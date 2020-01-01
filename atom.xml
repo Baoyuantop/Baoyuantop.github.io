@@ -2,13 +2,125 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://baoyuantop.github.io</id>
     <title>Baoyuan</title>
-    <updated>2020-01-01T02:15:23.455Z</updated>
+    <updated>2020-01-01T06:54:35.851Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://baoyuantop.github.io"/>
     <link rel="self" href="https://baoyuantop.github.io/atom.xml"/>
     <logo>https://baoyuantop.github.io/images/avatar.png</logo>
     <icon>https://baoyuantop.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Baoyuan</rights>
+    <entry>
+        <title type="html"><![CDATA[ES6中的 Symbol]]></title>
+        <id>https://baoyuantop.github.io/post/es6-zhong-de-symbol</id>
+        <link href="https://baoyuantop.github.io/post/es6-zhong-de-symbol">
+        </link>
+        <updated>2020-01-01T06:47:02.000Z</updated>
+        <summary type="html"><![CDATA[<p>一点读书笔记</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>一点读书笔记</p>
+<!-- more -->
+<h3 id="javascript-之-symbol">JavaScript 之 Symbol</h3>
+<h4 id="symbol是什么">Symbol是什么</h4>
+<blockquote>
+<p><code>Symbol</code>是<code>ES6</code>中新引入的一种基本数据类型。<code>Symbol()</code>函数会返回 symbol 类型的值，该类型具有静态属性和静态方法。它的静态属性会暴露几个内建的成员对象；它的静态方法会暴露全局的 symbol 注册，且类似于内建对象类，但作为构造函数来说它并不完整，因为它不支持语法：<code>new Symbol()</code>。</p>
+</blockquote>
+<p>也就是说<code>Symbol</code>作为一种新的基本数据类型，我们可以使用：</p>
+<pre><code class="language-javascript">let a = Symbol();
+</code></pre>
+<p>此时<code>a</code>便是一个<code>Symbol</code>类型的变量，它现在是独一无二的：</p>
+<pre><code class="language-javascript">let b = Symbol();
+a === b; //false
+</code></pre>
+<p>它还可以接受一个参数，我们可以给它传递一个字符串当描述，即使两个字符相同串也ok：</p>
+<pre><code class="language-javascript">let symbol1 = Symbol('some');
+let symbol2 = Symbol('some');
+symbol1 === symbol2; //false
+</code></pre>
+<p>如果参数是对象的话，会先调用对象的<code>toString</code>方法来转换为字符串。<br>
+也就是说每一个<code>Symbol</code>创造出来的值都是不一样的。需要注意的是不能使用<code>new</code>的方式来创建：</p>
+<pre><code class="language-javascript">let c = new Symbol(); //TypeError: Symbol is not a constructor
+</code></pre>
+<h4 id="symbol的使用姿势">Symbol的使用姿势</h4>
+<h5 id="给对象增加属性">给对象增加属性</h5>
+<p>在<code>ES5</code>之前对象的属性名大多都是字符串，起名字是个难事，而且名字一多动不动重复了就出错了。而且有的时候我们拿过别人的代码，要给其中一个对象增加属性，我们也不知道怎么起名字不重复，这也是<code>ES6</code>中引入<code>Symbol</code>的根本原因。</p>
+<pre><code class="language-javascript">let name = Symbol('name'); //加入 name 作为描述
+let obj = {
+    [name]: 'Baoyuan' //必须放在方括号之中
+};
+obj[name]; //'Baoyuan'
+</code></pre>
+<h5 id="属性名的遍历">属性名的遍历</h5>
+<p>对象中的普通属性,我们可以使用<code>Object.keys()</code>、<code>for...in</code>或者<code>Object.getOwnPropertyNames()</code>来进行遍历，但是他们并不能遍历出<code>Symbol</code>类型的属性名。请注意，它并不是私有属性。我们可以使用<code>Object.getOwnPropertySymbols</code>的方法来获取指定对象的<code>Symbol</code>属性。它会返回当前对象中所有<code>Symbol</code>类型的属性的<code>Symbol</code>值的数组：</p>
+<pre><code class="language-javascript">let a = Symbol('a');
+let b = Symbol('b');
+let c = 'c';
+let obj = {
+    [a]: 'a',
+    [b]: 'b',
+    c: 'c'
+};
+let objNames = Object.getOwnPropertySymbols(obj);
+console.log(objNames); // [Symbol(a), Symbol(b)]
+let objName = Object.getOwnPropertyNames(obj);
+console.log(objName); // [&quot;c&quot;]
+</code></pre>
+<p>使用<code>Reflect.ownKeys</code>可以遍历到所有的属性名：</p>
+<pre><code class="language-javascript">let names = Reflect.ownKeys(obj);
+console.log(names); // [&quot;c&quot;, Symbol(a), Symbol(b)]
+</code></pre>
+<h5 id="symbol值的重复引用">Symbol值的重复引用</h5>
+<p>有时候新建了一个<code>Symbol</code>值但是在其他地方我们希望再次使用，这时即使使用相同的描述符也不会产生同一个值，这时我们就需要<code>Symbol.for()</code>:</p>
+<pre><code class="language-javascript">let a = Symbol.for('hello');
+let b = Symbol.for('hello');
+a === b; // true
+</code></pre>
+<p>其实这两种写法都会产生新的<code>Symbol</code>，不过不同的是<code>Symbol</code>每次都产生一个新的值，而<code>Symbol.for</code>会先查看给定的<code>key</code>值是否存在，不存在了再去新建，并且还会被登记在全局环境中供搜索。我们可以使用<code>Symbol.keyFor</code>查看一个已登记的<code>Symbol</code>值的<code>key</code>:</p>
+<pre><code class="language-javascript">Symbol.keyFor(a); // &quot;hello&quot;
+</code></pre>
+<h4 id="ecmascript-中的定义">ECMAScript 中的定义</h4>
+<p>我们先来想一下它的主要特征</p>
+<ul>
+<li>
+<p>返回一个<code>Symbol</code>类型，并且是唯一的不会重复。</p>
+</li>
+<li>
+<p>使用<code>new</code>操作符初始化会报错。</p>
+</li>
+<li>
+<p>可以接受字符串参数作为标注，接受对象的时候调用对象的<code>toString</code>，即使参数相同返回的值也不同。</p>
+</li>
+</ul>
+<p>最后查看一下<code>ECMAScript</code>定义的<a href="http://www.ecma-international.org/ecma-262/6.0/#sec-symbol-description">规范</a>。</p>
+<blockquote>
+<p>When Symbol is called with optional argument description, the following steps are taken:</p>
+</blockquote>
+<ol>
+<li>If NewTarget is not undefined, throw a TypeError exception.</li>
+<li>If description is undefined, let descString be undefined.</li>
+<li>Else, let descString be ToString(description).</li>
+<li>ReturnIfAbrupt(descString).</li>
+<li>Return a new unique Symbol value whose [[Description]] value is descString.</li>
+</ol>
+<p>规范中指出了当我们调用<code>Symbol</code>的时候有几个步骤：</p>
+<ol>
+<li>
+<p>如果我们使用了<code>new</code>，就报错。</p>
+</li>
+<li>
+<p>如果没有传递参数，那么就使用<code>undefined</code>作为描述字.</p>
+</li>
+<li>
+<p>如果传了的话就把它转换为字符串。</p>
+</li>
+<li>
+<p>报错就返回。</p>
+</li>
+<li>
+<p>新返回一个唯一的<code>Symbol</code>值，它的<code>[[Description]]</code>属性值为<code>descString</code>。</p>
+</li>
+</ol>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Vue 数据响应式原理]]></title>
         <id>https://baoyuantop.github.io/post/vue-shu-ju-xiang-ying-shi-yuan-li</id>

@@ -1,0 +1,246 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ES6中的 Symbol | Baoyuan</title>
+<meta name="description" content="" />
+<link rel="shortcut icon" href="https://baoyuantop.github.io/favicon.ico?v=1577861663615">
+<link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+<link rel="stylesheet" href="https://baoyuantop.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="ES6中的 Symbol | Baoyuan - Atom Feed" href="https://baoyuantop.github.io/atom.xml">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+  </head>
+  <body>
+    <div class="site-nav has-cover">
+      <div class="head">
+  <div class="inner">
+    <a class="site-name" href="https://baoyuantop.github.io">
+        <span>Baoyuan</span>
+    </a>
+    <label class="burger" for="burger"></label>
+    <input id="burger" type="checkbox">
+    <button class="burger">
+      <div>
+        <span></span>
+        <span></span>
+      </div>
+    </button>
+    <nav class="info_nav">
+      
+        
+          <a href="https://baoyuantop.github.io">首页</a>
+        
+      
+        
+          <a href="/archives">归档</a>
+        
+      
+        
+          <a href="/tags">标签</a>
+        
+      
+        
+          <a href="/post/about">关于</a>
+        
+      
+    </nav>
+  </div>
+</div>
+    </div>
+    <article role="main" class="hentry has-cover">
+      
+        <div class="entry-cover js-cover" data-src="https://baoyuantop.github.io/post-images/es6-zhong-de-symbol.jpg" data-width="900" data-height="423" style="background-image:url(https://baoyuantop.github.io/post-images/es6-zhong-de-symbol.jpg); height: 80vw;">
+          <h1 class="post-title">ES6中的 Symbol</h1>
+        </div>
+      
+      <h1 class="entry-title" itemprop="headline">ES6中的 Symbol</h1>
+      <div class="entry-meta">
+        <time class="updated" datetime="2020-01-01 14:47:02">2020-01-01</time>
+        <span class="author vcard">
+          4 min read
+        </span>
+      </div>
+      <div class="post-content yue">
+        <p>一点读书笔记</p>
+<!-- more -->
+<h3 id="javascript-之-symbol">JavaScript 之 Symbol</h3>
+<h4 id="symbol是什么">Symbol是什么</h4>
+<blockquote>
+<p><code>Symbol</code>是<code>ES6</code>中新引入的一种基本数据类型。<code>Symbol()</code>函数会返回 symbol 类型的值，该类型具有静态属性和静态方法。它的静态属性会暴露几个内建的成员对象；它的静态方法会暴露全局的 symbol 注册，且类似于内建对象类，但作为构造函数来说它并不完整，因为它不支持语法：<code>new Symbol()</code>。</p>
+</blockquote>
+<p>也就是说<code>Symbol</code>作为一种新的基本数据类型，我们可以使用：</p>
+<pre><code class="language-javascript">let a = Symbol();
+</code></pre>
+<p>此时<code>a</code>便是一个<code>Symbol</code>类型的变量，它现在是独一无二的：</p>
+<pre><code class="language-javascript">let b = Symbol();
+a === b; //false
+</code></pre>
+<p>它还可以接受一个参数，我们可以给它传递一个字符串当描述，即使两个字符相同串也ok：</p>
+<pre><code class="language-javascript">let symbol1 = Symbol('some');
+let symbol2 = Symbol('some');
+symbol1 === symbol2; //false
+</code></pre>
+<p>如果参数是对象的话，会先调用对象的<code>toString</code>方法来转换为字符串。<br>
+也就是说每一个<code>Symbol</code>创造出来的值都是不一样的。需要注意的是不能使用<code>new</code>的方式来创建：</p>
+<pre><code class="language-javascript">let c = new Symbol(); //TypeError: Symbol is not a constructor
+</code></pre>
+<h4 id="symbol的使用姿势">Symbol的使用姿势</h4>
+<h5 id="给对象增加属性">给对象增加属性</h5>
+<p>在<code>ES5</code>之前对象的属性名大多都是字符串，起名字是个难事，而且名字一多动不动重复了就出错了。而且有的时候我们拿过别人的代码，要给其中一个对象增加属性，我们也不知道怎么起名字不重复，这也是<code>ES6</code>中引入<code>Symbol</code>的根本原因。</p>
+<pre><code class="language-javascript">let name = Symbol('name'); //加入 name 作为描述
+let obj = {
+    [name]: 'Baoyuan' //必须放在方括号之中
+};
+obj[name]; //'Baoyuan'
+</code></pre>
+<h5 id="属性名的遍历">属性名的遍历</h5>
+<p>对象中的普通属性,我们可以使用<code>Object.keys()</code>、<code>for...in</code>或者<code>Object.getOwnPropertyNames()</code>来进行遍历，但是他们并不能遍历出<code>Symbol</code>类型的属性名。请注意，它并不是私有属性。我们可以使用<code>Object.getOwnPropertySymbols</code>的方法来获取指定对象的<code>Symbol</code>属性。它会返回当前对象中所有<code>Symbol</code>类型的属性的<code>Symbol</code>值的数组：</p>
+<pre><code class="language-javascript">let a = Symbol('a');
+let b = Symbol('b');
+let c = 'c';
+let obj = {
+    [a]: 'a',
+    [b]: 'b',
+    c: 'c'
+};
+let objNames = Object.getOwnPropertySymbols(obj);
+console.log(objNames); // [Symbol(a), Symbol(b)]
+let objName = Object.getOwnPropertyNames(obj);
+console.log(objName); // [&quot;c&quot;]
+</code></pre>
+<p>使用<code>Reflect.ownKeys</code>可以遍历到所有的属性名：</p>
+<pre><code class="language-javascript">let names = Reflect.ownKeys(obj);
+console.log(names); // [&quot;c&quot;, Symbol(a), Symbol(b)]
+</code></pre>
+<h5 id="symbol值的重复引用">Symbol值的重复引用</h5>
+<p>有时候新建了一个<code>Symbol</code>值但是在其他地方我们希望再次使用，这时即使使用相同的描述符也不会产生同一个值，这时我们就需要<code>Symbol.for()</code>:</p>
+<pre><code class="language-javascript">let a = Symbol.for('hello');
+let b = Symbol.for('hello');
+a === b; // true
+</code></pre>
+<p>其实这两种写法都会产生新的<code>Symbol</code>，不过不同的是<code>Symbol</code>每次都产生一个新的值，而<code>Symbol.for</code>会先查看给定的<code>key</code>值是否存在，不存在了再去新建，并且还会被登记在全局环境中供搜索。我们可以使用<code>Symbol.keyFor</code>查看一个已登记的<code>Symbol</code>值的<code>key</code>:</p>
+<pre><code class="language-javascript">Symbol.keyFor(a); // &quot;hello&quot;
+</code></pre>
+<h4 id="ecmascript-中的定义">ECMAScript 中的定义</h4>
+<p>我们先来想一下它的主要特征</p>
+<ul>
+<li>
+<p>返回一个<code>Symbol</code>类型，并且是唯一的不会重复。</p>
+</li>
+<li>
+<p>使用<code>new</code>操作符初始化会报错。</p>
+</li>
+<li>
+<p>可以接受字符串参数作为标注，接受对象的时候调用对象的<code>toString</code>，即使参数相同返回的值也不同。</p>
+</li>
+</ul>
+<p>最后查看一下<code>ECMAScript</code>定义的<a href="http://www.ecma-international.org/ecma-262/6.0/#sec-symbol-description">规范</a>。</p>
+<blockquote>
+<p>When Symbol is called with optional argument description, the following steps are taken:</p>
+</blockquote>
+<ol>
+<li>If NewTarget is not undefined, throw a TypeError exception.</li>
+<li>If description is undefined, let descString be undefined.</li>
+<li>Else, let descString be ToString(description).</li>
+<li>ReturnIfAbrupt(descString).</li>
+<li>Return a new unique Symbol value whose [[Description]] value is descString.</li>
+</ol>
+<p>规范中指出了当我们调用<code>Symbol</code>的时候有几个步骤：</p>
+<ol>
+<li>
+<p>如果我们使用了<code>new</code>，就报错。</p>
+</li>
+<li>
+<p>如果没有传递参数，那么就使用<code>undefined</code>作为描述字.</p>
+</li>
+<li>
+<p>如果传了的话就把它转换为字符串。</p>
+</li>
+<li>
+<p>报错就返回。</p>
+</li>
+<li>
+<p>新返回一个唯一的<code>Symbol</code>值，它的<code>[[Description]]</code>属性值为<code>descString</code>。</p>
+</li>
+</ol>
+
+      </div>
+      <div class="entry-block">
+        <div class="entry-tags">
+          
+            <a href="https://baoyuantop.github.io/tag/-3zT2uEYU">
+              ES6
+            </a>
+          
+        </div>
+      </div>
+    </article>
+    
+    
+      <section class="post-section prev-post">
+        <div class="inner">
+          <h3>后一篇</h3>
+          <a href="https://baoyuantop.github.io/post/vue-shu-ju-xiang-ying-shi-yuan-li">
+            <strong>Vue 数据响应式原理</strong>
+          </a>
+        </div>
+      </section>
+    
+
+    
+
+    <footer class="footer">
+  <div class="main">
+    <a href="https://baoyuantop.github.io">
+      <img class="avatar" src="https://baoyuantop.github.io/images/avatar.png?v=1577861663615" alt="Baoyuan">
+    </a>
+    <div class="footer__social">
+      
+        
+          <a href="https://github.com/Baoyuantop" target="_blank"><i class="remixicon-github-line"></i></a>
+        
+      
+        
+          <a href="https://twitter.com/Baoyuan12" target="_blank"><i class="remixicon-twitter-line"></i></a>
+        
+      
+        
+          <a href="https://weibo.com/p/1005056062549773/home?from=page_100505&amp;mod=TAB&amp;is_all=1#place" target="_blank"><i class="remixicon-weibo-line"></i></a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <p class="footer__sosumi">
+      Powered by Baoyuan
+    </p>
+    <a class="footer-rss" href="https://baoyuantop.github.io/atom.xml">RSS</a>
+  </div>
+</footer>
+
+<script src="https://baoyuantop.github.io/media/prism.js"></script>
+<script>
+  Prism.highlightAll()
+</script>
+
+  </body>
+</html>
