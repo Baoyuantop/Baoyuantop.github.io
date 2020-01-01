@@ -2,13 +2,284 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://baoyuantop.github.io</id>
     <title>Baoyuan</title>
-    <updated>2020-01-01T07:14:50.917Z</updated>
+    <updated>2020-01-01T07:41:24.189Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://baoyuantop.github.io"/>
     <link rel="self" href="https://baoyuantop.github.io/atom.xml"/>
     <logo>https://baoyuantop.github.io/images/avatar.png</logo>
     <icon>https://baoyuantop.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Baoyuan</rights>
+    <entry>
+        <title type="html"><![CDATA[前端入坑指南]]></title>
+        <id>https://baoyuantop.github.io/post/qian-duan-ru-keng-zhi-nan</id>
+        <link href="https://baoyuantop.github.io/post/qian-duan-ru-keng-zhi-nan">
+        </link>
+        <updated>2020-01-01T07:39:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>一点建议</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>一点建议</p>
+<!-- more -->
+<h3 id="前端入门指南">前端入门指南</h3>
+<h4 id="为什么选择前端">为什么选择前端</h4>
+<p>做一件事之前最好问问自己为什么要做，然后再去思考该怎么做。如果只是看到别人做了，并且有很不错的收入，然后自己就决定做了，很可能中途放弃浪费掉很多时间。起码问自己一个问题：我是否真的热爱这个领域，并且很乐意在这个领域持续不断的一直学习付出？当你模糊不定我想你可以再想想自己适合什么，如果你接触后发现这就是我喜欢的东西，那么我想你可以开始了。</p>
+<p>作为自学两年的初级前端，希望对那些想入门前端开发的人分享一些观点。先谈谈我那会为什么选择入门前端，这个可能大多数人都一样：</p>
+<ul>
+<li>
+<p>不喜欢黑乎乎的命令框程序，喜欢漂亮的用户界面</p>
+</li>
+<li>
+<p>不喜欢整天与数据库交流，喜欢向用户展示内容和处理用户的操作</p>
+</li>
+<li>
+<p>代码写一点就能看见视图效果出来一点，这是很有成就感的</p>
+</li>
+</ul>
+<p>要是你有很强的算法逻辑，喜欢处理海量的用户请求和数据，你可以考虑一下后端开发，当然做一名全栈开发是最好的。</p>
+<p>这里有一个很大的误区：大多数人觉得前端简单，填填<code>Html</code>,稍微加点<code>CSS</code>,然后用<code>JavaScript</code>处理一下点击事件以及其他的逻辑，一个网页就成了。然后就会给人一个错觉：我简单地看看文档大概用一周的时间就能动手写网页了，给人一种前端门槛很低的感觉，还不用去考虑后端那些复杂的算法逻辑。</p>
+<p>确实，对于一个新手写一些网页确实不太需要算法逻辑，但是这些想法很容易给人误导，懂得这些你只是一个<code>切图工</code>，并不是一个很好的开发者。尤其是这几年前端领域飞速的发展，新东西层出不穷。仅仅会这些早已不能满足需求了。</p>
+<h4 id="前端发展及入门建议">前端发展及入门建议</h4>
+<p>这几年这一领域的发展还算蛮大的，出现了很多新的工具，前端开发的地位越来越被重视，随着技术的更新前端的产品体验越来越好。</p>
+<p>但是作为前端的三大基石：<code>Html</code>、<code>CSS</code>和<code>JavaScript</code>基础的内容没怎么变过，不过是在其基础上增加很多新的特性和方法。后来随着<code>Webpack</code>等一些工具的出现，前端的工作方式发生了变化，以及一些新的框架比如<code>Vue.js</code>、<code>React</code>的出现，使得前端体系越发的庞大。不过只要分清楚哪些是重点就可以。</p>
+<p>纵观计算机发展史，二三十年间技术更替了一波又一波，不断有新的技术产生，老的淘汰。前端领域也更替了好几代，所以希望明白一个事实，不要去争论什么语言、什么框架好，万一哪天出来一个更好的把它替代了呢？所以不要局限住自己的视野，要看到那些基础的东西是不会变的，那些 js 基础、网络协议以及一些编程思想，也就是数据结构与算法，吃透这些底层的东西无论上层工具怎样交替更换，自己总能得心应手。不要让自己完全依赖框架，要是没有框架该怎么办呢？</p>
+<p>打个比方，《蜘蛛侠：英雄归来》里面托尼对他说的：</p>
+<p><a href="https://i.loli.net/2019/05/20/5ce25ec6f12b563569.jpg"><img src="https://i.loli.net/2019/05/20/5ce25ec6f12b563569.jpg" alt="" loading="lazy"></a><br>
+<a href="https://i.loli.net/2019/05/20/5ce25ec6f12fc47996.jpg"><img src="https://i.loli.net/2019/05/20/5ce25ec6f12fc47996.jpg" alt="" loading="lazy"></a><br>
+<a href="https://i.loli.net/2019/05/20/5ce25ec74623242554.jpg"><img src="https://i.loli.net/2019/05/20/5ce25ec74623242554.jpg" alt="" loading="lazy"></a><br>
+<a href="https://i.loli.net/2019/05/20/5ce25ec8cf68814611.jpg"><img src="https://i.loli.net/2019/05/20/5ce25ec8cf68814611.jpg" alt="" loading="lazy"></a><br>
+<a href="https://i.loli.net/2019/05/20/5ce25ec8cf68986690.jpg"><img src="https://i.loli.net/2019/05/20/5ce25ec8cf68986690.jpg" alt="" loading="lazy"></a></p>
+<h4 id="学习路线及资源">学习路线及资源</h4>
+<p>这些都是我觉得比较好的东西，推荐一下：搜索引擎直接查找即可，也可关注我的微信公众号<code>前端123</code>获取。</p>
+<ol>
+<li>
+<p>首先就是<code>HTML</code>与<code>CSS</code>:<code>HTML</code>负责网页的骨架，而<code>CSS</code>则主要负责你美化你的的网页的样式。这些基础的话入门的时候过一下文档就可以了，这里推荐<code>MDN Web docs</code>。还有一个很有趣的教程，如果你不喜欢单看文字教程的话，可以试试<code>Freecodecamp</code>，一个学习编程的网站，闯关游戏感觉的学习过程，由最简单渐进深入的内容，试一下你会喜欢的。</p>
+</li>
+<li>
+<p>接着就是<code>JavaScript</code>的部分，这也是前端开发水平的分水岭，切图仔与工程师差距就在这。很多人往往忽略这一部分，往往拿着一些开发框架的特性和功能就开始直接使用了，觉得可以应付一般的需求，但是那些框架的原理实现对他完全就是黑盒，很容易造成错误和创造低效的代码。学习这部分的话首先推荐<code>廖雪峰的 JavaScript 教程</code>，内容很完整，每个部分还有单独的测试，以及后面的 js 一条龙教程。还有一个就是广受业内赞誉，被称为<code>红宝书</code>的<code>JavaScript 高级程序设计</code>。书很厚，但是完全值得啃下去。</p>
+</li>
+<li>
+<p>当你觉得完全掌握了上面的内容了，对<code>JavaScript</code>的基础了如指掌，是时候上手一门框架来增加你的开发效率了。无论<code>Vue</code>还是<code>React</code>，你都需要仔细阅读官方给的文档，这是最有效率的方式，选择你喜欢的框架风格深入看完文档就行了。</p>
+</li>
+</ol>
+<h4 id="学习策略与态度">学习策略与态度</h4>
+<p>好的学习方法是可以让你利用有限的时间掌握更多的内容。首先不得不提的是<code>解决问题的能力</code>是一个人很可贵的品质。</p>
+<p>编程的路上肯定会遇到不可控的各种问题，冷静分析，查阅错误信息，找出解决方法。或是尝试了各种方法，但是依旧无法解决，阻挡了你前进的步伐。这个时候你就要找一个你信任的水平高于你的人，解释你遇到了什么问题，你理解的这个问题可能会是哪里出问题了，你尝试过什么解决方法。</p>
+<p>切忌截一个报错信息就问解决方法。首先大家的时间都很宝贵，这是一种不尊重别人时间的表现；其次大家都愿意帮助乐于思考的人。搜索引擎是你解决问题的利器，大多数解决不了的问题都是你没有选对搜索引擎，或是你没有准确的描述出问题的信息。</p>
+<p>还有个<code>学习的能力</code>：学习是一个终身的事业，尤其是对于计算机行业，学会坚持主动学习、高效学习是很重要的。对待学习这件事，每个人的效率不一样，这就导致了人跟人之间的差距。这里有两个需要注意的：</p>
+<h5 id="构建知识体系">构建知识体系</h5>
+<p>在明确目标，开始学习前，不要那么急于上手干，还要学会构建出自己的知识体系。</p>
+<p>就拿读书来说，大部分人读书习惯于翻开第一页开始看，其实这是很低效的，拿到一本书以后，一定要先看目录，因为对于一本书来说，目录就是他的知识体系。明白整个体系后整本书大概就了然于胸，之后会选一些对我当前工作学习有帮助的内容去看，很少会从第一页开始。</p>
+<p>同样的编程也一样，比如你想成为一名前端工程师。你要做的并不是先买书、看视频、搭建开发环境。而是要先了解到成为一名前端开发工程师需要哪些知识体系，你可以自己搜索或者请教有经验的人了解到。也就是你在学习之前把你要学的东西大概框架先搞懂，然后再去对应每一个深入的学习。你的学习计划也就出来了。每学完一个地方你的潜意识就会给你反馈，又离目标进了一步，你的学习效率自然会提高，也会更有动力。随着水平的提高，定期更新你的知识体系就好了。</p>
+<h5 id="学会应用">学会应用</h5>
+<p>对于编程学习来说，应用是非常重要的。知识的学习本质是要解决问题的。如果在学习的过程中你能注重应用，那么会让你产生乐趣与满足感。</p>
+<p>在你学习一个阶段之后，可以去找一些小的案例，涵盖住学过的知识，然后自己动手仿造做出一个。不仅复习了前一段的知识，有了作品还很大程度上增加了满足感，让你更有学习的劲头。</p>
+<p>最后想谈一下学习的态度：</p>
+<p>每个人都是<code>急于求成</code>的，一些教程也很能抓住这个心理。你肯定看过很多诸如<code>几个小时学会什么</code>、<code>几天什么从入门到精通</code>等等。但是很不幸告诉你，任何领域的高手都是需要一个长期投入的过程。而当你看到这里的时候，我相信你是有信心坚持下去的，而当你已经坚持了几个月了，好吧，你该上路了。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[浅谈 JavaScript 中的内存管理与垃圾回收]]></title>
+        <id>https://baoyuantop.github.io/post/qian-tan-javascript-zhong-de-nei-cun-guan-li-yu-la-ji-hui-shou</id>
+        <link href="https://baoyuantop.github.io/post/qian-tan-javascript-zhong-de-nei-cun-guan-li-yu-la-ji-hui-shou">
+        </link>
+        <updated>2020-01-01T07:29:36.000Z</updated>
+        <summary type="html"><![CDATA[<p>一点读书笔记</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>一点读书笔记</p>
+<!-- more -->
+<h3 id="浅谈-javascript-内存管理与垃圾回收">浅谈 JavaScript 内存管理与垃圾回收</h3>
+<p>写过<code>C语言</code>的都清楚，我们需要时时刻刻关心处理程序的内存使用情况，这无形的给程序员增添了很多负担，但是在后期出现的一些语言中渐渐的都加入了内存自动管理和垃圾回收机制，这样一来我们就不必再关心程序运行的内存使用情况，同样的在<code>JavaScript</code>中也有内存管理和垃圾回收。但是这样渐渐的内存中的东西就离我们越来越远，直至现在很多入门前端的对内存的情况一概不知，我也是，当然这是错误的。</p>
+<h4 id="内存分配">内存分配</h4>
+<blockquote>
+<p>内存分配的最终目的就是为了配合垃圾回收机制，使得程序运行时占用内存更少，从而效率更高。</p>
+</blockquote>
+<p>我们都知道数据类型有两种：<code>基础类型和引用类型</code>，不同的类型采用着不同的存储方式。</p>
+<h5 id="基础类型与栈内存">基础类型与栈内存</h5>
+<p>基础类型值包括：<code>undefined</code>、<code>null</code>、<code>boolean</code>、<code>number</code>、<code>string</code>和<code>symbol</code>。这些类型的值大多有固定的大小，<code>JavaScript</code>将它们保存在栈内存中直接按值引用。<br>
+栈是一种线性的数据结构，典型特点是<code>先进后出, 后进先出</code>,当<code>JavaScript</code>中一个方法执行的时候，该方法就建立一个内存栈，然后将方法中定义的变量放入栈中，当我们需要的时候直接按值引用即可。当方法执行结束后就销毁。</p>
+<h5 id="引用类型与堆内存">引用类型与堆内存</h5>
+<p><code>JavaScript</code>的引用类型大多长度不固定，比如<code>Array</code>，它的长度并不是固定的。他的值保存在堆内存的对象中。然后将它的地址放入栈中，而且不允许我们直接访问堆内存中的位置，所以我们操作的都是对象的引用，并不是实际的对象。<br>
+在程序中创建一个对象的成本是比较大的，在创建完成后就会被保存在堆数据区，并不会随着方法的结束而销毁。只有当这个对象没有被任何引用变量引用的时候，垃圾回收的时候才会回收掉它。</p>
+<h4 id="垃圾回收">垃圾回收</h4>
+<p><code>JavaScript</code>具有自动垃圾收集机制，执行环境会负责找出那些不再继续使用的变量然后释放其占用的内存。对于找出垃圾的方法通常有两个策略：</p>
+<h5 id="标记清除">标记清除</h5>
+<p>这是最常用的垃圾收集机制。这种算法假定一个根对象，然后遍历所有从根开始引用的对象，垃圾收集器在运行的时候会将他们加上标记，然后去掉环境中使用的变量和被他们引用的变量的标记。之后再被加上标记的变量就是要删除的，垃圾收集器将其释放完成一次工作。</p>
+<h5 id="引用计数">引用计数</h5>
+<p>这种机制为每一个值标记被引用的次数并追踪，当被其他变量引用的时候就加一，反之就减一，当引用次数变成 0 的时候就是需要回收的了。垃圾收集器下次运行的时候就会把它释放掉。但是这样会有一个问题，比如：</p>
+<pre><code class="language-javascript">let obj1 = new Object();
+let obj2 = new Object();
+
+obj1.attr1 = obj2;
+obj2.attr2 = obj1;
+</code></pre>
+<p>在这里<code>obj1</code>和<code>obj2</code>各自互相引用，这块语句执行过后他们的引用次数永远不会变成 0 ，也就得不到回收，如果存在大量这种情况的话内存就出问题了。只要有出现循环引用的地方，这种机制就会出问题。所以它无法处理循环引用的问题。</p>
+<h3 id="v8引擎的垃圾回收">V8引擎的垃圾回收</h3>
+<p>V8 采用一种叫做<code>分代回收</code>的策略。将内存分为新生代和老生代，新生代存放存活时间段的对象，老生代则存放存活时间长或者常驻内存的对象。</p>
+<ul>
+<li>
+<p>大多数的对象会被分配到新生代内存中，回收算法将这里的内存空间一分为二，一个处于使用状态一个处于闲置状态。分配对象的时候先把它放在使用区中，开始垃圾回收的时候就检查使用区中存活的对象，将他们复制到闲置区中并适当紧缩，最后释放使用区上剩下的数据。然后闲置区变成使用区，使用区变成闲置区，循环往复。</p>
+</li>
+<li>
+<p>当一个对象经过多次清理后依然存在，它就会被移动到老生代，称为<code>晋升</code>。</p>
+</li>
+<li>
+<p>老生代占用内存较多，主要采用<code>标记清除</code>和<code>标记整理</code>两个策略。在标记阶段遍历堆中的所有对象，标注那些活着的对象，然后在清除阶段<code>标记清除</code>会清除掉没有被标记的对象。但是这会产生内存碎片。<code>标记清理</code>在清理的时候可以解决碎片问题，它将活着的对象向内存中的一段移动，然后清理掉边界外的内存。不过这个过程涉及到数据移动，所以效率不是很高。</p>
+</li>
+</ul>
+<p>除此之外 V8 中还使用了<code>增量标记</code>，让垃圾回收与应用逻辑交替进行，以减少垃圾回收时的停顿时间；在标记完成后还可以<code>惰性清理</code>；以及后期中引入了并行标记和并行清理，通过并行来利用多核 CPU 性能。这些无疑让 V8 成为了最出色的 JavaScript 引擎。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[JavaScript 引用类型]]></title>
+        <id>https://baoyuantop.github.io/post/javascript-yin-yong-lei-xing</id>
+        <link href="https://baoyuantop.github.io/post/javascript-yin-yong-lei-xing">
+        </link>
+        <updated>2020-01-01T07:23:51.000Z</updated>
+        <summary type="html"><![CDATA[<p>一点读书笔记</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>一点读书笔记</p>
+<!-- more -->
+<h3 id="javascript-引用类型">JavaScript 引用类型</h3>
+<p>所谓引用类型，在<code>ECMAScript</code>中表示一种数据结构，其中有一些数据和方法，在其他语言中大多被称为<em>类</em>,但是在这里我们一般不这样称呼。即使<code>ECMAScript</code>是一门面向对象语言，但是它不具备传统面向对象语言中所支持的类和接口。他们描述的是一类对象所具有的属性和方法。引用类型的值就是一个对象，它是引用类型的一个实例。<br>
+新对象是用一个<code>new</code>操作符后面跟上一个构造函数创建的。所谓构造函数本质上是一个函数，这个函数的目的是为了创建某一类对象，函数中包含了创建该对象所需要的东西。<br>
+<code>ECMAScript</code>中提供其他各种类型的引用类型。</p>
+<h4 id="基本类型和引用类型的值">基本类型和引用类型的值</h4>
+<blockquote>
+<p>JavaScript 中的变量与其他语言的变量有很大差别,独特的松散类型的特性，决定了它只是特定时间用来保存特定值的一个名字而已。它的数据类型在生命周期中是可以随时改变的。Crazy and Powerful !</p>
+</blockquote>
+<p>在一个变量中可能存在两种不同数据类型的值：基本类型值和引用类型值。基本类型值是按值引用的，我们可以操作保存在变量中实际的值。但是引用类型就不同了，引用类型的值是保存在内存中的对象，而<code>JavaScript</code>是不允许直接操作内存空间的。所以说我们在操作对象的时候操作的是对象的引用而不是实际的对象。所以对象是按引用访问的。</p>
+<ul>
+<li>引用类型具有动态的属性</li>
+</ul>
+<p>两种类型在定义的时候是相似的，创建一个变量并且为它赋值。但是引用类型允许我们更改其属性和方法，而基本类型值没有这个功能。当我们为基本类型值增添属性后虽然不会报错，但是却是无效的。</p>
+<ul>
+<li>变量值的复制</li>
+</ul>
+<p>对于基本类型值来说，从一个变量复制给另一个变量的时候，会在新的变量上创建一个新值，然后把值复制过去。从此这两个值就没了联系，不会相互影响了。但如果是从一个变量向另一个变量复制引用类型的值的时候，复制过去的其实是一个指针，指向存在堆中的一个对象，然后两个变量引用同一个对象，改变一个，会影响另一个：</p>
+<pre><code class="language-javascript">let obj1 = new Object();
+let obj2 = obj1;
+obj1.name = 'Baoyuan';
+console.log(obj2.name); //'Baoyuan'
+</code></pre>
+<ul>
+<li>参数的传递</li>
+</ul>
+<blockquote>
+<p><code>ECMAScript</code> 中所有函数的参数都是按值传递的。</p>
+</blockquote>
+<p>向函数传递基本类型的值的时候，被传递的值被复制给命名参数。而对于引用类型来说，会把这个值在内存中的地址复制给命名参数，这会导致函数内值的改变反应在函数外部：</p>
+<pre><code class="language-javascript">function setName (obj) {
+    obj.name = 'Baoyuan';
+};
+let people = new Object();
+setName(people); // 将people对象地址复制给了函数内部的obj，也就是说引用同一个对象。
+console.log(people.name); //'Baoyuan'
+</code></pre>
+<p>即使这个对象是按值传递的，因为 people 指向的对象在堆内存中只有一个， obj 会按引用来访问同一个对象。</p>
+<p>我们先来看最常见用的最多的一种-<code>Object</code>。</p>
+<h4 id="object">Object</h4>
+<p><code>Object</code>是典型的引用类型值，虽然它的实例中并不具备很多功能，但是大多数我们所见的引用类型值都是他的实例。而且对于我们在程序中存储和传输数据来说是不可或缺的。<br>
+通常我们可以使用<code>new</code>方法来创建一个对象：</p>
+<pre><code class="language-javascript">let peopele = new Object();
+people.age = 23;
+people.name = 'Baoyuan';
+</code></pre>
+<p>我们创建了一个<code>people</code>对象并为其设置了姓名和年龄属性,同样的使用对象字面量也可以有相同的效果：</p>
+<pre><code class="language-javascript">let people = {
+    name: 'Baoyuan',
+    age: 23
+};
+</code></pre>
+<p>在使用这种方式的时候属性名也可以用字符串表示，一般我们推荐使用字面量创建，它的代码简洁而且它也是向函数传递大量参数的首选方式。<br>
+我们可以通过点访问法访问其属性：</p>
+<pre><code class="language-javascript">console.log(people.name); //Baoyuan
+</code></pre>
+<p>除此之外还有一种更为灵活的方式，当我们的属性名中含有包含会导致语法错误的字符串或者是保留字的话，我们可以使用<code>[]</code>来访问：</p>
+<pre><code class="language-javascript">people['name'] = 'Bao yuan'; //属性名以字符串形式放入，属性值中含有空格。
+</code></pre>
+<p>这种方式还可以通过变量来访问属性：</p>
+<pre><code class="language-javascript">let item = 'name';
+people[item]; //Baoyuan
+</code></pre>
+<p>同常来说除非必须使用<code>[]</code>的情况下，一般建议用点表示法。</p>
+<p>除此之外引用类型还有<code>Array</code>、 <code>Date</code>、 <code>RegExp</code>、 <code>Function</code>等。</p>
+<h4 id="类型判断">类型判断</h4>
+<p>在检测基本数据类型的时候我们使用<code>typeof</code>但是如果我们在引用类型上使用的话都会返回<code>object</code>，这并不是我们想要的。为此<code>ECMAScript</code>提供了<code>instanceof</code>：</p>
+<blockquote>
+<p>result = variable instanceof constructor</p>
+</blockquote>
+<p>它会根据原型链来识别，比如：</p>
+<pre><code class="language-javascript">console.log(people instanceof Array); //变量people是Array类型吗？
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[JavaScript 基础数据类型]]></title>
+        <id>https://baoyuantop.github.io/post/javascript-ji-chu-shu-ju-lei-xing</id>
+        <link href="https://baoyuantop.github.io/post/javascript-ji-chu-shu-ju-lei-xing">
+        </link>
+        <updated>2020-01-01T07:20:04.000Z</updated>
+        <summary type="html"><![CDATA[<p>一点读书笔记</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>一点读书笔记</p>
+<!-- more -->
+<h3 id="javascript-中的基本数据类型">JavaScript 中的基本数据类型</h3>
+<h4 id="静态类型语言与动态类型语言">静态类型语言与动态类型语言</h4>
+<p>在编程语言中有这两种情况之分，具体的含义为：</p>
+<blockquote>
+<p>动态类型语言是一类在运行时可以改变其结构的语言：例如新的函数、对象、甚至代码可以被引进，已有的函数可以被删除或是其他结构上的变化。<br>
+--维基百科</p>
+</blockquote>
+<p>而静态类型语言则与之相反，典型的动态类型语言有<code>JavaScript</code> <code>PHP</code> <code>Python</code> <code>Ruby</code> 等。</p>
+<h4 id="基本数据类型">基本数据类型</h4>
+<p>在<code>JavaScript</code>中共有 5 种简单数据类型（暂不考虑 <code>Symbol</code>）： <code>Undefined</code>、 <code>Boolean</code>、 <code>Null</code>、 <code>Number</code> 和<code>String</code>，还有一种复杂的数据类型--<code>Object</code>。我们先分别看一下各自的特点。</p>
+<h5 id="undefined">Undefined</h5>
+<p><code>Undefined</code> 类型只有一个值，即特殊的 Undefined。当我们使用<code>let</code>声明了一个变量但是并未初始化赋值，它的值就是<code>Undefined</code>：</p>
+<pre><code class="language-javascript">let javascript; //等价于 let javascript = undefined; 但没必要这样
+javascript === undefined; //true
+</code></pre>
+<p><em>注意请与未定义分开</em>：</p>
+<pre><code class="language-javascript">let javascript;
+console.log(javascript); //&quot;undefined&quot;
+console.log(java); //java is not define;
+</code></pre>
+<h5 id="null">Null</h5>
+<p>同样的，<code>Null</code>也是只有一个值的数据类型：null。它表示一个空的对象指针,如果我们定义了一个变量准备将来存放对象，我们就可以将它初始化为<code>null</code>。</p>
+<h5 id="boolean">Boolean</h5>
+<p>这种类型在大多数编程语言中都很常见，该类型有两个值：<code>true</code>和<code>false</code>。请注意不要把它与数字01产生联系。还要注意的是他是区分大小写的，<code>True</code>并不是布尔值，只是标识符。虽然字面值只有两个，但<code>ECMAScript</code>中所有类型中都有与之相对应的值，如果要将一个其他值转换为布尔值，可以使用<code>Boolean</code>函数来转型。</p>
+<pre><code class="language-javascript">let item = &quot;javascript&quot;;
+let booleanitem = Boolean(item); //true
+</code></pre>
+<h5 id="number">Number</h5>
+<p>在<code>JavaScript</code>中使用 <em>IEEE754</em>格式来表示整数和浮点数值。基本数字字面量有<em>十进制整数</em>、<em>八进制整数</em>和<em>十六进制整数</em>。在算数运算时所有八进制和十六进制都将转换为十进制数值。</p>
+<ul>
+<li>浮点数值</li>
+</ul>
+<blockquote>
+<p>数值中必须包含一个小数点，并且小数点后必须有一个数字。</p>
+</blockquote>
+<p>浮点数值的最高精度是17位小数，但是在算数运算中精度远远不如整数：</p>
+<pre><code class="language-javascript">0.1 + 0.2 === 0.3; //false,舍入误差；
+console.log(0.1 + 0.2); //0.30000000000000004
+</code></pre>
+<ul>
+<li>数值范围</li>
+</ul>
+<blockquote>
+<p><code>ECMAScript</code> 能保存的最小数值保存在<code>Number.MIN_VALUE</code>中,在大多数浏览器中为<code>5e-324</code>;能保存的最大值保存在<code>Number.MAX_VALUE</code>中，在大多数浏览器中为<code>1.7976931348623157e+308</code>。</p>
+</blockquote>
+<p>如果在某次计算中超出了这一值，那么会被转化成<code>Infinity</code>(正无穷)或者<code>-Infinity</code>(负无穷)，并且无法参与下一次的计算。</p>
+<ul>
+<li>NaN</li>
+</ul>
+<blockquote>
+<p>NaN 即 Not a Number。这个数值用来表示一个本来要返回数值的操作数未返回数值的情况。</p>
+</blockquote>
+<p>它有两个显著的特点。<br>
+任何涉及 NaN 的操作都会返回 NaN。</p>
+<pre><code class="language-javascript">console.log(NaN/100); //NaN
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[JS 函数知多少（下）]]></title>
         <id>https://baoyuantop.github.io/post/js-han-shu-zhi-duo-shao-xia</id>

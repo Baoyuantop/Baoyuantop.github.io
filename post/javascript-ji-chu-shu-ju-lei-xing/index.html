@@ -1,0 +1,211 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>JavaScript 基础数据类型 | Baoyuan</title>
+<meta name="description" content="" />
+<link rel="shortcut icon" href="https://baoyuantop.github.io/favicon.ico?v=1577864478958">
+<link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+<link rel="stylesheet" href="https://baoyuantop.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="JavaScript 基础数据类型 | Baoyuan - Atom Feed" href="https://baoyuantop.github.io/atom.xml">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+  </head>
+  <body>
+    <div class="site-nav has-cover">
+      <div class="head">
+  <div class="inner">
+    <a class="site-name" href="https://baoyuantop.github.io">
+        <span>Baoyuan</span>
+    </a>
+    <label class="burger" for="burger"></label>
+    <input id="burger" type="checkbox">
+    <button class="burger">
+      <div>
+        <span></span>
+        <span></span>
+      </div>
+    </button>
+    <nav class="info_nav">
+      
+        
+          <a href="https://baoyuantop.github.io">首页</a>
+        
+      
+        
+          <a href="/archives">归档</a>
+        
+      
+        
+          <a href="/tags">标签</a>
+        
+      
+        
+          <a href="/post/about">关于</a>
+        
+      
+    </nav>
+  </div>
+</div>
+    </div>
+    <article role="main" class="hentry has-cover">
+      
+        <div class="entry-cover js-cover" data-src="https://baoyuantop.github.io/post-images/javascript-ji-chu-shu-ju-lei-xing.jpg" data-width="900" data-height="423" style="background-image:url(https://baoyuantop.github.io/post-images/javascript-ji-chu-shu-ju-lei-xing.jpg); height: 80vw;">
+          <h1 class="post-title">JavaScript 基础数据类型</h1>
+        </div>
+      
+      <h1 class="entry-title" itemprop="headline">JavaScript 基础数据类型</h1>
+      <div class="entry-meta">
+        <time class="updated" datetime="2020-01-01 15:20:04">2020-01-01</time>
+        <span class="author vcard">
+          3 min read
+        </span>
+      </div>
+      <div class="post-content yue">
+        <p>一点读书笔记</p>
+<!-- more -->
+<h3 id="javascript-中的基本数据类型">JavaScript 中的基本数据类型</h3>
+<h4 id="静态类型语言与动态类型语言">静态类型语言与动态类型语言</h4>
+<p>在编程语言中有这两种情况之分，具体的含义为：</p>
+<blockquote>
+<p>动态类型语言是一类在运行时可以改变其结构的语言：例如新的函数、对象、甚至代码可以被引进，已有的函数可以被删除或是其他结构上的变化。<br>
+--维基百科</p>
+</blockquote>
+<p>而静态类型语言则与之相反，典型的动态类型语言有<code>JavaScript</code> <code>PHP</code> <code>Python</code> <code>Ruby</code> 等。</p>
+<h4 id="基本数据类型">基本数据类型</h4>
+<p>在<code>JavaScript</code>中共有 5 种简单数据类型（暂不考虑 <code>Symbol</code>）： <code>Undefined</code>、 <code>Boolean</code>、 <code>Null</code>、 <code>Number</code> 和<code>String</code>，还有一种复杂的数据类型--<code>Object</code>。我们先分别看一下各自的特点。</p>
+<h5 id="undefined">Undefined</h5>
+<p><code>Undefined</code> 类型只有一个值，即特殊的 Undefined。当我们使用<code>let</code>声明了一个变量但是并未初始化赋值，它的值就是<code>Undefined</code>：</p>
+<pre><code class="language-javascript">let javascript; //等价于 let javascript = undefined; 但没必要这样
+javascript === undefined; //true
+</code></pre>
+<p><em>注意请与未定义分开</em>：</p>
+<pre><code class="language-javascript">let javascript;
+console.log(javascript); //&quot;undefined&quot;
+console.log(java); //java is not define;
+</code></pre>
+<h5 id="null">Null</h5>
+<p>同样的，<code>Null</code>也是只有一个值的数据类型：null。它表示一个空的对象指针,如果我们定义了一个变量准备将来存放对象，我们就可以将它初始化为<code>null</code>。</p>
+<h5 id="boolean">Boolean</h5>
+<p>这种类型在大多数编程语言中都很常见，该类型有两个值：<code>true</code>和<code>false</code>。请注意不要把它与数字01产生联系。还要注意的是他是区分大小写的，<code>True</code>并不是布尔值，只是标识符。虽然字面值只有两个，但<code>ECMAScript</code>中所有类型中都有与之相对应的值，如果要将一个其他值转换为布尔值，可以使用<code>Boolean</code>函数来转型。</p>
+<pre><code class="language-javascript">let item = &quot;javascript&quot;;
+let booleanitem = Boolean(item); //true
+</code></pre>
+<h5 id="number">Number</h5>
+<p>在<code>JavaScript</code>中使用 <em>IEEE754</em>格式来表示整数和浮点数值。基本数字字面量有<em>十进制整数</em>、<em>八进制整数</em>和<em>十六进制整数</em>。在算数运算时所有八进制和十六进制都将转换为十进制数值。</p>
+<ul>
+<li>浮点数值</li>
+</ul>
+<blockquote>
+<p>数值中必须包含一个小数点，并且小数点后必须有一个数字。</p>
+</blockquote>
+<p>浮点数值的最高精度是17位小数，但是在算数运算中精度远远不如整数：</p>
+<pre><code class="language-javascript">0.1 + 0.2 === 0.3; //false,舍入误差；
+console.log(0.1 + 0.2); //0.30000000000000004
+</code></pre>
+<ul>
+<li>数值范围</li>
+</ul>
+<blockquote>
+<p><code>ECMAScript</code> 能保存的最小数值保存在<code>Number.MIN_VALUE</code>中,在大多数浏览器中为<code>5e-324</code>;能保存的最大值保存在<code>Number.MAX_VALUE</code>中，在大多数浏览器中为<code>1.7976931348623157e+308</code>。</p>
+</blockquote>
+<p>如果在某次计算中超出了这一值，那么会被转化成<code>Infinity</code>(正无穷)或者<code>-Infinity</code>(负无穷)，并且无法参与下一次的计算。</p>
+<ul>
+<li>NaN</li>
+</ul>
+<blockquote>
+<p>NaN 即 Not a Number。这个数值用来表示一个本来要返回数值的操作数未返回数值的情况。</p>
+</blockquote>
+<p>它有两个显著的特点。<br>
+任何涉及 NaN 的操作都会返回 NaN。</p>
+<pre><code class="language-javascript">console.log(NaN/100); //NaN
+</code></pre>
+
+      </div>
+      <div class="entry-block">
+        <div class="entry-tags">
+          
+            <a href="https://baoyuantop.github.io/tag/NY3dHko2N">
+              JavaScript
+            </a>
+          
+        </div>
+      </div>
+    </article>
+    
+      <section class="post-section prev-post">
+        <div class="inner">
+          <h3>前一篇</h3>
+          <a href="https://baoyuantop.github.io/post/javascript-yin-yong-lei-xing">
+            <strong>JavaScript 引用类型</strong>
+          </a>
+        </div>
+      </section>
+    
+    
+      <section class="post-section prev-post">
+        <div class="inner">
+          <h3>后一篇</h3>
+          <a href="https://baoyuantop.github.io/post/js-han-shu-zhi-duo-shao-xia">
+            <strong>JS 函数知多少（下）</strong>
+          </a>
+        </div>
+      </section>
+    
+
+    
+
+    <footer class="footer">
+  <div class="main">
+    <a href="https://baoyuantop.github.io">
+      <img class="avatar" src="https://baoyuantop.github.io/images/avatar.png?v=1577864478958" alt="Baoyuan">
+    </a>
+    <div class="footer__social">
+      
+        
+          <a href="https://github.com/Baoyuantop" target="_blank"><i class="remixicon-github-line"></i></a>
+        
+      
+        
+          <a href="https://twitter.com/Baoyuan12" target="_blank"><i class="remixicon-twitter-line"></i></a>
+        
+      
+        
+          <a href="https://weibo.com/p/1005056062549773/home?from=page_100505&amp;mod=TAB&amp;is_all=1#place" target="_blank"><i class="remixicon-weibo-line"></i></a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <p class="footer__sosumi">
+      Powered by Baoyuan
+    </p>
+    <a class="footer-rss" href="https://baoyuantop.github.io/atom.xml">RSS</a>
+  </div>
+</footer>
+
+<script src="https://baoyuantop.github.io/media/prism.js"></script>
+<script>
+  Prism.highlightAll()
+</script>
+
+  </body>
+</html>
