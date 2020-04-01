@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://baoyuantop.github.io</id>
     <title>小窗幽记</title>
-    <updated>2020-01-11T14:41:30.672Z</updated>
+    <updated>2020-04-01T07:18:41.964Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://baoyuantop.github.io"/>
     <link rel="self" href="https://baoyuantop.github.io/atom.xml"/>
@@ -10,6 +10,77 @@
     <logo>https://baoyuantop.github.io/images/avatar.png</logo>
     <icon>https://baoyuantop.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 小窗幽记</rights>
+    <entry>
+        <title type="html"><![CDATA[React Hooks]]></title>
+        <id>https://baoyuantop.github.io/post/react-hooks</id>
+        <link href="https://baoyuantop.github.io/post/react-hooks">
+        </link>
+        <updated>2020-03-30T13:30:15.000Z</updated>
+        <content type="html"><![CDATA[<p><code>React Hooks</code> 是一种特殊的函数，它可以让你拿到 <code>React</code> 中的很多特性：<code>state</code>、<code>生命周期</code> 等等。<br>
+在一些 <code>React</code> 的函数组件中，比如：</p>
+<pre><code class="language-javascript">function Example (props) {
+    return &lt;div /&gt;;
+}
+</code></pre>
+<p>我们可能更习惯叫它 “无状态组件”，因为它没有内部状态（state），也没有生命周期函数。一般如果我们要做一个轻量的组件，只用来渲染数据，不包含自身的 <code>state</code> ，那么我们可以选择函数式组件，它可以给我们带来更好的性能。</p>
+<p>一旦我们需要维护组件自身的 <code>state</code> 或是生命周期方法，函数式组件就不能很好的胜任了。我们会选择 <code>class</code> 组件。</p>
+<p>我们还是拿最简单的计数器🌰看下：</p>
+<p>我们先写一个 <code>class</code> 组件：</p>
+<pre><code class="language-javascript">class Number extends React.component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            count: 0,
+        }
+        this.handleClick = this.handleClick.bind(this)
+    }
+
+    handleClick (e) {
+        this.setState({
+            count: this.state.count + 1
+        })
+    }
+
+    render () {
+        return (
+            &lt;div&gt;
+                &lt;p&gt;{this.state.count}&lt;/p&gt;
+                &lt;button onClick={this.handleClick}&gt;
+                    Click me ~
+                &lt;/button&gt;
+            &lt;/div&gt;
+        )
+    }
+}
+</code></pre>
+<p>很简单，当我们点一下按钮数字就会加一。</p>
+<p>有了 React Hooks 的帮助，我们也可以在函数组件中实现这样的功能。React Hooks 中内置了一个 <code>useState</code> Hook，React 允许我们使用它在函数式组件中使用 <code>state</code>：</p>
+<pre><code class="language-javascript">import React, { useState } from 'react';
+
+function Number () {
+    const [count, setCount] = useState(0)
+
+    return (
+        &lt;div&gt;
+            &lt;p&gt;{count}&lt;/p&gt;
+            &lt;button onClick={() =&gt; setCount(count + 1)}&gt;
+                Click me ~
+            &lt;/button&gt;
+        &lt;/div&gt;
+    )
+}
+</code></pre>
+<p>我们用这样一个函数式组件完成了相同的功能。</p>
+<p>我们先从 <code>react</code> 中引入了 <code>useState</code> 这个 Hook，然后使用它初始化这个组件的 <code>state</code> ，<code>useState</code> 接受一个初始值参数，我们使用它初始化 <code>state</code>，然后使用结构赋值拿到 <code>count</code> 和 <code>setCount</code>，setCount 可以改变 count。当我们想要读取的时候，直接用 <code>count</code> 即可。</p>
+<p>如果我们还需要其他 state 的话，直接定义即可：</p>
+<pre><code class="language-javascript">    const [food, setFood] = useState('🍔')
+    const [drink, setDrink] = useState('🍺')
+    // ......
+</code></pre>
+<p>所以在之前如果我们编写函数式组件的时候需要使用 <code>state</code>，那么我们会将它转换为 <code>class</code> 组件，现在我们可以在现有的函数式组件中使用 <code>Hook</code> 完成。</p>
+<p>React 内置了很多种 Hook 提供不同的功能，我们可以按需选用。除此之外，React 还支持自定义 Hook 。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[前端入坑指南]]></title>
         <id>https://baoyuantop.github.io/post/qian-duan-ru-keng-zhi-nan</id>
