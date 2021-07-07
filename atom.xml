@@ -2,18 +2,18 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://baoyuantop.github.io</id>
     <title>小窗幽记</title>
-    <updated>2020-04-01T09:06:54.521Z</updated>
+    <updated>2021-07-07T14:11:34.497Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://baoyuantop.github.io"/>
     <link rel="self" href="https://baoyuantop.github.io/atom.xml"/>
     <subtitle>不近人情，举世皆畏途；不察物情，一生俱梦境。</subtitle>
     <logo>https://baoyuantop.github.io/images/avatar.png</logo>
     <icon>https://baoyuantop.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2020, 小窗幽记</rights>
+    <rights>All rights reserved 2021, 小窗幽记</rights>
     <entry>
         <title type="html"><![CDATA[React Hooks]]></title>
-        <id>https://baoyuantop.github.io/post/react-hooks</id>
-        <link href="https://baoyuantop.github.io/post/react-hooks">
+        <id>https://baoyuantop.github.io/post/react-hooks/</id>
+        <link href="https://baoyuantop.github.io/post/react-hooks/">
         </link>
         <updated>2020-03-30T13:30:15.000Z</updated>
         <content type="html"><![CDATA[<p><code>React Hooks</code> 是一种特殊的函数，它可以让你拿到 <code>React</code> 中的很多特性：<code>state</code>、<code>生命周期</code> 等等。<br>
@@ -83,8 +83,8 @@ function Number () {
     </entry>
     <entry>
         <title type="html"><![CDATA[前端入坑指南]]></title>
-        <id>https://baoyuantop.github.io/post/qian-duan-ru-keng-zhi-nan</id>
-        <link href="https://baoyuantop.github.io/post/qian-duan-ru-keng-zhi-nan">
+        <id>https://baoyuantop.github.io/post/qian-duan-ru-keng-zhi-nan/</id>
+        <link href="https://baoyuantop.github.io/post/qian-duan-ru-keng-zhi-nan/">
         </link>
         <updated>2020-01-01T07:39:00.000Z</updated>
         <summary type="html"><![CDATA[<p>一点建议</p>
@@ -150,8 +150,8 @@ function Number () {
     </entry>
     <entry>
         <title type="html"><![CDATA[浅谈 JavaScript 中的内存管理与垃圾回收]]></title>
-        <id>https://baoyuantop.github.io/post/qian-tan-javascript-zhong-de-nei-cun-guan-li-yu-la-ji-hui-shou</id>
-        <link href="https://baoyuantop.github.io/post/qian-tan-javascript-zhong-de-nei-cun-guan-li-yu-la-ji-hui-shou">
+        <id>https://baoyuantop.github.io/post/qian-tan-javascript-zhong-de-nei-cun-guan-li-yu-la-ji-hui-shou/</id>
+        <link href="https://baoyuantop.github.io/post/qian-tan-javascript-zhong-de-nei-cun-guan-li-yu-la-ji-hui-shou/">
         </link>
         <updated>2020-01-01T07:29:36.000Z</updated>
         <summary type="html"><![CDATA[<p>一点读书笔记</p>
@@ -202,8 +202,8 @@ obj2.attr2 = obj1;
     </entry>
     <entry>
         <title type="html"><![CDATA[JavaScript 引用类型]]></title>
-        <id>https://baoyuantop.github.io/post/javascript-yin-yong-lei-xing</id>
-        <link href="https://baoyuantop.github.io/post/javascript-yin-yong-lei-xing">
+        <id>https://baoyuantop.github.io/post/javascript-yin-yong-lei-xing/</id>
+        <link href="https://baoyuantop.github.io/post/javascript-yin-yong-lei-xing/">
         </link>
         <updated>2020-01-01T07:23:51.000Z</updated>
         <summary type="html"><![CDATA[<p>一点读书笔记</p>
@@ -286,8 +286,8 @@ people[item]; //Baoyuan
     </entry>
     <entry>
         <title type="html"><![CDATA[JavaScript 基础数据类型]]></title>
-        <id>https://baoyuantop.github.io/post/javascript-ji-chu-shu-ju-lei-xing</id>
-        <link href="https://baoyuantop.github.io/post/javascript-ji-chu-shu-ju-lei-xing">
+        <id>https://baoyuantop.github.io/post/javascript-ji-chu-shu-ju-lei-xing/</id>
+        <link href="https://baoyuantop.github.io/post/javascript-ji-chu-shu-ju-lei-xing/">
         </link>
         <updated>2020-01-01T07:20:04.000Z</updated>
         <summary type="html"><![CDATA[<p>一点读书笔记</p>
@@ -354,8 +354,8 @@ console.log(0.1 + 0.2); //0.30000000000000004
     </entry>
     <entry>
         <title type="html"><![CDATA[JS 函数知多少（下）]]></title>
-        <id>https://baoyuantop.github.io/post/js-han-shu-zhi-duo-shao-xia</id>
-        <link href="https://baoyuantop.github.io/post/js-han-shu-zhi-duo-shao-xia">
+        <id>https://baoyuantop.github.io/post/js-han-shu-zhi-duo-shao-xia/</id>
+        <link href="https://baoyuantop.github.io/post/js-han-shu-zhi-duo-shao-xia/">
         </link>
         <updated>2020-01-01T07:11:39.000Z</updated>
         <summary type="html"><![CDATA[<p>一点读书笔记</p>
@@ -452,8 +452,8 @@ console.log(b); // 1
     </entry>
     <entry>
         <title type="html"><![CDATA[JS 函数知多少]]></title>
-        <id>https://baoyuantop.github.io/post/js-han-shu-zhi-duo-shao</id>
-        <link href="https://baoyuantop.github.io/post/js-han-shu-zhi-duo-shao">
+        <id>https://baoyuantop.github.io/post/js-han-shu-zhi-duo-shao/</id>
+        <link href="https://baoyuantop.github.io/post/js-han-shu-zhi-duo-shao/">
         </link>
         <updated>2020-01-01T06:59:58.000Z</updated>
         <summary type="html"><![CDATA[<p>一点读书笔记</p>
@@ -491,8 +491,8 @@ console.log(b); // 1
     </entry>
     <entry>
         <title type="html"><![CDATA[ES6中的 Symbol]]></title>
-        <id>https://baoyuantop.github.io/post/es6-zhong-de-symbol</id>
-        <link href="https://baoyuantop.github.io/post/es6-zhong-de-symbol">
+        <id>https://baoyuantop.github.io/post/es6-zhong-de-symbol/</id>
+        <link href="https://baoyuantop.github.io/post/es6-zhong-de-symbol/">
         </link>
         <updated>2020-01-01T06:47:02.000Z</updated>
         <summary type="html"><![CDATA[<p>一点读书笔记</p>
@@ -603,8 +603,8 @@ a === b; // true
     </entry>
     <entry>
         <title type="html"><![CDATA[Vue 数据响应式原理]]></title>
-        <id>https://baoyuantop.github.io/post/vue-shu-ju-xiang-ying-shi-yuan-li</id>
-        <link href="https://baoyuantop.github.io/post/vue-shu-ju-xiang-ying-shi-yuan-li">
+        <id>https://baoyuantop.github.io/post/vue-shu-ju-xiang-ying-shi-yuan-li/</id>
+        <link href="https://baoyuantop.github.io/post/vue-shu-ju-xiang-ying-shi-yuan-li/">
         </link>
         <updated>2020-01-01T02:10:33.000Z</updated>
         <summary type="html"><![CDATA[<p>Vue 的数据响应式原理是怎么实现的</p>
@@ -837,8 +837,8 @@ a === b; // true
     </entry>
     <entry>
         <title type="html"><![CDATA[Vue 的数据流]]></title>
-        <id>https://baoyuantop.github.io/post/vuedeshujuliu</id>
-        <link href="https://baoyuantop.github.io/post/vuedeshujuliu">
+        <id>https://baoyuantop.github.io/post/vuedeshujuliu/</id>
+        <link href="https://baoyuantop.github.io/post/vuedeshujuliu/">
         </link>
         <updated>2020-01-01T01:05:40.000Z</updated>
         <summary type="html"><![CDATA[<p>Vue 中的数据流</p>
