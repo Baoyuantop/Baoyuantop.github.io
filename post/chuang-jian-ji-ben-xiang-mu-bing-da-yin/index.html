@@ -1,0 +1,248 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>创建基本项目并打印 | Baoyuan&#39;s Blog</title>
+<meta name="description" content="" />
+<link rel="shortcut icon" href="https://baoyuantop.github.io/favicon.ico?v=1625992593856">
+<link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css"> -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+<link rel="stylesheet" href="https://baoyuantop.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="创建基本项目并打印 | Baoyuan&#39;s Blog - Atom Feed" href="https://baoyuantop.github.io/atom.xml">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-155405926-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-155405926-1');
+</script>
+
+
+  </head>
+  <body>
+    <div class="site-nav has-cover">
+      <div class="head">
+  <div class="inner">
+    <a class="site-name" href="https://baoyuantop.github.io">
+        <span>Baoyuan&#39;s Blog</span>
+    </a>
+    <label class="burger" for="burger"></label>
+    <input id="burger" type="checkbox">
+    <button class="burger">
+      <div>
+        <span></span>
+        <span></span>
+      </div>
+    </button>
+    <nav class="info_nav">
+      
+        
+          <a href="https://baoyuantop.github.io">首页</a>
+        
+      
+        
+          <a href="/archives">归档</a>
+        
+      
+        
+          <a href="/tags">标签</a>
+        
+      
+        
+          <a href="/post/about">关于</a>
+        
+      
+    </nav>
+  </div>
+</div>
+    </div>
+    <article role="main" class="hentry has-cover">
+      
+        <div class="entry-cover js-cover" data-src="https://images.unsplash.com/photo-1625754955442-66fa46221fc1?ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDMyfExldXlZNVZ0bzB3fHxlbnwwfHx8fA%3D%3D&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=900&amp;q=60" data-width="900" data-height="423" style="background-image:url(https://images.unsplash.com/photo-1625754955442-66fa46221fc1?ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDMyfExldXlZNVZ0bzB3fHxlbnwwfHx8fA%3D%3D&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=900&amp;q=60); height: 80vw;">
+          <h1 class="post-title">创建基本项目并打印</h1>
+        </div>
+      
+      <h1 class="entry-title" itemprop="headline">创建基本项目并打印</h1>
+      <div class="entry-meta">
+        <time class="updated" datetime="2021-07-11 15:32:26">2021-07-11</time>
+        <span class="author vcard">
+          3 min read
+        </span>
+      </div>
+      <div class="post-content yue">
+        <h2 id="基本项目结构">基本项目结构</h2>
+<p>在安装 Rust 后，使用 Cargo （Rust 的包管理器）创建一个新的项目：</p>
+<pre><code class="language-bash">cargo new &lt;PROJECT_NAME&gt;
+</code></pre>
+<p>这会在你的当前目录中创建一个新的文件夹，或者你手动创建一个文件夹然后在文件夹内部执行：</p>
+<pre><code class="language-bash">cargo init
+</code></pre>
+<p>项目的入口是 <code>src/main.rs</code> 文件，入口点是 <code>main</code> 函数。</p>
+<p>Rust 已经为你准备好了 <code>Hello World</code> 了：</p>
+<pre><code class="language-rust">fn main() {
+    println!(&quot;Hello, world!&quot;);
+}
+</code></pre>
+<p>在项目中执行 <code>cargo run</code> 就可以看到了。</p>
+<h2 id="使用-println-打印">使用 println! 打印</h2>
+<p>在 Rust 中使用 <code>（macro）宏</code> 来打印到控制台，Rust 中的宏都有一个标识符，即在关键字后加一个 <code>!</code>。所以打印的宏为 <code>println!</code> ，它非常灵活：</p>
+<p>字符串插值：</p>
+<pre><code class="language-rust">println!(&quot;Adding {} and {} gives {}&quot;, 22, 33, 22 + 33); // Adding 22 and 33 gives 55
+</code></pre>
+<p>位置参数：</p>
+<pre><code class="language-rust">println!(
+        &quot;Ypur name is {0}. Welcome to {1}. Nice to meet you {0}&quot;,
+        &quot;Goto&quot;, &quot;Rust&quot;
+   ); // Ypur name is Goto. Welcome to Rust. Nice to meet you Goto
+</code></pre>
+<p>命名参数：</p>
+<pre><code class="language-rust">println!(
+        &quot;{language} is very popular. It was created in {year}&quot;,
+        language = &quot;Rust&quot;,
+        year = 2010
+   ); // Rust is very popular. It was created in 2010
+</code></pre>
+<p>占位符 traits，使用位置参数避免重复</p>
+<pre><code class="language-rust">println!(&quot;{0}, in binary: {0:b}, in hexadecimal: {0:x}&quot;, 11); // Decimal: 11      Binary: 1011    Hexadecimal: b
+</code></pre>
+<p>直接打印数组：</p>
+<pre><code class="language-rust">println!(&quot;{:?}&quot;, [11, 22, 33]); // [11, 22, 33]
+</code></pre>
+<p>在 Rust 中必须在行尾使用 <code>;</code> ，除非他是函数的最后一行（后面会详细解释）。</p>
+<h2 id="高级格式打印">高级格式打印</h2>
+<p>首先我们声明几个变量:</p>
+<pre><code class="language-rust">let x = 246.92385;
+let y = 24.69;
+let z = x / y;
+</code></pre>
+<p>打印具有三位精度的宏:</p>
+<pre><code class="language-rust">println!(&quot;z is {:.3}&quot;, z); // z is 10.001
+</code></pre>
+<p>控制字符长度为 9 ，并设置预填充:</p>
+<pre><code class="language-rust">println!(&quot;z is {:9.3}&quot;, z); // z is    10.001
+</code></pre>
+<p>使用 0 填充：</p>
+<pre><code class="language-rust">println!(&quot;z is {:09.3}&quot;, z); // z is 00010.001
+println!(&quot;z is {:09.3}\nx is {}&quot;, z, x); // z is 00010.001
+// x is 246.92385
+</code></pre>
+<p>不换行：</p>
+<pre><code class="language-rust">print!(&quot;y is {:09.3}\n x is {}\n&quot;, y, x);
+// y is 00024.690
+//  x is 246.92385
+</code></pre>
+<p>位置参数：</p>
+<pre><code class="language-rust">println!(&quot;z is {0:05.1} and x is {1:.2}. \nx is also {1}&quot;, z, x);
+// z is 010.0 and x is 246.92. 
+// x is also 246.92385
+</code></pre>
+<blockquote>
+<p>这里并没有 Rust 的安装教程，但是它很容易找到并搞定。</p>
+</blockquote>
+
+      </div>
+      <div class="entry-block">
+        <div class="entry-tags">
+          
+            <a href="https://baoyuantop.github.io/tag/15IGZUW99/">
+              Rust
+            </a>
+          
+        </div>
+      </div>
+    </article>
+    
+    
+      <section class="post-section prev-post">
+        <div class="inner">
+          <h3>后一篇</h3>
+          <a href="https://baoyuantop.github.io/post/rust-ji-chu-ru-men/">
+            <strong>Rust 基础入门</strong>
+          </a>
+        </div>
+      </section>
+    
+
+    
+      
+        <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: 'fbb50faa206162db5797',
+    clientSecret: '03cc41bb09f885d1b61dfe631e9f9497a29c38cc',
+    repo: 'baoyuantop.github.io',
+    owner: 'baoyuantop',
+    admin: ['baoyuantop'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+      
+
+      
+    
+
+    <footer class="footer">
+  <div class="main">
+    <a href="https://baoyuantop.github.io">
+      <img class="avatar" src="https://baoyuantop.github.io/images/avatar.png?v=1625992593856" alt="Baoyuan&#39;s Blog">
+    </a>
+    <div class="footer__social">
+      
+        
+          <a href="https://github.com/Baoyuantop" target="_blank"><i class="remixicon-github-line"></i></a>
+        
+      
+        
+          <a href="https://twitter.com/Baoyuan12" target="_blank"><i class="remixicon-twitter-line"></i></a>
+        
+      
+        
+          <a href="https://weibo.com/p/1005056062549773/home?from=page_100505&amp;mod=TAB&amp;is_all=1#place" target="_blank"><i class="remixicon-weibo-line"></i></a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <p class="footer__sosumi">
+      Powered by Baoyuan
+    </p>
+    <a class="footer-rss" href="https://baoyuantop.github.io/atom.xml">RSS</a>
+  </div>
+</footer>
+
+<script src="https://baoyuantop.github.io/media/prism.js"></script>
+<script>
+  Prism.highlightAll()
+</script>
+
+  </body>
+</html>

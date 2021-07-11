@@ -2,13 +2,90 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://baoyuantop.github.io</id>
     <title>Baoyuan&apos;s Blog</title>
-    <updated>2021-07-11T07:30:07.178Z</updated>
+    <updated>2021-07-11T08:36:38.693Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://baoyuantop.github.io"/>
     <link rel="self" href="https://baoyuantop.github.io/atom.xml"/>
     <logo>https://baoyuantop.github.io/images/avatar.png</logo>
     <icon>https://baoyuantop.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Baoyuan&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[创建基本项目并打印]]></title>
+        <id>https://baoyuantop.github.io/post/chuang-jian-ji-ben-xiang-mu-bing-da-yin/</id>
+        <link href="https://baoyuantop.github.io/post/chuang-jian-ji-ben-xiang-mu-bing-da-yin/">
+        </link>
+        <updated>2021-07-11T07:32:26.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="基本项目结构">基本项目结构</h2>
+<p>在安装 Rust 后，使用 Cargo （Rust 的包管理器）创建一个新的项目：</p>
+<pre><code class="language-bash">cargo new &lt;PROJECT_NAME&gt;
+</code></pre>
+<p>这会在你的当前目录中创建一个新的文件夹，或者你手动创建一个文件夹然后在文件夹内部执行：</p>
+<pre><code class="language-bash">cargo init
+</code></pre>
+<p>项目的入口是 <code>src/main.rs</code> 文件，入口点是 <code>main</code> 函数。</p>
+<p>Rust 已经为你准备好了 <code>Hello World</code> 了：</p>
+<pre><code class="language-rust">fn main() {
+    println!(&quot;Hello, world!&quot;);
+}
+</code></pre>
+<p>在项目中执行 <code>cargo run</code> 就可以看到了。</p>
+<h2 id="使用-println-打印">使用 println! 打印</h2>
+<p>在 Rust 中使用 <code>（macro）宏</code> 来打印到控制台，Rust 中的宏都有一个标识符，即在关键字后加一个 <code>!</code>。所以打印的宏为 <code>println!</code> ，它非常灵活：</p>
+<p>字符串插值：</p>
+<pre><code class="language-rust">println!(&quot;Adding {} and {} gives {}&quot;, 22, 33, 22 + 33); // Adding 22 and 33 gives 55
+</code></pre>
+<p>位置参数：</p>
+<pre><code class="language-rust">println!(
+        &quot;Ypur name is {0}. Welcome to {1}. Nice to meet you {0}&quot;,
+        &quot;Goto&quot;, &quot;Rust&quot;
+   ); // Ypur name is Goto. Welcome to Rust. Nice to meet you Goto
+</code></pre>
+<p>命名参数：</p>
+<pre><code class="language-rust">println!(
+        &quot;{language} is very popular. It was created in {year}&quot;,
+        language = &quot;Rust&quot;,
+        year = 2010
+   ); // Rust is very popular. It was created in 2010
+</code></pre>
+<p>占位符 traits，使用位置参数避免重复</p>
+<pre><code class="language-rust">println!(&quot;{0}, in binary: {0:b}, in hexadecimal: {0:x}&quot;, 11); // Decimal: 11      Binary: 1011    Hexadecimal: b
+</code></pre>
+<p>直接打印数组：</p>
+<pre><code class="language-rust">println!(&quot;{:?}&quot;, [11, 22, 33]); // [11, 22, 33]
+</code></pre>
+<p>在 Rust 中必须在行尾使用 <code>;</code> ，除非他是函数的最后一行（后面会详细解释）。</p>
+<h2 id="高级格式打印">高级格式打印</h2>
+<p>首先我们声明几个变量:</p>
+<pre><code class="language-rust">let x = 246.92385;
+let y = 24.69;
+let z = x / y;
+</code></pre>
+<p>打印具有三位精度的宏:</p>
+<pre><code class="language-rust">println!(&quot;z is {:.3}&quot;, z); // z is 10.001
+</code></pre>
+<p>控制字符长度为 9 ，并设置预填充:</p>
+<pre><code class="language-rust">println!(&quot;z is {:9.3}&quot;, z); // z is    10.001
+</code></pre>
+<p>使用 0 填充：</p>
+<pre><code class="language-rust">println!(&quot;z is {:09.3}&quot;, z); // z is 00010.001
+println!(&quot;z is {:09.3}\nx is {}&quot;, z, x); // z is 00010.001
+// x is 246.92385
+</code></pre>
+<p>不换行：</p>
+<pre><code class="language-rust">print!(&quot;y is {:09.3}\n x is {}\n&quot;, y, x);
+// y is 00024.690
+//  x is 246.92385
+</code></pre>
+<p>位置参数：</p>
+<pre><code class="language-rust">println!(&quot;z is {0:05.1} and x is {1:.2}. \nx is also {1}&quot;, z, x);
+// z is 010.0 and x is 246.92. 
+// x is also 246.92385
+</code></pre>
+<blockquote>
+<p>这里并没有 Rust 的安装教程，但是它很容易找到并搞定。</p>
+</blockquote>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Rust 基础入门]]></title>
         <id>https://baoyuantop.github.io/post/rust-ji-chu-ru-men/</id>
@@ -618,240 +695,6 @@ a === b; // true
 <p>新返回一个唯一的<code>Symbol</code>值，它的<code>[[Description]]</code>属性值为<code>descString</code>。</p>
 </li>
 </ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Vue 数据响应式原理]]></title>
-        <id>https://baoyuantop.github.io/post/vue-shu-ju-xiang-ying-shi-yuan-li/</id>
-        <link href="https://baoyuantop.github.io/post/vue-shu-ju-xiang-ying-shi-yuan-li/">
-        </link>
-        <updated>2020-01-01T02:10:33.000Z</updated>
-        <summary type="html"><![CDATA[<p>Vue 的数据响应式原理是怎么实现的</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>Vue 的数据响应式原理是怎么实现的</p>
-<!-- more -->
-<h3 id="vue-数据响应式原理">Vue 数据响应式原理</h3>
-<h3 id="什么是数据响应式">什么是数据响应式</h3>
-<blockquote>
-<p>数据响应式即数据双向绑定，将<code>Model</code>绑定到<code>view</code>, 当我们用 Javascript代码更新<code>Model</code>时，<code>View</code>就会自动更新；如果用户更新了<code>View</code>, <code>Model</code>也会自动更新。</p>
-</blockquote>
-<h3 id="数据响应式原理">数据响应式原理</h3>
-<ul>
-<li>在Vue中主要是利用了 <code>Object.defineProperty()</code> 这个方法重新定义了对象获取属性值(get)和设置属性值(set)的操作来实现的。</li>
-<li>在Vue 3.0 中采用 ES6 中的 <code>Proxy</code> 对象来实现。</li>
-</ul>
-<h4 id="数据响应式实现">数据响应式实现</h4>
-<ul>
-<li>以下采用 Object.defineProperty() 来实现。</li>
-</ul>
-<ol>
-<li>根据订阅发布者模式实现一个整体架构，包括 <code>MVVM</code> 类，<code>Vue</code>类， <code>Watcher</code>类。</li>
-</ol>
-<pre><code class="language-Javascript">    //发布者
-    class Vue {
-        constructor (options) {
-            this.options = options;
-            this.$data = options.data; //获取数据
-            this.$el = document.querySelector(options.el); //获取挂载对象
-        }
-        //劫持监听所有属性
-        Observer () {
-
-        }
-        //解析指令
-        Compile () {
-
-        }
-    }
-</code></pre>
-<ol start="2">
-<li>实现 <code>MVVM</code> 中的由 M 到 V，将模型中的数据绑定到视图。</li>
-</ol>
-<pre><code class="language-Javascript">    //发布者
-    class Vue {
-        constructor (options) {
-            this.options = options;
-            this.$data = options.data; //获取数据
-            this.$el = document.querySelector(options.el); //获取挂载对象
-            this._directive = {}; //创建容器存放订阅者
-            this.Observer(this.$data);
-            this.Compile(this.$el);
-        }
-        //劫持监听所有属性
-        Observer (data) {
-            for (let key in data) {
-                this._directive[key] = [];
-            }
-        }
-        //解析指令
-        Compile (el) {
-            let Vnodes = el.children;
-            for (Vnode of Vnodes) {
-                //递归查找子元素
-                if (Vnode.children.length) {
-                    this.Compile(Vnode);
-                }
-                //判断是否含有对应的属性，做出相应的处理
-                if (Vnode.hasAttribute('v-text')) {
-                    let attrVal = node.getAttribute('v-text');
-                    //向订阅者容器中添加对应的订阅者
-                    this._directive[attrVal].push(new Watcher(node, this, attrVal, 'innerHTML'));
-                }
-                if (Vnode.hasAttribute('v-model')) {
-                    let attrVal = node.getAttribute('v-model');
-                    this._directive[attrVal].push(new Watcher(node, this, attrVal, 'value'));
-                }
-            }
-        }
-        //订阅者,更新视图
-        class Watcher {
-            constructor (el, vm, exp, attr) {
-                this.el = el;
-                this.vm = vm;
-                this.exp = exp;
-                this.attr = attr;
-                this.update(); //初始化视图
-            }
-            update () {
-                this.el[this.attr] = this.vm.$data[this.exp];
-            }
-        }
-    }
-</code></pre>
-<ol start="3">
-<li>最后实现 V 到 M，当视图变化的时候，触发更新模型中的数据。</li>
-</ol>
-<pre><code class="language-Javascript">    //发布者
-    class Vue {
-        constructor (options) {
-            this.options = options;
-            this.$data = options.data; //获取数据
-            this.$el = document.querySelector(options.el); //获取挂载对象
-            this._directive = {}; //创建容器存放订阅者
-            this.Observer(this.$data);
-            this.Compile(this.$el);
-        }
-        //劫持监听所有属性
-        Observer (data) {
-            for (let key in data) {
-                this._directive[key] = [];
-            }
-        }
-        //解析指令
-        Compile (el) {
-            let Vnodes = el.children;
-            for (Vnode of Vnodes) {
-                //递归查找子元素
-                if (Vnode.children.length) {
-                    this.Compile(Vnode);
-                }
-                //判断是否含有对应的属性，做出相应的处理
-                if (Vnode.hasAttribute('v-text')) {
-                    let attrVal = node.getAttribute('v-text');
-                    //向订阅者容器中添加对应的订阅者
-                    this._directive[attrVal].push(new Watcher(node, this, attrVal, 'innerHTML'));
-                }
-                if (Vnode.hasAttribute('v-model')) {
-                    let attrVal = node.getAttribute('v-model');
-                    this._directive[attrVal].push(new Watcher(node, this, attrVal, 'value'));
-                    node.addEventListener('input', (function () {
-                        return function () {
-                            this.$data[attrVal] = node.value;   //这里更新了 ~
-                        }
-                    })().bind(this)); //bind不会立即执行
-                }
-            }
-        }
-        //订阅者,更新视图
-        class Watcher {
-            constructor (el, vm, exp, attr) {
-                this.el = el;
-                this.vm = vm;
-                this.exp = exp;
-                this.attr = attr;
-                this.update(); //初始化视图
-            }
-            update () {
-                this.el[this.attr] = this.vm.$data[this.exp];
-            }
-        }
-    }
-</code></pre>
-<ol start="4">
-<li>同时更新相应视图。</li>
-</ol>
-<pre><code class="language-Javascript">    //发布者
-    class Vue {
-        constructor (options) {
-            this.options = options;
-            this.$data = options.data; //获取数据
-            this.$el = document.querySelector(options.el); //获取挂载对象
-            this._directive = {}; //创建容器存放订阅者
-            this.Observer(this.$data);
-            this.Compile(this.$el);
-        }
-        //劫持监听所有属性
-        Observer (data) {
-            for (let key in data) {
-                this._directive[key] = [];
-                let val = data[key];
-                let watch = this._directive[key];
-                //这里是核心 ！！！
-                Object.defineProperty(this.$data, key, {
-                    get: function () {
-                        return val;
-                    },
-                    set: function (newVal) {
-                        if (newVal !== val) {
-                            val = newVal;
-                            watch.forEach(ele =&gt; {  //ele为订阅者实例对象
-                                ele.update();
-                            })
-                        }
-                    }
-                })
-            }
-        }
-        //解析指令
-        Compile (el) {
-            let Vnodes = el.children;
-            for (Vnode of Vnodes) {
-                //递归查找子元素
-                if (Vnode.children.length) {
-                    this.Compile(Vnode);
-                }
-                //判断是否含有对应的属性，做出相应的处理
-                if (Vnode.hasAttribute('v-text')) {
-                    let attrVal = node.getAttribute('v-text');
-                    //向订阅者容器中添加对应的订阅者
-                    this._directive[attrVal].push(new Watcher(node, this, attrVal, 'innerHTML'));
-                }
-                if (Vnode.hasAttribute('v-model')) {
-                    let attrVal = node.getAttribute('v-model');
-                    this._directive[attrVal].push(new Watcher(node, this, attrVal, 'value'));
-                    node.addEventListener('input', (function () {
-                        return function () {
-                            this.$data[attrVal] = node.value;
-                        }
-                    })().bind(this)); //bind不会立即执行
-                }
-            }
-        }
-        //订阅者,更新视图
-        class Watcher {
-            constructor (el, vm, exp, attr) {
-                this.el = el;
-                this.vm = vm;
-                this.exp = exp;
-                this.attr = attr;
-                this.update(); //初始化视图
-            }
-            update () {
-                this.el[this.attr] = this.vm.$data[this.exp];
-            }
-        }
-    }
-</code></pre>
 ]]></content>
     </entry>
 </feed>
