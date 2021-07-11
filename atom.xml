@@ -2,13 +2,33 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://baoyuantop.github.io</id>
     <title>Baoyuan&apos;s Blog</title>
-    <updated>2021-07-08T02:26:18.106Z</updated>
+    <updated>2021-07-11T07:17:23.850Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://baoyuantop.github.io"/>
     <link rel="self" href="https://baoyuantop.github.io/atom.xml"/>
     <logo>https://baoyuantop.github.io/images/avatar.png</logo>
     <icon>https://baoyuantop.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Baoyuan&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[Rust 基础入门]]></title>
+        <id>https://baoyuantop.github.io/post/rust-ji-chu-ru-men/</id>
+        <link href="https://baoyuantop.github.io/post/rust-ji-chu-ru-men/">
+        </link>
+        <updated>2021-07-11T06:24:48.000Z</updated>
+        <content type="html"><![CDATA[<p>这是一个系列，提供给 JavaScript 开发者的 Rust 翻译教程。原文在：https://itnext.io/deep-dive-into-rust-for-node-js-developers-5faace6dc71f。</p>
+<p>随着 WebAssembly 的出现，现在是在现有 JavaScript/Node.js 基础上学习 Rust 的最佳时机，你可以使用他们在浏览器、服务端或是其他场景进行高性能计算。</p>
+<p>将 Rust 添加到 Node.js 的技术栈中实属天作之合，因为 Rust 为 WebAssembly 提供了高级和完善的支持，而且 WebAssembly 二进制文件可以在 Node.js 上运行。</p>
+<p>通过一些基础内容以及深入的学习，您将足够熟悉 Rust 并可以构建一些更为复杂的工程。</p>
+<p>请注意：</p>
+<p>作为一个 JavaScript 开发者，你会看到类似 <code>std::wx::yz</code> 或是 <code>&amp;xyz</code> 这样不熟悉的符号，不用担心后面都会解释。</p>
+<p>与 JavaScript 相比，Rust 是一种偏底层语言，你会处理一些你从未在 JavaScript 中处理过或是关注过的一些事情。</p>
+<p>请记住 Rust 是一种非常贴近硬件的系统编程语言，这意味着语言中提供的抽象概念更贴近硬件。这为高性能编程提供了强大的能力，也意味着比 JavaScript 更加复杂。</p>
+<p>Rust 不会隐藏一些底层的问题，比如值是在堆还是栈上存储，并基于此允许或不允许。但是和 Node.js 一样，有许多包或者库可以让你干起活来更简单。</p>
+<p>许多其他的教程都有一个问题在于，他们都是由精通 C 、C++ 或者 Linux 的人编写的，他们假设你已经知道计算机内部是如何工作的了，比如内存分配等。而对于许多 Web 开发者来说并不是这样。</p>
+<p>这篇教程会始终保持简单，并站在 JavaScript 开发者的角度描述问题。</p>
+<p>Rust 的学习曲线非常陡峭而且会耗费你很多时间，但这完全值得。总的来说，学习 Rust 可以让你成为更好的 JavaScript 开发者 !</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[React Hooks]]></title>
         <id>https://baoyuantop.github.io/post/react-hooks/</id>
@@ -832,47 +852,6 @@ a === b; // true
         }
     }
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Vue 的数据流]]></title>
-        <id>https://baoyuantop.github.io/post/vuedeshujuliu/</id>
-        <link href="https://baoyuantop.github.io/post/vuedeshujuliu/">
-        </link>
-        <updated>2020-01-01T01:05:40.000Z</updated>
-        <summary type="html"><![CDATA[<p>Vue 中的数据流</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>Vue 中的数据流</p>
-<!-- more -->
-<h3 id="双向绑定">双向绑定</h3>
-<p>model(数据) 和 view(视图) 之间的绑定， 任一方的更新都会触发另一方的更新。</p>
-<h3 id="单向数据流">单向数据流</h3>
-<p>model的更新会触发视图更新， 视图的更新堆model没什么影响。</p>
-<h3 id="vue-的应用">Vue 的应用</h3>
-<ul>
-<li>Vue是单向数据流，不是双向绑定。</li>
-<li>Vue的双向绑定不过是语法糖。</li>
-<li>Object.defineProperty 是Vue底层用来做数据响应式更新的，不是双向绑定。</li>
-</ul>
-<h3 id="数据驱动">数据驱动</h3>
-<ul>
-<li>Vue 是数据驱动的视图框架，DOM跟数据是相互映射的，只有数据改变的时候视图才会做出相应的更新。</li>
-<li>数据可以来自与自身的 data 属性、父元素的 prop、或者状态管理 Vuex。</li>
-<li>数据改变触发视图更新有一些条件：</li>
-</ul>
-<blockquote>
-<ol>
-<li>数据必须写进 data{},这样的话会有响应式。</li>
-<li>仅把对象名称写进 data{} 是没有效果的，要写上属性。</li>
-<li>data{} 中的数据要写进视图中，否则不会响应式。</li>
-</ol>
-</blockquote>
-<p>基于这些特征我们要学会操作数据，不能直接操作 DOM。</p>
-<h3 id="vue响应式更新原理">Vue响应式更新原理</h3>
-<ul>
-<li>实例化的时候会对 data{} 下的数据进行处理，添加 getter 与 setter 的代理，以后读取写入数据都要经过代理层。使用到 Object.defineProperty.</li>
-<li>组件在渲染的时候将 data{} 中用到的数据放进 Watcher。</li>
-</ul>
 ]]></content>
     </entry>
 </feed>
