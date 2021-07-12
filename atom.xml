@@ -2,13 +2,77 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://baoyuantop.github.io</id>
     <title>Baoyuan&apos;s Blog</title>
-    <updated>2021-07-12T02:57:26.688Z</updated>
+    <updated>2021-07-12T09:41:45.958Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://baoyuantop.github.io"/>
     <link rel="self" href="https://baoyuantop.github.io/atom.xml"/>
     <logo>https://baoyuantop.github.io/images/avatar.png</logo>
     <icon>https://baoyuantop.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Baoyuan&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[算数运算与比较运算]]></title>
+        <id>https://baoyuantop.github.io/post/suan-shu-yun-suan-yu-bi-jiao-yun-suan/</id>
+        <link href="https://baoyuantop.github.io/post/suan-shu-yun-suan-yu-bi-jiao-yun-suan/">
+        </link>
+        <updated>2021-07-12T02:59:50.000Z</updated>
+        <content type="html"><![CDATA[<p>在 Rust 中只能对相同类型的操作数做算数运算。</p>
+<p>基本运算:</p>
+<pre><code class="language-rust">let a = 11;
+let b = 33;
+let c = a + b;
+println!(&quot;c is {}&quot;, c); // c is 44
+let d = c - b;
+println!(&quot;d is {}&quot;, d); // d is 11
+let e = a * d;
+println!(&quot;e is {}&quot;, e); // e is 121
+</code></pre>
+<p>使用 <code>as</code> 进行类型转换，需要注意精度损失和兼容性问题。</p>
+<pre><code class="language-rust">let f = c as f32 / 4.5;
+println!(&quot;f is {}&quot;, f); // f is 9.777778
+</code></pre>
+<p>优先级控制</p>
+<pre><code class="language-rust">let g = 43.5432 % (a as f64 * e as f64);
+println!(&quot;g is {}&quot;, g); // g is 43.5432
+</code></pre>
+<p>同样的做比较运算只能对相同类型的进行比较</p>
+<pre><code class="language-rust">let a = 11;
+let b = 88;
+</code></pre>
+<pre><code class="language-rust">println!(&quot;a EQUAL TO b is {}&quot;, a == b); // a EQUAL TO b is false
+
+println!(&quot;a NOT EQUAL TO b is {}&quot;, a != b); // a NOT EQUAL TO b is true
+
+println!(&quot;a GREATER THAN b is {}&quot;, a &gt; b); // a GREATER THAN b is false
+
+println!(&quot;a GREATER THAN OR EQUAL TO b is {}&quot;, a &gt;= b); // a GREATER THAN OR EQUAL TO b is false
+
+println!(&quot;a LESS THAN b is {}&quot;, a &lt; b); // a LESS THAN b is true
+
+println!(&quot;a LESS THAN OR EQUAL TO b is {}&quot;, a &lt;= b); // a LESS THAN OR EQUAL TO b is true
+</code></pre>
+<pre><code class="language-rust">let c = true;
+let d = false;
+
+println!(&quot;c GREATER THAN d is {}&quot;, c &gt; d); // c GREATER THAN d is true
+println!(&quot;c GREATER THAN OR EQUAL TO d is {}&quot;, c &gt;= d); // c GREATER THAN OR EQUAL TO d is true
+</code></pre>
+<p><strong>示例：计算平均值</strong></p>
+<pre><code class="language-rust">fn main() {
+    let a = 33;
+    let b = 4.9;
+    let c: f32 = 123.5;
+    let average = (a as f32 + b as f32 + c) / 3.0;
+    println!(&quot;average is {}&quot;, average);
+    assert_eq!(average, 53.8);
+    println!(&quot;test passed.&quot;);
+}
+</code></pre>
+<p>输出：</p>
+<pre><code class="language-rust">average is 53.8
+test passed.
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[基本类型]]></title>
         <id>https://baoyuantop.github.io/post/ji-ben-lei-xing/</id>
@@ -671,45 +735,6 @@ var b = obj.getA.bind(obj);
 console.log(b); // 1
 </code></pre>
 <p>当然这对箭头函数是无效的。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[JS 函数知多少]]></title>
-        <id>https://baoyuantop.github.io/post/js-han-shu-zhi-duo-shao/</id>
-        <link href="https://baoyuantop.github.io/post/js-han-shu-zhi-duo-shao/">
-        </link>
-        <updated>2020-01-01T06:59:58.000Z</updated>
-        <summary type="html"><![CDATA[<p>一点读书笔记</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>一点读书笔记</p>
-<!-- more -->
-<h3 id="js函数知多少上">JS函数知多少(上)</h3>
-<p>说起来<code>JavaScript</code>中最有意思的东西，莫过于函数了。</p>
-<p>函数在任何一种编程语言中应该都存在，可以将经常使用的代码封装起来，在需要的地方多次调用。在<code>JavaScript</code>中也是这个意思，不过它还有他自己独特的地方。</p>
-<p><code>Function</code>作为一种引用类型，每个函数都是<code>Function</code>类型的实例，定义：</p>
-<pre><code class="language-javascript">function functionName (argnments) {
-    // something...
-};
-</code></pre>
-<p>你也可以使用函数表达式：</p>
-<pre><code class="language-javascript">let fun = function (argument) {
-    // something...
-};
-</code></pre>
-<p>使用这种方式的时候不用写函数名，使用<code>fun</code>即可引用。这两种方式几乎相差无几。</p>
-<p>它具有引用类型的属性与方法。所以本质上函数是对象。你可能没见过这样的操作：</p>
-<pre><code class="language-javascript">let addNum = new Function('num1', 'num2', 'return num1+num2');
-</code></pre>
-<p>上面这个实际上是定义了一个函数，接受两个参数，返回两个数字的和。很形象的表现了对象的本质，但是实际使用的时候不推荐这样写。</p>
-<p>因为是以对象为形式在内存中存储的，所以函数的名字本质上只是一个指向函数的指针，这样的话一个函数也可以有多个名字了，只是多个指针引用了同一个对象。我们也可以通过给某个名字赋值<code>null</code>来解除这种引用。这种特性引出了<code>JS</code>函数的一个特点：<code>没有重载</code>。因为当你创建第二个相同名字的函数的时候就把第一个引用给覆盖掉了。</p>
-<p>函数是可以作为值来引用的，你可以给函数传递参数的时候传递一个函数，你也可以在返回值的时候返回一个函数，这在某些场景下是十分有用的。</p>
-<p>在函数中有两个属性需要注意下：</p>
-<h4 id="arguments">arguments</h4>
-<p>它是一个跟数组差不多的对象，保存着传进函数的所有参数，我们可以很方便的查看，进行一些操作。比如根据传入参数的情况判断对应的操作。</p>
-<h4 id="this">this</h4>
-<p>当初设计<code>js</code>的时候被迫进行模仿<code>Java</code>，所以这个特性跟<code>Java</code>中的类似。<code>this</code>引用的是函数执行的环境对象。这个要看具体的情况具体分析。比如当在网页的全局环境下调用函数的话，<code>this</code>对象引用的就是<code>window</code>。它可以在代码的执行过程中引用不同的对象。</p>
-<p>不过还需要注意一个特殊的类别：箭头函数。箭头函数是没有<code>this</code>的，它的这个属性只取决于包裹箭头函数的第一个普通函数的<code>this</code>。</p>
-<p>下一篇从作用域角度再详细说明。</p>
 ]]></content>
     </entry>
 </feed>
