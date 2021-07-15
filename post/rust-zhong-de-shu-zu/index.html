@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>React Hooks | Baoyuan&#39;s Blog</title>
+<title>Rust 中的数组 | Baoyuan&#39;s Blog</title>
 <meta name="description" content="" />
 <link rel="shortcut icon" href="https://baoyuantop.github.io/favicon.ico?v=1626362126948">
 <link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 <link rel="stylesheet" href="https://baoyuantop.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="React Hooks | Baoyuan&#39;s Blog - Atom Feed" href="https://baoyuantop.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Rust 中的数组 | Baoyuan&#39;s Blog - Atom Feed" href="https://baoyuantop.github.io/atom.xml">
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
@@ -65,85 +65,71 @@
     </div>
     <article role="main" class="hentry has-cover">
       
-        <div class="entry-cover js-cover" data-src="https://z3.ax1x.com/2021/07/08/RLC8II.jpg" data-width="900" data-height="423" style="background-image:url(https://z3.ax1x.com/2021/07/08/RLC8II.jpg); height: 80vw;">
-          <h1 class="post-title">React Hooks</h1>
+        <div class="entry-cover js-cover" data-src="https://images.unsplash.com/photo-1578508100537-30a3fca93b9a?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE2fHx8ZW58MHx8fHw%3D&amp;auto=format&amp;fit=crop&amp;w=700&amp;q=60" data-width="900" data-height="423" style="background-image:url(https://images.unsplash.com/photo-1578508100537-30a3fca93b9a?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE2fHx8ZW58MHx8fHw%3D&amp;auto=format&amp;fit=crop&amp;w=700&amp;q=60); height: 80vw;">
+          <h1 class="post-title">Rust 中的数组</h1>
         </div>
       
-      <h1 class="entry-title" itemprop="headline">React Hooks</h1>
+      <h1 class="entry-title" itemprop="headline">Rust 中的数组</h1>
       <div class="entry-meta">
-        <time class="updated" datetime="2020-03-30 21:30:15">2020-03-30</time>
+        <time class="updated" datetime="2021-07-12 17:44:22">2021-07-12</time>
         <span class="author vcard">
-          3 min read
+          2 min read
         </span>
       </div>
       <div class="post-content yue">
-        <p><code>React Hooks</code> 是一种特殊的函数，它可以让你拿到 <code>React</code> 中的很多特性：<code>state</code>、<code>生命周期</code> 等等。<br>
-在一些 <code>React</code> 的函数组件中，比如：</p>
-<pre><code class="language-javascript">function Example (props) {
-    return &lt;div /&gt;;
-}
+        <p>Rust 中的数组长度是固定的，数组中的每个元素类型是一致的。</p>
+<p>数组存储在内存中一段连续的空间内，<code>连续</code> 意味着相邻元素之间的距离一致。</p>
+<pre><code class="language-rust">let letters = ['a', 'b', 'c']; // letters 的类型为 [char; 3]
+let first_letter = letters[0];
+println!(&quot;first_letter is {}&quot;, first_letter); // first_letter is a
 </code></pre>
-<p>我们可能更习惯叫它 “无状态组件”，因为它没有内部状态（state），也没有生命周期函数。一般如果我们要做一个轻量的组件，只用来渲染数据，不包含自身的 <code>state</code> ，那么我们可以选择函数式组件，它可以给我们带来更好的性能。</p>
-<p>一旦我们需要维护组件自身的 <code>state</code> 或是生命周期方法，函数式组件就不能很好的胜任了。我们会选择 <code>class</code> 组件。</p>
-<p>我们还是拿最简单的计数器🌰看下：</p>
-<p>我们先写一个 <code>class</code> 组件：</p>
-<pre><code class="language-javascript">class Number extends React.component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            count: 0,
-        }
-        this.handleClick = this.handleClick.bind(this)
-    }
-
-    handleClick (e) {
-        this.setState({
-            count: this.state.count + 1
-        })
-    }
-
-    render () {
-        return (
-            &lt;div&gt;
-                &lt;p&gt;{this.state.count}&lt;/p&gt;
-                &lt;button onClick={this.handleClick}&gt;
-                    Click me ~
-                &lt;/button&gt;
-            &lt;/div&gt;
-        )
-    }
-}
+<p>如果要修改数组中的某个元素，则数组创建时应声明为 <code>可变的(mut)</code>。</p>
+<pre><code class="language-rust">let mut numbers = [11, 22, 44]; // 类型为 [i32; 3]
+numbers[2] = 33;
+println!(&quot;numbers is {}&quot;, numbers[2]); // numbers is 33
 </code></pre>
-<p>很简单，当我们点一下按钮数字就会加一。</p>
-<p>有了 React Hooks 的帮助，我们也可以在函数组件中实现这样的功能。React Hooks 中内置了一个 <code>useState</code> Hook，React 允许我们使用它在函数式组件中使用 <code>state</code>：</p>
-<pre><code class="language-javascript">import React, { useState } from 'react';
-
-function Number () {
-    const [count, setCount] = useState(0)
-
-    return (
-        &lt;div&gt;
-            &lt;p&gt;{count}&lt;/p&gt;
-            &lt;button onClick={() =&gt; setCount(count + 1)}&gt;
-                Click me ~
-            &lt;/button&gt;
-        &lt;/div&gt;
-    )
-}
+<p>声明一个空数组时，应标识类型（元素类型、长度）:</p>
+<pre><code class="language-rust">let words: [&amp;str; 2]; // 标识数组长度为 2 ，元素类型为 &amp;str
+words = [&quot;ok&quot;; 2]; // 重复表达式，等效于 [&quot;ok&quot;, &quot;ok&quot;]
+println!(&quot;words is {:?}&quot;, words); // words is [&quot;ok&quot;, &quot;ok&quot;]
 </code></pre>
-<p>我们用这样一个函数式组件完成了相同的功能。</p>
-<p>我们先从 <code>react</code> 中引入了 <code>useState</code> 这个 Hook，然后使用它初始化这个组件的 <code>state</code> ，<code>useState</code> 接受一个初始值参数，我们使用它初始化 <code>state</code>，然后使用结构赋值拿到 <code>count</code> 和 <code>setCount</code>，setCount 可以改变 count。当我们想要读取的时候，直接用 <code>count</code> 即可。</p>
-<p>如果我们还需要其他 state 的话，直接定义即可：</p>
-<pre><code class="language-javascript">    const [food, setFood] = useState('🍔')
-    const [drink, setDrink] = useState('🍺')
-    // ......
+<p><code>usize</code> 长度基于在目标机器 CPU 的位数：</p>
+<ul>
+<li>32 位机器为 4 位</li>
+<li>64 位机器位 8 位</li>
+</ul>
+<pre><code class="language-rust">let ints = [22; 5];
+let length: usize = ints.len();
+println!(&quot;length is {}&quot;, length); // length is 5
 </code></pre>
-<p>所以在之前如果我们编写函数式组件的时候需要使用 <code>state</code>，那么我们会将它转换为 <code>class</code> 组件，现在我们可以在现有的函数式组件中使用 <code>Hook</code> 完成。</p>
-<p>React 内置了很多种 Hook 提供不同的功能，我们可以按需选用。除此之外，React 还支持自定义 Hook 。</p>
+<p>使用 std crate 的 <code>men</code> 模块查看内存占用大小</p>
+<pre><code class="language-rust">let mem_size_byte = std::mem::size_of_val(&amp;ints);
+println!(&quot;mem_size_byte is {}&quot;, mem_size_byte); // mem_size_byte is 20
+</code></pre>
+<p>获取数组切片</p>
+<pre><code class="language-rust">let mut slice: &amp;[i32] = &amp;ints;
+println!(&quot;slice is {:?}&quot;, slice); // slice is [22, 22, 22, 22, 22]
+
+slice = &amp;ints[3..5];
+println!(&quot;slice is {:?}&quot;, slice); // slice is [22, 22]
+</code></pre>
+<h2 id="多阶数组">多阶数组</h2>
+<pre><code class="language-rust">let d2: [[i32; 3]; 3] = [[9, 8, 7], [6, 5, 4], [3, 2, 1]];
+let value = d2[1][0];
+println!(&quot;value is {}&quot;, value); // value is 6
+
+let d3: [[[&amp;str; 100]; 20]; 5];
+d3 = [[[&quot;ok&quot;; 100]; 20]; 5];
+println!(&quot;value d3[3][11][35] is {}&quot;, d3[3][11][35]) // value d3[3][11][35] is ok
+</code></pre>
 
       </div>
       <div class="entry-block">
         <div class="entry-tags">
+          
+            <a href="https://baoyuantop.github.io/tag/15IGZUW99/">
+              Rust
+            </a>
           
         </div>
       </div>
@@ -152,8 +138,8 @@ function Number () {
       <section class="post-section prev-post">
         <div class="inner">
           <h3>前一篇</h3>
-          <a href="https://baoyuantop.github.io/post/rust-ji-chu-ru-men/">
-            <strong>Rust 基础入门</strong>
+          <a href="https://baoyuantop.github.io/post/qie-pian-lei-xing-slices/">
+            <strong>切片类型(slices)</strong>
           </a>
         </div>
       </section>
@@ -162,8 +148,8 @@ function Number () {
       <section class="post-section prev-post">
         <div class="inner">
           <h3>后一篇</h3>
-          <a href="https://baoyuantop.github.io/post/qian-duan-ru-keng-zhi-nan/">
-            <strong>前端入坑指南</strong>
+          <a href="https://baoyuantop.github.io/post/suan-shu-yun-suan-yu-bi-jiao-yun-suan/">
+            <strong>算数运算与比较运算</strong>
           </a>
         </div>
       </section>

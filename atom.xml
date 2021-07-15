@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://baoyuantop.github.io</id>
     <title>Baoyuan&apos;s Blog</title>
-    <updated>2021-07-15T14:22:23.270Z</updated>
+    <updated>2021-07-15T15:15:33.325Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://baoyuantop.github.io"/>
     <link rel="self" href="https://baoyuantop.github.io/atom.xml"/>
@@ -68,6 +68,59 @@ println!(&quot;first_word is \&quot;{}\&quot;&quot;, first_word); // first_word 
 
 let first_word_too = get_first_word_too(&amp;message[6..]);
 println!(&quot;first_word_too is \&quot;{}\&quot;&quot;, first_word_too); // first_word_too is &quot;ipsum&quot;
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Rust 中的数组]]></title>
+        <id>https://baoyuantop.github.io/post/rust-zhong-de-shu-zu/</id>
+        <link href="https://baoyuantop.github.io/post/rust-zhong-de-shu-zu/">
+        </link>
+        <updated>2021-07-12T09:44:22.000Z</updated>
+        <content type="html"><![CDATA[<p>Rust 中的数组长度是固定的，数组中的每个元素类型是一致的。</p>
+<p>数组存储在内存中一段连续的空间内，<code>连续</code> 意味着相邻元素之间的距离一致。</p>
+<pre><code class="language-rust">let letters = ['a', 'b', 'c']; // letters 的类型为 [char; 3]
+let first_letter = letters[0];
+println!(&quot;first_letter is {}&quot;, first_letter); // first_letter is a
+</code></pre>
+<p>如果要修改数组中的某个元素，则数组创建时应声明为 <code>可变的(mut)</code>。</p>
+<pre><code class="language-rust">let mut numbers = [11, 22, 44]; // 类型为 [i32; 3]
+numbers[2] = 33;
+println!(&quot;numbers is {}&quot;, numbers[2]); // numbers is 33
+</code></pre>
+<p>声明一个空数组时，应标识类型（元素类型、长度）:</p>
+<pre><code class="language-rust">let words: [&amp;str; 2]; // 标识数组长度为 2 ，元素类型为 &amp;str
+words = [&quot;ok&quot;; 2]; // 重复表达式，等效于 [&quot;ok&quot;, &quot;ok&quot;]
+println!(&quot;words is {:?}&quot;, words); // words is [&quot;ok&quot;, &quot;ok&quot;]
+</code></pre>
+<p><code>usize</code> 长度基于在目标机器 CPU 的位数：</p>
+<ul>
+<li>32 位机器为 4 位</li>
+<li>64 位机器位 8 位</li>
+</ul>
+<pre><code class="language-rust">let ints = [22; 5];
+let length: usize = ints.len();
+println!(&quot;length is {}&quot;, length); // length is 5
+</code></pre>
+<p>使用 std crate 的 <code>men</code> 模块查看内存占用大小</p>
+<pre><code class="language-rust">let mem_size_byte = std::mem::size_of_val(&amp;ints);
+println!(&quot;mem_size_byte is {}&quot;, mem_size_byte); // mem_size_byte is 20
+</code></pre>
+<p>获取数组切片</p>
+<pre><code class="language-rust">let mut slice: &amp;[i32] = &amp;ints;
+println!(&quot;slice is {:?}&quot;, slice); // slice is [22, 22, 22, 22, 22]
+
+slice = &amp;ints[3..5];
+println!(&quot;slice is {:?}&quot;, slice); // slice is [22, 22]
+</code></pre>
+<h2 id="多阶数组">多阶数组</h2>
+<pre><code class="language-rust">let d2: [[i32; 3]; 3] = [[9, 8, 7], [6, 5, 4], [3, 2, 1]];
+let value = d2[1][0];
+println!(&quot;value is {}&quot;, value); // value is 6
+
+let d3: [[[&amp;str; 100]; 20]; 5];
+d3 = [[[&quot;ok&quot;; 100]; 20]; 5];
+println!(&quot;value d3[3][11][35] is {}&quot;, d3[3][11][35]) // value d3[3][11][35] is ok
 </code></pre>
 ]]></content>
     </entry>
@@ -630,74 +683,6 @@ people[item]; //Baoyuan
 </blockquote>
 <p>它会根据原型链来识别，比如：</p>
 <pre><code class="language-javascript">console.log(people instanceof Array); //变量people是Array类型吗？
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[JavaScript 基础数据类型]]></title>
-        <id>https://baoyuantop.github.io/post/javascript-ji-chu-shu-ju-lei-xing/</id>
-        <link href="https://baoyuantop.github.io/post/javascript-ji-chu-shu-ju-lei-xing/">
-        </link>
-        <updated>2020-01-01T07:20:04.000Z</updated>
-        <summary type="html"><![CDATA[<p>一点读书笔记</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>一点读书笔记</p>
-<!-- more -->
-<h3 id="javascript-中的基本数据类型">JavaScript 中的基本数据类型</h3>
-<h4 id="静态类型语言与动态类型语言">静态类型语言与动态类型语言</h4>
-<p>在编程语言中有这两种情况之分，具体的含义为：</p>
-<blockquote>
-<p>动态类型语言是一类在运行时可以改变其结构的语言：例如新的函数、对象、甚至代码可以被引进，已有的函数可以被删除或是其他结构上的变化。<br>
---维基百科</p>
-</blockquote>
-<p>而静态类型语言则与之相反，典型的动态类型语言有<code>JavaScript</code> <code>PHP</code> <code>Python</code> <code>Ruby</code> 等。</p>
-<h4 id="基本数据类型">基本数据类型</h4>
-<p>在<code>JavaScript</code>中共有 5 种简单数据类型（暂不考虑 <code>Symbol</code>）： <code>Undefined</code>、 <code>Boolean</code>、 <code>Null</code>、 <code>Number</code> 和<code>String</code>，还有一种复杂的数据类型--<code>Object</code>。我们先分别看一下各自的特点。</p>
-<h5 id="undefined">Undefined</h5>
-<p><code>Undefined</code> 类型只有一个值，即特殊的 Undefined。当我们使用<code>let</code>声明了一个变量但是并未初始化赋值，它的值就是<code>Undefined</code>：</p>
-<pre><code class="language-javascript">let javascript; //等价于 let javascript = undefined; 但没必要这样
-javascript === undefined; //true
-</code></pre>
-<p><em>注意请与未定义分开</em>：</p>
-<pre><code class="language-javascript">let javascript;
-console.log(javascript); //&quot;undefined&quot;
-console.log(java); //java is not define;
-</code></pre>
-<h5 id="null">Null</h5>
-<p>同样的，<code>Null</code>也是只有一个值的数据类型：null。它表示一个空的对象指针,如果我们定义了一个变量准备将来存放对象，我们就可以将它初始化为<code>null</code>。</p>
-<h5 id="boolean">Boolean</h5>
-<p>这种类型在大多数编程语言中都很常见，该类型有两个值：<code>true</code>和<code>false</code>。请注意不要把它与数字01产生联系。还要注意的是他是区分大小写的，<code>True</code>并不是布尔值，只是标识符。虽然字面值只有两个，但<code>ECMAScript</code>中所有类型中都有与之相对应的值，如果要将一个其他值转换为布尔值，可以使用<code>Boolean</code>函数来转型。</p>
-<pre><code class="language-javascript">let item = &quot;javascript&quot;;
-let booleanitem = Boolean(item); //true
-</code></pre>
-<h5 id="number">Number</h5>
-<p>在<code>JavaScript</code>中使用 <em>IEEE754</em>格式来表示整数和浮点数值。基本数字字面量有<em>十进制整数</em>、<em>八进制整数</em>和<em>十六进制整数</em>。在算数运算时所有八进制和十六进制都将转换为十进制数值。</p>
-<ul>
-<li>浮点数值</li>
-</ul>
-<blockquote>
-<p>数值中必须包含一个小数点，并且小数点后必须有一个数字。</p>
-</blockquote>
-<p>浮点数值的最高精度是17位小数，但是在算数运算中精度远远不如整数：</p>
-<pre><code class="language-javascript">0.1 + 0.2 === 0.3; //false,舍入误差；
-console.log(0.1 + 0.2); //0.30000000000000004
-</code></pre>
-<ul>
-<li>数值范围</li>
-</ul>
-<blockquote>
-<p><code>ECMAScript</code> 能保存的最小数值保存在<code>Number.MIN_VALUE</code>中,在大多数浏览器中为<code>5e-324</code>;能保存的最大值保存在<code>Number.MAX_VALUE</code>中，在大多数浏览器中为<code>1.7976931348623157e+308</code>。</p>
-</blockquote>
-<p>如果在某次计算中超出了这一值，那么会被转化成<code>Infinity</code>(正无穷)或者<code>-Infinity</code>(负无穷)，并且无法参与下一次的计算。</p>
-<ul>
-<li>NaN</li>
-</ul>
-<blockquote>
-<p>NaN 即 Not a Number。这个数值用来表示一个本来要返回数值的操作数未返回数值的情况。</p>
-</blockquote>
-<p>它有两个显著的特点。<br>
-任何涉及 NaN 的操作都会返回 NaN。</p>
-<pre><code class="language-javascript">console.log(NaN/100); //NaN
 </code></pre>
 ]]></content>
     </entry>
