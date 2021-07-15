@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>切片类型(slices) | Baoyuan&#39;s Blog</title>
 <meta name="description" content="" />
-<link rel="shortcut icon" href="https://baoyuantop.github.io/favicon.ico?v=1626148072696">
+<link rel="shortcut icon" href="https://baoyuantop.github.io/favicon.ico?v=1626358939286">
 <link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css"> -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
@@ -73,7 +73,7 @@
       <div class="entry-meta">
         <time class="updated" datetime="2021-07-13 10:31:08">2021-07-13</time>
         <span class="author vcard">
-          2 min read
+          3 min read
         </span>
       </div>
       <div class="post-content yue">
@@ -100,6 +100,35 @@ println!(&quot;slice_length is {} bytes&quot;, slice_length); // slice_length is
 </code></pre>
 <p>当使用字符串切片索引取值的时候应特别注意，<code>UTF-8</code> 编码会占用 1 到 4 字节，而不是固定的字节。索引值必须在字符的边界处，否则程序会 <code>panic</code> 。所以在创建字符串的时候谨慎使用特殊字符或是表情。</p>
 <p>在 <code>Node.js</code> 中我们是不太会关注这些底层问题。</p>
+<h2 id="slices-类型作为参数">Slices 类型作为参数</h2>
+<p>我们创建一个函数用来获取一句话的第一个词语：</p>
+<pre><code class="language-rust">fn get_first_word(msg: &amp;String) -&gt; &amp;str {
+    // 从字符串语句中创建一个字节类型的 slice （&amp;[u8]）
+    let bytes: &amp;[u8] = msg.as_bytes();
+
+    // 遍历这个 bytes ，并使用 enumerate() 获取每次的索引值
+    for (index, &amp;item) in bytes.iter().enumerate() {
+        // 找到第一个空格，并将之前的所有内容作为 string slice 返回
+        // 一个空格的字节表示为 b' '
+        // 我们正在迭代的是 字节 而不是 字符串
+        // 这样做是因为 索引值 是因为字符串切片的索引是以 字节 为单位的
+
+        if item == b' ' {
+            return &amp;msg[..index];
+       }
+    }
+    // 如果没有找到空格则返回全部
+    &amp;msg
+}
+</code></pre>
+<pre><code class="language-rust">let message = String::from(&quot;lorem ipsum&quot;);
+
+let first_word = get_first_word(&amp;message);
+println!(&quot;first_word is \&quot;{}\&quot;&quot;, first_word); // first_word is &quot;lorem&quot;
+
+let first_word_too = get_first_word_too(&amp;message[6..]);
+println!(&quot;first_word_too is \&quot;{}\&quot;&quot;, first_word_too); // first_word_too is &quot;ipsum&quot;
+</code></pre>
 
       </div>
       <div class="entry-block">
@@ -155,7 +184,7 @@ println!(&quot;slice_length is {} bytes&quot;, slice_length); // slice_length is
     <footer class="footer">
   <div class="main">
     <a href="https://baoyuantop.github.io">
-      <img class="avatar" src="https://baoyuantop.github.io/images/avatar.png?v=1626148072696" alt="Baoyuan&#39;s Blog">
+      <img class="avatar" src="https://baoyuantop.github.io/images/avatar.png?v=1626358939286" alt="Baoyuan&#39;s Blog">
     </a>
     <div class="footer__social">
       
