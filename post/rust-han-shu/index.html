@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Vectors 类型 | Baoyuan&#39;s Blog</title>
+<title>Rust 函数 | Baoyuan&#39;s Blog</title>
 <meta name="description" content="" />
 <link rel="shortcut icon" href="https://baoyuantop.github.io/favicon.ico?v=1626879910394">
 <link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 <link rel="stylesheet" href="https://baoyuantop.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Vectors 类型 | Baoyuan&#39;s Blog - Atom Feed" href="https://baoyuantop.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Rust 函数 | Baoyuan&#39;s Blog - Atom Feed" href="https://baoyuantop.github.io/atom.xml">
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
@@ -65,72 +65,60 @@
     </div>
     <article role="main" class="hentry has-cover">
       
-        <div class="entry-cover js-cover" data-src="https://images.unsplash.com/photo-1566022035914-ceebadd0d6ad?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8Mnw4NDY5ODkzfHxlbnwwfHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=600&amp;q=60" data-width="900" data-height="423" style="background-image:url(https://images.unsplash.com/photo-1566022035914-ceebadd0d6ad?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8Mnw4NDY5ODkzfHxlbnwwfHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=600&amp;q=60); height: 80vw;">
-          <h1 class="post-title">Vectors 类型</h1>
+        <div class="entry-cover js-cover" data-src="https://images.unsplash.com/photo-1539601591461-2a5e0edb6915?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8NHw4NDY5ODkzfHxlbnwwfHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=900&amp;q=60" data-width="900" data-height="423" style="background-image:url(https://images.unsplash.com/photo-1539601591461-2a5e0edb6915?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8NHw4NDY5ODkzfHxlbnwwfHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=900&amp;q=60); height: 80vw;">
+          <h1 class="post-title">Rust 函数</h1>
         </div>
       
-      <h1 class="entry-title" itemprop="headline">Vectors 类型</h1>
+      <h1 class="entry-title" itemprop="headline">Rust 函数</h1>
       <div class="entry-meta">
-        <time class="updated" datetime="2021-07-19 21:30:08">2021-07-19</time>
+        <time class="updated" datetime="2021-07-21 22:05:22">2021-07-21</time>
         <span class="author vcard">
           2 min read
         </span>
       </div>
       <div class="post-content yue">
-        <p>vector 是一个具有相同类型的数据集合，元素按顺序排列。</p>
-<p>数组 具有固定的大小，必须在编译时确定大小，因为数组存储在栈上。</p>
-<p>vector 可以动态的调整大小，通过 <code>adding</code> 或 <code>removing</code> 元素。相当于动态长度的数组。</p>
-<p>vector 数据存储在堆内存中，因此你需要自己处理 <code>所有权</code> 和 <code>借用</code>。</p>
-<pre><code class="language-rust">let mut letters: Vec&lt;char&gt; = vec!['a', 'b', 'c'];
-println!(&quot;letters are {:?}&quot;, letters); // letters are ['a', 'b', 'c']
-
-let first_letter = letters[0];
-println!(&quot;first_letter is {}&quot;, first_letter); // first_letter is a
-</code></pre>
-<p>向 vector 中添加数据:</p>
-<pre><code class="language-rust">letters.push('d');
-letters.push('e');
-letters.push('f');
-println!(&quot;letters are {:?}&quot;, letters); // letters are ['a', 'b', 'c', 'd', 'e', 'f']
-</code></pre>
-<p>删除最后一个元素:</p>
-<pre><code class="language-rust">letters.pop();
-println!(&quot;letters are {:?}&quot;, letters); // letters are ['a', 'b', 'c', 'd', 'e']
-</code></pre>
-<p>可变的 vector：</p>
-<pre><code class="language-rust">let mut numbers: Vec&lt;i32&gt; = vec![11, 22, 44];
-numbers[2] = 33;
-println!(&quot;numbers is {}&quot;, numbers[2]); // numbers is 33
-</code></pre>
-<p>获取长度:</p>
-<pre><code class="language-rust">let mut ints = vec![22, 33, 44, 55, 66, 77];
-let length: usize = ints.len();
-println!(&quot;length is {}&quot;, length); // length is 6
-</code></pre>
-<p>vector 切片:</p>
-<pre><code class="language-rust">let mut slice: &amp;[i32] = &amp;ints;
-println!(&quot;slice is {:?}&quot;, slice); // slice is [22, 33, 44, 55, 66, 77]
-slice = &amp;ints[2..5];
-println!(&quot;slice is {:?}&quot;, slice); // slice is [44, 55, 66]
-</code></pre>
-<p>基于 vector 的迭代:</p>
-<pre><code class="language-rust">for it in ints.iter() {
-    println!(&quot;it is {}&quot;, it);
+        <p>定义一个两数相加的函数:</p>
+<pre><code class="language-rust">fn add(a: u8, b: u8) {
+    let sum = a + b;
+    println!(&quot;sum is {}&quot;, sum)
 }
-
-// it is 22
-// it is 33
-// it is 44
-// it is 55
-// it is 66
-// it is 77
 </code></pre>
-<p>在迭代中修改值:</p>
-<pre><code class="language-rust">for it in ints.iter_mut() {
-    // 使用取消引用指针 (*it) 以获取和修改值
-    *it *= *it;
+<p>如果你没有为变量声明类型，它们将设置为你第一次使用的函数的参数类型。</p>
+<p>默认情况下整数的推断类型为 <code>i32</code>。</p>
+<pre><code class="language-rust">let y = 12;
+let z = 34;
+
+add(y, z);
+</code></pre>
+<p>因为使用了 add 函数，y 和 z 将被推断为 <code>u8</code> 类型。如果再将 y 或者 z 传入其他类型参数的函数中会触发程序 panic。</p>
+<pre><code class="language-rust">fn guess_number(number: i32) {
+    println!(&quot;Indeed, {} is the correct answer&quot;, number)
 }
-println!(&quot;ints is {:?}&quot;, ints); // ints is [484, 1089, 1936, 3025, 4356, 5929]
+</code></pre>
+<pre><code class="language-rust">guess_number(z); // 需要 i32 而传入了 u8
+</code></pre>
+<p>需要显式类型转换:</p>
+<pre><code class="language-rust">guess_number(y as i32);
+</code></pre>
+<h2 id="函数返回类型">函数返回类型</h2>
+<pre><code class="language-rust">// 接受一个 i32 类型的参数，返回一个 i32 类型的值
+fn square(number: i32) -&gt; i32 {
+    number * number
+    // 返回值的表达式
+    // 等效于 return number * number
+}
+</code></pre>
+<p>使用元组返回多个值：</p>
+<pre><code class="language-rust">fn triple(number: i32) -&gt; (i32, i32) {
+    let input = number;
+    let result = number * 3;
+    (input, result)
+}
+</code></pre>
+<p>没有返回值，指定返回值为 () 是可选的。</p>
+<pre><code class="language-rust">fn does_not_return() -&gt; () {
+    println!(&quot;ain't returning nuthing!&quot;)
+}
 </code></pre>
 
       </div>
@@ -145,21 +133,12 @@ println!(&quot;ints is {:?}&quot;, ints); // ints is [484, 1089, 1936, 3025, 435
       </div>
     </article>
     
-      <section class="post-section prev-post">
-        <div class="inner">
-          <h3>前一篇</h3>
-          <a href="https://baoyuantop.github.io/post/yuan-zu-lei-xing/">
-            <strong>元组类型</strong>
-          </a>
-        </div>
-      </section>
-    
     
       <section class="post-section prev-post">
         <div class="inner">
           <h3>后一篇</h3>
-          <a href="https://baoyuantop.github.io/post/qie-pian-lei-xing-slices/">
-            <strong>切片类型(slices)</strong>
+          <a href="https://baoyuantop.github.io/post/yuan-zu-lei-xing/">
+            <strong>元组类型</strong>
           </a>
         </div>
       </section>
