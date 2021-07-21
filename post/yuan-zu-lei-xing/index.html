@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>关于 | Baoyuan&#39;s Blog</title>
+<title>元组类型 | Baoyuan&#39;s Blog</title>
 <meta name="description" content="" />
 <link rel="shortcut icon" href="https://baoyuantop.github.io/favicon.ico?v=1626875981702">
 <link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 <link rel="stylesheet" href="https://baoyuantop.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="关于 | Baoyuan&#39;s Blog - Atom Feed" href="https://baoyuantop.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="元组类型 | Baoyuan&#39;s Blog - Atom Feed" href="https://baoyuantop.github.io/atom.xml">
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
@@ -27,7 +27,7 @@
 
   </head>
   <body>
-    <div class="site-nav no-cover">
+    <div class="site-nav has-cover">
       <div class="head">
   <div class="inner">
     <a class="site-name" href="https://baoyuantop.github.io">
@@ -63,32 +63,62 @@
   </div>
 </div>
     </div>
-    <article role="main" class="hentry ">
+    <article role="main" class="hentry has-cover">
       
-      <h1 class="entry-title" itemprop="headline">关于</h1>
+        <div class="entry-cover js-cover" data-src="https://images.unsplash.com/photo-1572248668361-a8d3789312d6?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8M3w4NDY5ODkzfHxlbnwwfHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=900&amp;q=60" data-width="900" data-height="423" style="background-image:url(https://images.unsplash.com/photo-1572248668361-a8d3789312d6?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8M3w4NDY5ODkzfHxlbnwwfHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=900&amp;q=60); height: 80vw;">
+          <h1 class="post-title">元组类型</h1>
+        </div>
+      
+      <h1 class="entry-title" itemprop="headline">元组类型</h1>
       <div class="entry-meta">
-        <time class="updated" datetime="2019-01-25 19:09:48">2019-01-25</time>
+        <time class="updated" datetime="2021-07-21 14:18:52">2021-07-21</time>
         <span class="author vcard">
           1 min read
         </span>
       </div>
       <div class="post-content yue">
-        <blockquote>
-<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
-</blockquote>
-<h2 id="关于本站">🏠 关于本站</h2>
-<h2 id="博主是谁">👨‍💻 博主是谁</h2>
-<h2 id="兴趣爱好">⛹ 兴趣爱好</h2>
-<h2 id="联系我呀">📬 联系我呀</h2>
+        <p>Tuples (元组) 类型 用于混合数据类型，最多可以有 12 种混合类型。</p>
+<p>定义元组并取值:</p>
+<pre><code class="language-rust">let a_tuple: (&amp;str, u8, char) = (&quot;ok&quot;, 0, 'd');
+let first_item = a_tuple.0;
+println!(&quot;first_item is {}&quot;, first_item); // &quot;ok&quot;
+</code></pre>
+<p>修改元组的值：</p>
+<pre><code class="language-rust">let mut b_tuples = (&quot;ok&quot;, 0);
+b_tuples.0 = &quot;ko&quot;;
+b_tuples.1 += 1;
+println!(&quot;b_tuples.0 is {}, b_tuples.1 is {}&quot;, b_tuples.0, b_tuples.1);
+</code></pre>
+<p>元组的解构赋值:</p>
+<pre><code class="language-rust">let c_tuple = (&quot;zh&quot;, &quot;CN&quot;, 1);
+let (language, country, code) = c_tuple;
+println!(
+    &quot;language is: {}, country is: {}, code is: {}&quot;,
+    language, country, code
+); // language is: en, country is: US, code is: 1
+</code></pre>
 
       </div>
       <div class="entry-block">
         <div class="entry-tags">
           
+            <a href="https://baoyuantop.github.io/tag/15IGZUW99/">
+              Rust
+            </a>
+          
         </div>
       </div>
     </article>
     
+    
+      <section class="post-section prev-post">
+        <div class="inner">
+          <h3>后一篇</h3>
+          <a href="https://baoyuantop.github.io/post/vectors-lei-xing/">
+            <strong>Vectors 类型</strong>
+          </a>
+        </div>
+      </section>
     
 
     
