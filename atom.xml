@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://baoyuantop.github.io</id>
     <title>Baoyuan&apos;s Blog</title>
-    <updated>2021-07-21T15:05:13.810Z</updated>
+    <updated>2021-07-22T10:18:16.737Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://baoyuantop.github.io"/>
     <link rel="self" href="https://baoyuantop.github.io/atom.xml"/>
@@ -85,6 +85,73 @@ println!(
     &quot;language is: {}, country is: {}, code is: {}&quot;,
     language, country, code
 ); // language is: en, country is: US, code is: 1
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[React 函数式组件的返回值]]></title>
+        <id>https://baoyuantop.github.io/post/component-retrun/</id>
+        <link href="https://baoyuantop.github.io/post/component-retrun/">
+        </link>
+        <updated>2021-07-20T08:12:25.000Z</updated>
+        <content type="html"><![CDATA[<p>函数式组件是一个普通函数，接受参数并返回一个 React 元素。</p>
+<p>一些特殊的返回值：</p>
+<ul>
+<li>没有任何返回会直接导致错误，这包括显式的返回 <code>undefined</code>，两者等价</li>
+</ul>
+<pre><code class="language-js">import React from 'react';
+import { render } from 'react-dom';
+
+const App = () =&gt; {
+  return; // 等价于 return undefined;
+};
+
+render(&lt;App /&gt;, document.getElementById('root'));
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://z3.ax1x.com/2021/07/22/WBiHRP.png" alt="错误信息" loading="lazy"></figure>
+<p>错误提示我们没有返回任何内容供 render。</p>
+<ul>
+<li>如果返回了 <code>null</code> 则是可以正常渲染空白页面的:</li>
+</ul>
+<pre><code class="language-js">import React from 'react';
+import { render } from 'react-dom';
+
+const App = () =&gt; {
+  return null;
+};
+
+render(&lt;App /&gt;, document.getElementById('root'));
+</code></pre>
+<p>除此之外还有以下类型:</p>
+<ul>
+<li>
+<p>空字符串、空数组、false、返回空白页面，不渲染任何内容。</p>
+</li>
+<li>
+<p>1 或者 0 直接渲染 1 或 0;</p>
+</li>
+<li>
+<p>空对象出错</p>
+</li>
+</ul>
+<p>问题的原因在于 <code>render(&lt;App /&gt;, document.getElementById('root'));</code>，也就是 react-dom 的 <code>render</code> 方法，它接受的第一个参数为 <code>React 元素类型</code>。</p>
+<p>源码中的定义为</p>
+<pre><code class="language-js">function render(
+  element: React$Element&lt;any&gt;,
+  container: Container,
+  callback: ?Function,
+) {};
+</code></pre>
+<p>可以看到 element 的类型为 <code>React$Element&lt;any&gt;</code>。</p>
+<p>tips😂: 这样做会有特殊的效果:</p>
+<pre><code class="language-js">import React from 'react';
+import { render } from 'react-dom';
+
+const App = () =&gt; {
+  return &lt;App /&gt;;
+};
+
+render(&lt;App /&gt;, document.getElementById('root'));
 </code></pre>
 ]]></content>
     </entry>
@@ -552,77 +619,6 @@ println!(&quot;z is {:09.3}\nx is {}&quot;, z, x); // z is 00010.001
 <p>许多其他的教程都有一个问题在于，他们都是由精通 C 、C++ 或者 Linux 的人编写的，他们假设你已经知道计算机内部是如何工作的了，比如内存分配等。而对于许多 Web 开发者来说并不是这样。</p>
 <p>这篇教程会始终保持简单，并站在 JavaScript 开发者的角度描述问题。</p>
 <p>Rust 的学习曲线非常陡峭而且会耗费你很多时间，但这完全值得。总的来说，学习 Rust 可以让你成为更好的 JavaScript 开发者 !</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[React Hooks]]></title>
-        <id>https://baoyuantop.github.io/post/react-hooks/</id>
-        <link href="https://baoyuantop.github.io/post/react-hooks/">
-        </link>
-        <updated>2020-03-30T13:30:15.000Z</updated>
-        <content type="html"><![CDATA[<p><code>React Hooks</code> 是一种特殊的函数，它可以让你拿到 <code>React</code> 中的很多特性：<code>state</code>、<code>生命周期</code> 等等。<br>
-在一些 <code>React</code> 的函数组件中，比如：</p>
-<pre><code class="language-javascript">function Example (props) {
-    return &lt;div /&gt;;
-}
-</code></pre>
-<p>我们可能更习惯叫它 “无状态组件”，因为它没有内部状态（state），也没有生命周期函数。一般如果我们要做一个轻量的组件，只用来渲染数据，不包含自身的 <code>state</code> ，那么我们可以选择函数式组件，它可以给我们带来更好的性能。</p>
-<p>一旦我们需要维护组件自身的 <code>state</code> 或是生命周期方法，函数式组件就不能很好的胜任了。我们会选择 <code>class</code> 组件。</p>
-<p>我们还是拿最简单的计数器🌰看下：</p>
-<p>我们先写一个 <code>class</code> 组件：</p>
-<pre><code class="language-javascript">class Number extends React.component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            count: 0,
-        }
-        this.handleClick = this.handleClick.bind(this)
-    }
-
-    handleClick (e) {
-        this.setState({
-            count: this.state.count + 1
-        })
-    }
-
-    render () {
-        return (
-            &lt;div&gt;
-                &lt;p&gt;{this.state.count}&lt;/p&gt;
-                &lt;button onClick={this.handleClick}&gt;
-                    Click me ~
-                &lt;/button&gt;
-            &lt;/div&gt;
-        )
-    }
-}
-</code></pre>
-<p>很简单，当我们点一下按钮数字就会加一。</p>
-<p>有了 React Hooks 的帮助，我们也可以在函数组件中实现这样的功能。React Hooks 中内置了一个 <code>useState</code> Hook，React 允许我们使用它在函数式组件中使用 <code>state</code>：</p>
-<pre><code class="language-javascript">import React, { useState } from 'react';
-
-function Number () {
-    const [count, setCount] = useState(0)
-
-    return (
-        &lt;div&gt;
-            &lt;p&gt;{count}&lt;/p&gt;
-            &lt;button onClick={() =&gt; setCount(count + 1)}&gt;
-                Click me ~
-            &lt;/button&gt;
-        &lt;/div&gt;
-    )
-}
-</code></pre>
-<p>我们用这样一个函数式组件完成了相同的功能。</p>
-<p>我们先从 <code>react</code> 中引入了 <code>useState</code> 这个 Hook，然后使用它初始化这个组件的 <code>state</code> ，<code>useState</code> 接受一个初始值参数，我们使用它初始化 <code>state</code>，然后使用结构赋值拿到 <code>count</code> 和 <code>setCount</code>，setCount 可以改变 count。当我们想要读取的时候，直接用 <code>count</code> 即可。</p>
-<p>如果我们还需要其他 state 的话，直接定义即可：</p>
-<pre><code class="language-javascript">    const [food, setFood] = useState('🍔')
-    const [drink, setDrink] = useState('🍺')
-    // ......
-</code></pre>
-<p>所以在之前如果我们编写函数式组件的时候需要使用 <code>state</code>，那么我们会将它转换为 <code>class</code> 组件，现在我们可以在现有的函数式组件中使用 <code>Hook</code> 完成。</p>
-<p>React 内置了很多种 Hook 提供不同的功能，我们可以按需选用。除此之外，React 还支持自定义 Hook 。</p>
 ]]></content>
     </entry>
 </feed>
