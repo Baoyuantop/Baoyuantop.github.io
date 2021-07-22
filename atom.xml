@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://baoyuantop.github.io</id>
     <title>Baoyuan&apos;s Blog</title>
-    <updated>2021-07-22T10:18:16.737Z</updated>
+    <updated>2021-07-22T10:23:17.116Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://baoyuantop.github.io"/>
     <link rel="self" href="https://baoyuantop.github.io/atom.xml"/>
@@ -142,7 +142,7 @@ render(&lt;App /&gt;, document.getElementById('root'));
   callback: ?Function,
 ) {};
 </code></pre>
-<p>可以看到 element 的类型为 <code>React$Element&lt;any&gt;</code>。</p>
+<p>可以看到 element 的类型为 <code>React$Element&lt;any&gt;</code>，接收的为一个 React 组件。</p>
 <p>tips😂: 这样做会有特殊的效果:</p>
 <pre><code class="language-js">import React from 'react';
 import { render } from 'react-dom';
