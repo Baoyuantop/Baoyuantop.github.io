@@ -2,13 +2,38 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://baoyuantop.github.io</id>
     <title>Baoyuan&apos;s Blog</title>
-    <updated>2021-07-22T10:28:52.512Z</updated>
+    <updated>2021-07-26T13:42:35.366Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://baoyuantop.github.io"/>
     <link rel="self" href="https://baoyuantop.github.io/atom.xml"/>
     <logo>https://baoyuantop.github.io/images/avatar.png</logo>
     <icon>https://baoyuantop.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Baoyuan&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[React useCallback]]></title>
+        <id>https://baoyuantop.github.io/post/react-usecallback/</id>
+        <link href="https://baoyuantop.github.io/post/react-usecallback/">
+        </link>
+        <updated>2021-07-22T08:58:41.000Z</updated>
+        <content type="html"><![CDATA[<p>useCallback 接受一个函数并返回它的 <code>memoized</code> 版本，也就是缓存该函数。</p>
+<p>在 React 的函数式组件中，每次 UI 变化该函数就会重新执行。所以在函数式组件内部定义的函数是不会重复利用的，而是每次都会创建一个新的。创建一个新的函数后，在使用这个函数的组件也会接受一个新的函数，相当于接受的 <code>props</code> 更新了， 所以就需要重新渲染。</p>
+<p>例如：</p>
+<pre><code class="language-js">const AddButton = () =&gt; {
+    const [count, setCount] = useState(0);
+    const handleClick = () =&gt; setCount(count + 1);
+    return &lt;button onClick={handleClick}&gt;{count}&lt;/button&gt;
+}
+</code></pre>
+<p>在 button 的 props 中我们传入了 <code>handlkeClick</code>，每次 UI 变化时 AddButton 这个组件就会重新执行一遍，然后重新创建一个 handleClick 函数，button 接受了新的 handleClick 函数就会重新渲染。</p>
+<p>因此我们需要仅在 <code>count</code> 发生变化的时候才返回新的 handleClick 函数。这就是 <code>useCallback</code> 的作用。</p>
+<p>useCallback 的函数签名如下：</p>
+<pre><code class="language-js">useCallback(fn, deps)
+</code></pre>
+<p>fn 为我们定义的函数，deps 为依赖项数组，只有当这个数组中的变量变化了，fn 才会返回新的函数。依赖项数组类似于 <code>useEffect</code>。</p>
+<p>useCallback 其实并没有避免重复创建函数，因为在 useCallback(fn, [deps]) 的形式中，每次运行都会创建一个函数。useCallback 只是可以决定是不是要使用新的函数。在 依赖项不变的时候，就始终返回之前的，从而避免组件的重复渲染。</p>
+<p>如果你确定组件重复渲染问题不大，那么 useCallback 用不用就问题不大。不过最佳实践是使用它处理内部定义的函数。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Rust 函数]]></title>
         <id>https://baoyuantop.github.io/post/rust-han-shu/</id>
@@ -599,26 +624,6 @@ println!(&quot;z is {:09.3}\nx is {}&quot;, z, x); // z is 00010.001
 <blockquote>
 <p>这里并没有 Rust 的安装教程，但是它很容易找到并搞定。</p>
 </blockquote>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Rust 基础入门]]></title>
-        <id>https://baoyuantop.github.io/post/rust-ji-chu-ru-men/</id>
-        <link href="https://baoyuantop.github.io/post/rust-ji-chu-ru-men/">
-        </link>
-        <updated>2021-07-11T06:24:48.000Z</updated>
-        <content type="html"><![CDATA[<p>这是一个系列，提供给 JavaScript 开发者的 Rust 翻译教程。原文在：https://itnext.io/deep-dive-into-rust-for-node-js-developers-5faace6dc71f。</p>
-<p>随着 WebAssembly 的出现，现在是在现有 JavaScript/Node.js 基础上学习 Rust 的最佳时机，你可以使用他们在浏览器、服务端或是其他场景进行高性能计算。</p>
-<p>将 Rust 添加到 Node.js 的技术栈中实属天作之合，因为 Rust 为 WebAssembly 提供了高级和完善的支持，而且 WebAssembly 二进制文件可以在 Node.js 上运行。</p>
-<p>通过一些基础内容以及深入的学习，您将足够熟悉 Rust 并可以构建一些更为复杂的工程。</p>
-<p>请注意：</p>
-<p>作为一个 JavaScript 开发者，你会看到类似 <code>std::wx::yz</code> 或是 <code>&amp;xyz</code> 这样不熟悉的符号，不用担心后面都会解释。</p>
-<p>与 JavaScript 相比，Rust 是一种偏底层语言，你会处理一些你从未在 JavaScript 中处理过或是关注过的一些事情。</p>
-<p>请记住 Rust 是一种非常贴近硬件的系统编程语言，这意味着语言中提供的抽象概念更贴近硬件。这为高性能编程提供了强大的能力，也意味着比 JavaScript 更加复杂。</p>
-<p>Rust 不会隐藏一些底层的问题，比如值是在堆还是栈上存储，并基于此允许或不允许。但是和 Node.js 一样，有许多包或者库可以让你干起活来更简单。</p>
-<p>许多其他的教程都有一个问题在于，他们都是由精通 C 、C++ 或者 Linux 的人编写的，他们假设你已经知道计算机内部是如何工作的了，比如内存分配等。而对于许多 Web 开发者来说并不是这样。</p>
-<p>这篇教程会始终保持简单，并站在 JavaScript 开发者的角度描述问题。</p>
-<p>Rust 的学习曲线非常陡峭而且会耗费你很多时间，但这完全值得。总的来说，学习 Rust 可以让你成为更好的 JavaScript 开发者 !</p>
 ]]></content>
     </entry>
 </feed>
