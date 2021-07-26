@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Rust 函数 | Baoyuan&#39;s Blog</title>
 <meta name="description" content="" />
-<link rel="shortcut icon" href="https://baoyuantop.github.io/favicon.ico?v=1627306950402">
+<link rel="shortcut icon" href="https://baoyuantop.github.io/favicon.ico?v=1627308054011">
 <link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css"> -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
@@ -120,6 +120,14 @@ fn square(number: i32) -&gt; i32 {
     println!(&quot;ain't returning nuthing!&quot;)
 }
 </code></pre>
+<h2 id="闭包">闭包</h2>
+<p>闭包大多是可以访问封闭环境中的变量的匿名函数。</p>
+<pre><code class="language-rust">let double = |n1: u8| -&gt; u8 { n1 * 2 };
+println!(&quot;{}&quot;, double(11)); // 22
+</code></pre>
+<pre><code class="language-rust">let triple = |n1| n1 * 3;
+println!(&quot;{}&quot;, triple(99)); // 297
+</code></pre>
 
       </div>
       <div class="entry-block">
@@ -184,7 +192,7 @@ fn square(number: i32) -&gt; i32 {
     <footer class="footer">
   <div class="main">
     <a href="https://baoyuantop.github.io">
-      <img class="avatar" src="https://baoyuantop.github.io/images/avatar.png?v=1627306950402" alt="Baoyuan&#39;s Blog">
+      <img class="avatar" src="https://baoyuantop.github.io/images/avatar.png?v=1627308054011" alt="Baoyuan&#39;s Blog">
     </a>
     <div class="footer__social">
       

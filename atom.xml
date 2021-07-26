@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://baoyuantop.github.io</id>
     <title>Baoyuan&apos;s Blog</title>
-    <updated>2021-07-26T13:42:35.366Z</updated>
+    <updated>2021-07-26T14:01:03.968Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://baoyuantop.github.io"/>
     <link rel="self" href="https://baoyuantop.github.io/atom.xml"/>
@@ -82,6 +82,14 @@ fn square(number: i32) -&gt; i32 {
 <pre><code class="language-rust">fn does_not_return() -&gt; () {
     println!(&quot;ain't returning nuthing!&quot;)
 }
+</code></pre>
+<h2 id="闭包">闭包</h2>
+<p>闭包大多是可以访问封闭环境中的变量的匿名函数。</p>
+<pre><code class="language-rust">let double = |n1: u8| -&gt; u8 { n1 * 2 };
+println!(&quot;{}&quot;, double(11)); // 22
+</code></pre>
+<pre><code class="language-rust">let triple = |n1| n1 * 3;
+println!(&quot;{}&quot;, triple(99)); // 297
 </code></pre>
 ]]></content>
     </entry>
