@@ -2,13 +2,119 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://baoyuantop.github.io</id>
     <title>Baoyuan&apos;s Blog</title>
-    <updated>2021-07-26T14:01:03.968Z</updated>
+    <updated>2021-07-28T04:01:26.411Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://baoyuantop.github.io"/>
     <link rel="self" href="https://baoyuantop.github.io/atom.xml"/>
     <logo>https://baoyuantop.github.io/images/avatar.png</logo>
     <icon>https://baoyuantop.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Baoyuan&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[Rust 条件与循环]]></title>
+        <id>https://baoyuantop.github.io/post/rust-tiao-jian-yu-xun-huan/</id>
+        <link href="https://baoyuantop.github.io/post/rust-tiao-jian-yu-xun-huan/">
+        </link>
+        <updated>2021-07-26T14:06:53.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="条件执行">条件执行</h2>
+<pre><code class="language-rust">let x = 5;
+if x == 5 {
+    println!(&quot;x is 5&quot;); // done
+}
+</code></pre>
+<p>if 表达式，相当于 JavaScript 的三元表达式：</p>
+<pre><code class="language-rust">let x_odd = if x % 2 == 0 { &quot;odd&quot; } else { &quot;even&quot; };
+println!(&quot;x_odd is {}&quot;, x_odd); // x_odd is even
+</code></pre>
+<h2 id="多个条件-ifelse-if">多个条件 (if/else if)</h2>
+<pre><code class="language-rust">let x = 2;
+let y = 5;
+if x &gt; y {
+    println!(&quot;x is greater than  y&quot;);
+} else if x &lt; y {
+    println!(&quot;x is less than y&quot;); // done 
+} else {
+    println!(&quot;x is equal to y&quot;);
+}
+</code></pre>
+<h2 id="循环">循环</h2>
+<h3 id="使用-loop-循环">使用 <code>loop</code> 循环</h3>
+<pre><code class="language-rust">loop {
+    if count == 10 {
+        break;
+    }
+    count += 1;
+    println!(&quot;count is {}&quot;, count);
+}
+</code></pre>
+<p>loop 会循环执行某个语法快，直到使用 <code>break</code> 停止循环或是手动停止程序。<br>
+上述打印出：</p>
+<pre><code class="language-rust">count is 1
+count is 2
+count is 3
+count is 4
+count is 5
+count is 6
+count is 7
+count is 8
+count is 9
+count is 10
+</code></pre>
+<p>从循环中返回某个值：</p>
+<pre><code class="language-rust">let result = loop {
+    if count == 15 {
+        // returning a value with break statement
+        break count * 20;
+    }
+    count += 1;
+    println!(&quot;count is {}&quot;, count); // 300
+};
+</code></pre>
+<h3 id="使用-while-循环">使用 while 循环</h3>
+<p>与 loop 循环不同的是，while 循环中 break 不能返回值。</p>
+<pre><code class="language-rust">let mut count = 0;
+let letters: [char; 5] = ['a', 'b', 'c', 'd', 'e'];
+
+while count &lt; letters.len() {
+    println!(&quot;letter [{}] is {}&quot;, count, letters[count]);
+    count += 1;
+}
+</code></pre>
+<p>结果:</p>
+<pre><code class="language-rust">letter[0] is a
+letter[1] is b
+letter[2] is c
+letter[3] is d
+letter[4] is e
+</code></pre>
+<h3 id="for-循环">for 循环</h3>
+<p>使用 <code>iter()</code> 方法返回一个迭代器。<br>
+迭代器对集合类元素实现迭代，使用 <code>next()</code> 方法返回下一个迭代。</p>
+<pre><code class="language-rust">for item in message.iter() {
+    println!(&quot;current item is  {}&quot;, item);
+}
+</code></pre>
+<p>使用 <code>enumerate()</code> 返回一个元组，包含当前迭代的元素的索引和引用。推荐对该元组进行解构。</p>
+<pre><code class="language-rust">for (index, &amp;item) in message.iter().enumerate() {
+    println!(&quot;item {} is {}&quot;, index, item);
+    if item == 'e' {
+        break;
+    }
+}
+</code></pre>
+<p>因为返回的元组中是元素的引用，使用 <code>&amp;item</code> 可以借用变量而不取得所有权。在循环中可以访问该变量。</p>
+<p>迭代一组数字：</p>
+<pre><code class="language-rust">for number in 0..5 {
+    println!(&quot;number is {}&quot;, number); 
+}
+</code></pre>
+<pre><code class="language-rust">number is 0
+number is 1
+number is 2
+number is 3
+number is 4
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[React useCallback]]></title>
         <id>https://baoyuantop.github.io/post/react-usecallback/</id>
@@ -555,83 +661,6 @@ println!(&quot;max_f64 is: {}\n&quot;, max_f64);
 // max_f64 is: 179769313486231570000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[创建基本项目并打印]]></title>
-        <id>https://baoyuantop.github.io/post/chuang-jian-ji-ben-xiang-mu-bing-da-yin/</id>
-        <link href="https://baoyuantop.github.io/post/chuang-jian-ji-ben-xiang-mu-bing-da-yin/">
-        </link>
-        <updated>2021-07-11T07:32:26.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="基本项目结构">基本项目结构</h2>
-<p>在安装 Rust 后，使用 Cargo （Rust 的包管理器）创建一个新的项目：</p>
-<pre><code class="language-bash">cargo new &lt;PROJECT_NAME&gt;
-</code></pre>
-<p>这会在你的当前目录中创建一个新的文件夹，或者你手动创建一个文件夹然后在文件夹内部执行：</p>
-<pre><code class="language-bash">cargo init
-</code></pre>
-<p>项目的入口是 <code>src/main.rs</code> 文件，入口点是 <code>main</code> 函数。</p>
-<p>Rust 已经为你准备好了 <code>Hello World</code> 了：</p>
-<pre><code class="language-rust">fn main() {
-    println!(&quot;Hello, world!&quot;);
-}
-</code></pre>
-<p>在项目中执行 <code>cargo run</code> 就可以看到了。</p>
-<h2 id="使用-println-打印">使用 println! 打印</h2>
-<p>在 Rust 中使用 <code>（macro）宏</code> 来打印到控制台，Rust 中的宏都有一个标识符，即在关键字后加一个 <code>!</code>。所以打印的宏为 <code>println!</code> ，它非常灵活：</p>
-<p>字符串插值：</p>
-<pre><code class="language-rust">println!(&quot;Adding {} and {} gives {}&quot;, 22, 33, 22 + 33); // Adding 22 and 33 gives 55
-</code></pre>
-<p>位置参数：</p>
-<pre><code class="language-rust">println!(
-        &quot;Ypur name is {0}. Welcome to {1}. Nice to meet you {0}&quot;,
-        &quot;Goto&quot;, &quot;Rust&quot;
-   ); // Ypur name is Goto. Welcome to Rust. Nice to meet you Goto
-</code></pre>
-<p>命名参数：</p>
-<pre><code class="language-rust">println!(
-        &quot;{language} is very popular. It was created in {year}&quot;,
-        language = &quot;Rust&quot;,
-        year = 2010
-   ); // Rust is very popular. It was created in 2010
-</code></pre>
-<p>占位符 traits，使用位置参数避免重复</p>
-<pre><code class="language-rust">println!(&quot;{0}, in binary: {0:b}, in hexadecimal: {0:x}&quot;, 11); // Decimal: 11      Binary: 1011    Hexadecimal: b
-</code></pre>
-<p>直接打印数组：</p>
-<pre><code class="language-rust">println!(&quot;{:?}&quot;, [11, 22, 33]); // [11, 22, 33]
-</code></pre>
-<p>在 Rust 中必须在行尾使用 <code>;</code> ，除非他是函数的最后一行（后面会详细解释）。</p>
-<h2 id="高级格式打印">高级格式打印</h2>
-<p>首先我们声明几个变量:</p>
-<pre><code class="language-rust">let x = 246.92385;
-let y = 24.69;
-let z = x / y;
-</code></pre>
-<p>打印具有三位精度的宏:</p>
-<pre><code class="language-rust">println!(&quot;z is {:.3}&quot;, z); // z is 10.001
-</code></pre>
-<p>控制字符长度为 9 ，并设置预填充:</p>
-<pre><code class="language-rust">println!(&quot;z is {:9.3}&quot;, z); // z is    10.001
-</code></pre>
-<p>使用 0 填充：</p>
-<pre><code class="language-rust">println!(&quot;z is {:09.3}&quot;, z); // z is 00010.001
-println!(&quot;z is {:09.3}\nx is {}&quot;, z, x); // z is 00010.001
-// x is 246.92385
-</code></pre>
-<p>不换行：</p>
-<pre><code class="language-rust">print!(&quot;y is {:09.3}\n x is {}\n&quot;, y, x);
-// y is 00024.690
-//  x is 246.92385
-</code></pre>
-<p>位置参数：</p>
-<pre><code class="language-rust">println!(&quot;z is {0:05.1} and x is {1:.2}. \nx is also {1}&quot;, z, x);
-// z is 010.0 and x is 246.92. 
-// x is also 246.92385
-</code></pre>
-<blockquote>
-<p>这里并没有 Rust 的安装教程，但是它很容易找到并搞定。</p>
-</blockquote>
 ]]></content>
     </entry>
 </feed>

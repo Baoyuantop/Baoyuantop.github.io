@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Rust 中的数组 | Baoyuan&#39;s Blog</title>
+<title>Rust 条件与循环 | Baoyuan&#39;s Blog</title>
 <meta name="description" content="" />
 <link rel="shortcut icon" href="https://baoyuantop.github.io/favicon.ico?v=1627444879931">
 <link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 <link rel="stylesheet" href="https://baoyuantop.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Rust 中的数组 | Baoyuan&#39;s Blog - Atom Feed" href="https://baoyuantop.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Rust 条件与循环 | Baoyuan&#39;s Blog - Atom Feed" href="https://baoyuantop.github.io/atom.xml">
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
@@ -65,62 +65,115 @@
     </div>
     <article role="main" class="hentry has-cover">
       
-        <div class="entry-cover js-cover" data-src="https://images.unsplash.com/photo-1578508100537-30a3fca93b9a?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE2fHx8ZW58MHx8fHw%3D&amp;auto=format&amp;fit=crop&amp;w=700&amp;q=60" data-width="900" data-height="423" style="background-image:url(https://images.unsplash.com/photo-1578508100537-30a3fca93b9a?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE2fHx8ZW58MHx8fHw%3D&amp;auto=format&amp;fit=crop&amp;w=700&amp;q=60); height: 80vw;">
-          <h1 class="post-title">Rust 中的数组</h1>
+        <div class="entry-cover js-cover" data-src="https://images.unsplash.com/photo-1581495889260-39705bbc54b4?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDZ8fHxlbnwwfHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=900&amp;q=60" data-width="900" data-height="423" style="background-image:url(https://images.unsplash.com/photo-1581495889260-39705bbc54b4?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDZ8fHxlbnwwfHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=900&amp;q=60); height: 80vw;">
+          <h1 class="post-title">Rust 条件与循环</h1>
         </div>
       
-      <h1 class="entry-title" itemprop="headline">Rust 中的数组</h1>
+      <h1 class="entry-title" itemprop="headline">Rust 条件与循环</h1>
       <div class="entry-meta">
-        <time class="updated" datetime="2021-07-12 17:44:22">2021-07-12</time>
+        <time class="updated" datetime="2021-07-26 22:06:53">2021-07-26</time>
         <span class="author vcard">
-          2 min read
+          3 min read
         </span>
       </div>
       <div class="post-content yue">
-        <p>Rust 中的数组长度是固定的，数组中的每个元素类型是一致的。</p>
-<p>数组存储在内存中一段连续的空间内，<code>连续</code> 意味着相邻元素之间的距离一致。</p>
-<pre><code class="language-rust">let letters = ['a', 'b', 'c']; // letters 的类型为 [char; 3]
-let first_letter = letters[0];
-println!(&quot;first_letter is {}&quot;, first_letter); // first_letter is a
+        <h2 id="条件执行">条件执行</h2>
+<pre><code class="language-rust">let x = 5;
+if x == 5 {
+    println!(&quot;x is 5&quot;); // done
+}
 </code></pre>
-<p>如果要修改数组中的某个元素，则数组创建时应声明为 <code>可变的(mut)</code>。</p>
-<pre><code class="language-rust">let mut numbers = [11, 22, 44]; // 类型为 [i32; 3]
-numbers[2] = 33;
-println!(&quot;numbers is {}&quot;, numbers[2]); // numbers is 33
+<p>if 表达式，相当于 JavaScript 的三元表达式：</p>
+<pre><code class="language-rust">let x_odd = if x % 2 == 0 { &quot;odd&quot; } else { &quot;even&quot; };
+println!(&quot;x_odd is {}&quot;, x_odd); // x_odd is even
 </code></pre>
-<p>声明一个空数组时，应标识类型（元素类型、长度）:</p>
-<pre><code class="language-rust">let words: [&amp;str; 2]; // 标识数组长度为 2 ，元素类型为 &amp;str
-words = [&quot;ok&quot;; 2]; // 重复表达式，等效于 [&quot;ok&quot;, &quot;ok&quot;]
-println!(&quot;words is {:?}&quot;, words); // words is [&quot;ok&quot;, &quot;ok&quot;]
+<h2 id="多个条件-ifelse-if">多个条件 (if/else if)</h2>
+<pre><code class="language-rust">let x = 2;
+let y = 5;
+if x &gt; y {
+    println!(&quot;x is greater than  y&quot;);
+} else if x &lt; y {
+    println!(&quot;x is less than y&quot;); // done 
+} else {
+    println!(&quot;x is equal to y&quot;);
+}
 </code></pre>
-<p><code>usize</code> 长度基于在目标机器 CPU 的位数：</p>
-<ul>
-<li>32 位机器为 4 位</li>
-<li>64 位机器位 8 位</li>
-</ul>
-<pre><code class="language-rust">let ints = [22; 5];
-let length: usize = ints.len();
-println!(&quot;length is {}&quot;, length); // length is 5
+<h2 id="循环">循环</h2>
+<h3 id="使用-loop-循环">使用 <code>loop</code> 循环</h3>
+<pre><code class="language-rust">loop {
+    if count == 10 {
+        break;
+    }
+    count += 1;
+    println!(&quot;count is {}&quot;, count);
+}
 </code></pre>
-<p>使用 std crate 的 <code>men</code> 模块查看内存占用大小</p>
-<pre><code class="language-rust">let mem_size_byte = std::mem::size_of_val(&amp;ints);
-println!(&quot;mem_size_byte is {}&quot;, mem_size_byte); // mem_size_byte is 20
+<p>loop 会循环执行某个语法快，直到使用 <code>break</code> 停止循环或是手动停止程序。<br>
+上述打印出：</p>
+<pre><code class="language-rust">count is 1
+count is 2
+count is 3
+count is 4
+count is 5
+count is 6
+count is 7
+count is 8
+count is 9
+count is 10
 </code></pre>
-<p>获取数组切片</p>
-<pre><code class="language-rust">let mut slice: &amp;[i32] = &amp;ints;
-println!(&quot;slice is {:?}&quot;, slice); // slice is [22, 22, 22, 22, 22]
+<p>从循环中返回某个值：</p>
+<pre><code class="language-rust">let result = loop {
+    if count == 15 {
+        // returning a value with break statement
+        break count * 20;
+    }
+    count += 1;
+    println!(&quot;count is {}&quot;, count); // 300
+};
+</code></pre>
+<h3 id="使用-while-循环">使用 while 循环</h3>
+<p>与 loop 循环不同的是，while 循环中 break 不能返回值。</p>
+<pre><code class="language-rust">let mut count = 0;
+let letters: [char; 5] = ['a', 'b', 'c', 'd', 'e'];
 
-slice = &amp;ints[3..5];
-println!(&quot;slice is {:?}&quot;, slice); // slice is [22, 22]
+while count &lt; letters.len() {
+    println!(&quot;letter [{}] is {}&quot;, count, letters[count]);
+    count += 1;
+}
 </code></pre>
-<h2 id="多阶数组">多阶数组</h2>
-<pre><code class="language-rust">let d2: [[i32; 3]; 3] = [[9, 8, 7], [6, 5, 4], [3, 2, 1]];
-let value = d2[1][0];
-println!(&quot;value is {}&quot;, value); // value is 6
-
-let d3: [[[&amp;str; 100]; 20]; 5];
-d3 = [[[&quot;ok&quot;; 100]; 20]; 5];
-println!(&quot;value d3[3][11][35] is {}&quot;, d3[3][11][35]) // value d3[3][11][35] is ok
+<p>结果:</p>
+<pre><code class="language-rust">letter[0] is a
+letter[1] is b
+letter[2] is c
+letter[3] is d
+letter[4] is e
+</code></pre>
+<h3 id="for-循环">for 循环</h3>
+<p>使用 <code>iter()</code> 方法返回一个迭代器。<br>
+迭代器对集合类元素实现迭代，使用 <code>next()</code> 方法返回下一个迭代。</p>
+<pre><code class="language-rust">for item in message.iter() {
+    println!(&quot;current item is  {}&quot;, item);
+}
+</code></pre>
+<p>使用 <code>enumerate()</code> 返回一个元组，包含当前迭代的元素的索引和引用。推荐对该元组进行解构。</p>
+<pre><code class="language-rust">for (index, &amp;item) in message.iter().enumerate() {
+    println!(&quot;item {} is {}&quot;, index, item);
+    if item == 'e' {
+        break;
+    }
+}
+</code></pre>
+<p>因为返回的元组中是元素的引用，使用 <code>&amp;item</code> 可以借用变量而不取得所有权。在循环中可以访问该变量。</p>
+<p>迭代一组数字：</p>
+<pre><code class="language-rust">for number in 0..5 {
+    println!(&quot;number is {}&quot;, number); 
+}
+</code></pre>
+<pre><code class="language-rust">number is 0
+number is 1
+number is 2
+number is 3
+number is 4
 </code></pre>
 
       </div>
@@ -135,21 +188,12 @@ println!(&quot;value d3[3][11][35] is {}&quot;, d3[3][11][35]) // value d3[3][11
       </div>
     </article>
     
-      <section class="post-section prev-post">
-        <div class="inner">
-          <h3>前一篇</h3>
-          <a href="https://baoyuantop.github.io/post/qie-pian-lei-xing-slices/">
-            <strong>切片类型(slices)</strong>
-          </a>
-        </div>
-      </section>
-    
     
       <section class="post-section prev-post">
         <div class="inner">
           <h3>后一篇</h3>
-          <a href="https://baoyuantop.github.io/post/suan-shu-yun-suan-yu-bi-jiao-yun-suan/">
-            <strong>算数运算与比较运算</strong>
+          <a href="https://baoyuantop.github.io/post/react-usecallback/">
+            <strong>React useCallback</strong>
           </a>
         </div>
       </section>
