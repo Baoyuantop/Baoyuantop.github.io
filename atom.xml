@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://baoyuantop.github.io</id>
     <title>Baoyuan&apos;s Blog</title>
-    <updated>2021-07-28T04:01:26.411Z</updated>
+    <updated>2021-07-31T09:07:12.328Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://baoyuantop.github.io"/>
     <link rel="self" href="https://baoyuantop.github.io/atom.xml"/>
@@ -113,6 +113,145 @@ number is 2
 number is 3
 number is 4
 </code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Update state on unmounted component]]></title>
+        <id>https://baoyuantop.github.io/post/update-state-on-unmounted-component/</id>
+        <link href="https://baoyuantop.github.io/post/update-state-on-unmounted-component/">
+        </link>
+        <updated>2021-07-24T03:47:59.000Z</updated>
+        <content type="html"><![CDATA[<p>写过 <code>React</code> 的一定会有遇到过这个错误：</p>
+<figure data-type="image" tabindex="1"><img src="https://z3.ax1x.com/2021/07/31/Wjf7Hs.png" alt="错误信息" loading="lazy"></figure>
+<p>准确来说这是一个警告，因为它看起来并不会影响程序的正常运行，如果不去处理的话也不会有什么严重的后果，所以大多数人就会选择视而不见... 😂</p>
+<p>但是要真问题来为啥会这样，不仔细研究一下不是很好想明白，下面就来探讨下这个错误提示的根本原因在哪。</p>
+<p>首先看一下错误的字面意思：</p>
+<p>不能更新 React 的 state 在一个还没有挂载的组件上。</p>
+<p>这是一个空操作，但它表明您的应用程序中存在内存泄漏。</p>
+<p>要修复，请取消 useEffect 清理函数中的所有订阅和异步任务。</p>
+<p>意思大概是说问题出在了 <code>useEffect</code> 上，首先我们先尝试着复现一下这个错误。</p>
+<p>我们构建一个简单的应用，通过一个 select 组件选择不同的动物名称，然后根据选择的名字读取相应的数据并显示在下方。</p>
+<p>Pets 组件：</p>
+<pre><code class="language-js">const Pets: React.FC = () =&gt; {
+  const [pets, setPets] = useState('');
+  const [petsData, setPetsData] = useState({});
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = ({ target }) =&gt; {
+    setLoading(true);
+    setPets(target.value);
+  };
+
+  useEffect(() =&gt; {
+    if (pets) {
+      getPets(pets).then(res =&gt; {
+        setLoading(false);
+        setPetsData(res);
+      });
+    }
+  }, [pets]);
+
+  return (
+    &lt;div&gt;
+      &lt;select name=&quot;pets&quot; id=&quot;pets&quot; onChange={handleChange}&gt;
+        &lt;option value=&quot;&quot;&gt;Select a pet&lt;/option&gt;
+        &lt;option value=&quot;cats&quot;&gt;Cats&lt;/option&gt;
+        &lt;option value=&quot;dogs&quot;&gt;Dogs&lt;/option&gt;
+      &lt;/select&gt;
+      {loading &amp;&amp; &lt;Loading /&gt;}
+      {petsData &amp;&amp; &lt;PetsCard petsData={petsData} /&gt;}
+    &lt;/div&gt;
+  );
+};
+</code></pre>
+<p>我们使用了 select 组件选择 <code>cats</code> 或是 <code>dogs</code>，当选择改变的时候我们设置当前的 <code>pets</code> 状态为选择的值，然后会触发 useEffect 更新对应的内容并显示。</p>
+<p>其中 <code>PetsCard</code> 组件接受动物的数据并渲染：</p>
+<pre><code class="language-js">const PetsCard = ({ petsData }) =&gt; {
+  console.log(petsData);
+  return (
+    &lt;div&gt;
+      &lt;p&gt;{petsData.name}&lt;/p&gt;
+      &lt;p&gt;{petsData.avatar}&lt;/p&gt;
+    &lt;/div&gt;
+  );
+};
+</code></pre>
+<p>使用 <code>Loading</code> 组件展示加载中的状态:</p>
+<pre><code class="language-js">const Loading: React.FC = () =&gt; {
+  return &lt;p&gt;Loading...&lt;/p&gt;;
+};
+</code></pre>
+<p>数据部分我们选择本地模拟：</p>
+<pre><code class="language-js">const petsData = {
+  dogs: {
+    name: 'dogs',
+    avatar: '🐶'
+  },
+  cats: {
+    name: 'cats',
+    avatar: '🐱'
+  }
+};
+
+export const getPets = (type: 'dogs' | 'cats') =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    setTimeout(() =&gt; {
+      resolve(petsData[type]);
+    }, 1000);
+  });
+};
+</code></pre>
+<p>使用 <code>setTimeout</code> 模拟较慢的网络请求。</p>
+<p>最后将他们挂载起来：</p>
+<pre><code class="language-js">const App: React.FC = () =&gt; {
+  return (
+    &lt;div&gt;
+      &lt;Pets /&gt;
+    &lt;/div&gt;
+  );
+};
+
+render(&lt;App /&gt;, document.getElementById('root'));
+</code></pre>
+<p>运行起来后一切正常，我们选择不同的名字展示相应的数据。</p>
+<p>重点来了，我们添加一个按钮控制这个组件的显示与隐藏，修改后：</p>
+<pre><code class="language-js">const App: React.FC = () =&gt; {
+  const [show, setShow] = useState(true);
+  return (
+    &lt;div&gt;
+      &lt;button onClick={() =&gt; setShow(!show)}&gt;switch&lt;/button&gt;
+      {show &amp;&amp; &lt;Pets /&gt;}
+    &lt;/div&gt;
+  );
+};
+
+render(&lt;App /&gt;, document.getElementById('root'));
+</code></pre>
+<p>下面执行操作：<strong>更换一个名字，在 Loading 状态的时候点击按钮，组件消失，console 弹出警告</strong></p>
+<p>至此我们已经复现出了这个问题。</p>
+<p>经过模拟我们发现了大概的问题所在，当我们更换名字的时候，组件开始请求对应的数据，然后我们点击了按钮，这个组件被卸载掉了，但是一秒后数据请求到了并 <code>setState</code> 更新数据，此时组件确实处于没有挂载的状态。</p>
+<p>按照这个思路，要修复这个问题，只需要在这个组件被卸载的时候，取消掉所有的可能在未来更改状态的操作，而在 <code>useEffect</code> 这个 hooks 中，允许我们 return 一个函数，在这个函数中我们可以放入一些清理的逻辑，React 会在组件被卸载的时候执行这个函数，而在当前应用中我们只需要保证 <strong>组件卸载后不会再有 setState</strong></p>
+<p>我们按照这个思路修改下 Pets 组件：</p>
+<p>修改一下 useEffect 方法：</p>
+<pre><code class="language-js">useEffect(() =&gt; {
+    let mount = true;
+    if (pets) {
+      getPets(pets).then(res =&gt; {
+        if (mount) {
+          setLoading(false);
+          setPetsData(res);
+        }
+      });
+    }
+    return () =&gt; {
+      console.log('hahahhaha');
+      mount = false;
+    };
+  }, [pets]);
+</code></pre>
+<p>定一个一个 <code>mount</code> 变量控制组件是否被挂载，并有条件的进行更新状态。</p>
+<p>这下那个警告就消失了😁。</p>
+<p>总结，在 <code>useEffect</code> 中订阅某些状态或者执行某些异步任务，一定要注意是否需要在组件被卸载的时候清除这些操作。</p>
 ]]></content>
     </entry>
     <entry>
@@ -533,133 +672,6 @@ println!(&quot;c GREATER THAN OR EQUAL TO d is {}&quot;, c &gt;= d); // c GREATE
 <p>输出：</p>
 <pre><code class="language-rust">average is 53.8
 test passed.
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[基本类型]]></title>
-        <id>https://baoyuantop.github.io/post/ji-ben-lei-xing/</id>
-        <link href="https://baoyuantop.github.io/post/ji-ben-lei-xing/">
-        </link>
-        <updated>2021-07-12T01:36:18.000Z</updated>
-        <content type="html"><![CDATA[<p>首先定义一个判断类型的函数：</p>
-<pre><code class="language-rust">fn get_type&lt;T&gt;(_: &amp;T) -&gt; &amp;str {
-    std::any::type_name::&lt;T&gt;()
-}
-</code></pre>
-<p>关于这个函数的详细信息后面章节再做解释，现在你需要清楚它可以返回某个值的类型。</p>
-<p>在 Rust 中默认的整数数字类型为 <code>i32</code>：</p>
-<pre><code class="language-rust">let num1 = 123;
-println!(&quot;{} - type: {}&quot;, num1, get_type(&amp;num1)); // 123 - type: i32
-</code></pre>
-<p>默认的浮点数字类型为 <code>f64</code>:</p>
-<pre><code class="language-rust">let num2 = 1.23;
-println!(&quot;{} - type: {}&quot;, num2, get_type(&amp;num2)); // 1.23 - type: f64
-</code></pre>
-<p>你可以显式定义某个值的类型：</p>
-<pre><code class="language-rust">let num3: i8 = 23;
-println!(&quot;{} - type: {}&quot;, num3, get_type(&amp;num3)); // 23 - type: i8
-</code></pre>
-<h2 id="最大值">最大值</h2>
-<p><code>std</code> 是标准库(crate)，提供了丰富多样的功能，这里我们使用类型模块(i32、i16 等) 和属性。</p>
-<pre><code class="language-rust">let max_i32 = i32::MAX;
-let max_i16 = i16::MAX;
-println!(&quot;max value for i32 is {}&quot;, max_i32); // max value for i32 is 2147483647
-println!(&quot;max value for i16 is {}&quot;, max_i16); // max value for i16 is 32767
-</code></pre>
-<h2 id="布尔值">布尔值</h2>
-<pre><code class="language-rust">let is_rust_fun: bool = true;
-println!(
-    &quot;is_rust_fun is {} - type: {}&quot;,
-    is_rust_fun,
-    get_type(&amp;is_rust_fun)
-); // is_rust_fun is true - type: bool
-let is_greater = 23 &gt; 5;
-println!(
-    &quot;is_greater is {} - type: {}&quot;,
-    is_greater,
-    get_type(&amp;is_greater)
-); // is_greater is true - type: bool
-</code></pre>
-<h2 id="布尔值运算">布尔值运算</h2>
-<p>定义两个布尔值：</p>
-<pre><code class="language-rust">let a = true;
-let b = false;
-println!(&quot;a is {}\nb is {}&quot;, a, b);
-// a is true
-// b is false
-</code></pre>
-<p>使用 <code>!</code> 取反</p>
-<pre><code class="language-rust">println!(&quot;NOT a is {}&quot;, !a); // NOT a is false
-</code></pre>
-<p>使用 <code>&amp;</code> 按位与，使用 <code>&amp;&amp;</code> 逻辑与</p>
-<pre><code class="language-rust">println!(&quot;a AND b is {}&quot;, a &amp; b); // a AND b is false
-</code></pre>
-<p>使用 <code>|</code> 按位或，使用 <code>||</code> 逻辑或</p>
-<pre><code class="language-rust">println!(&quot;a OR b is {}&quot;, a | b); // a OR b is true
-</code></pre>
-<p>使用 <code>^</code> XOR 按位异或运算</p>
-<pre><code class="language-rust">println!(&quot;a XOR b is {}&quot;, a ^ b); // a XOR b is true
-</code></pre>
-<p>布尔类型可以映射到整数类型的 1 或 2</p>
-<pre><code class="language-rust">println!(&quot;a XOR b is {}&quot;, (a ^ b) as i32); // a XOR b is 1
-</code></pre>
-<pre><code class="language-rust">let c = (a ^ b) | (a &amp; b);
- println!(&quot;c is {}&quot;, c); // c is true
-</code></pre>
-<p>短路逻辑操作，忽略右操作数</p>
-<pre><code class="language-rust">let d = true || (a &amp; b);
-println!(&quot;d is {}&quot;, d); // d is true
-</code></pre>
-<p><code>panics</code> 是一种错误处理方式，它会抛出错误栈并立即退出程序，类似于 Node.js 中的 <code>throwing error</code>。</p>
-<pre><code class="language-rust">let e = false &amp;&amp; panic!();
-println!(&quot;e is {}&quot;, e); // e is false
-</code></pre>
-<p>由于 <code>panic!()</code> 没有被执行，所以程序执行打印并正常退出。</p>
-<h2 id="chars-字符">chars 字符</h2>
-<p>chars 字符使用4 个字节（32位）存储:</p>
-<pre><code class="language-rust">let letter: char = 'z';
-let number_char = '9';
-let finger = '\u{261D}';
-
-println!(&quot;letter is {}&quot;, letter); // letter is z
-println!(&quot;number_char is {}&quot;, number_char); // number_char is 9
-println!(&quot;finger is {}&quot;, finger); // finger is ☝
-</code></pre>
-<pre><code class="language-rust">let smiley = '😀';
-println!(&quot;smiley is {} - type: {}&quot;, smiley, get_type(&amp;smiley));
-// smiley is 😀 - type: char
-</code></pre>
-<h2 id="浮点数">浮点数</h2>
-<blockquote>
-<ul>
-<li>f32 32 位浮点数</li>
-<li>f64 64 位浮点数</li>
-</ul>
-</blockquote>
-<p>默认小数存储在 <code>f64</code> 中：</p>
-<pre><code class="language-rust">let my_float = 12.345677890123456789012345;
-println!(&quot;my_float is: {}&quot;, my_float);
-// my_float is: 12.345677890123456
-let a_float: f32 = 9.9438535983578493758;
-println!(&quot;a_float is: {}&quot;, a_float);
-// a_float is: 9.943853
-let min_f32 = f32::MIN;
-println!(&quot;min_f32 is: {}\n&quot;, min_f32);
-// min_f32 is: -340282350000000000000000000000000000000
-
-let max_f32 = f32::MAX;
-println!(&quot;max_f32 is: {}\n&quot;, max_f32);
-// max_f32 is: 340282350000000000000000000000000000000
-
-let min_f64 = f64::MIN;
-println!(&quot;min_f64 is: {}\n&quot;, min_f64);
-// min_f64 is: -179769313486231570000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-
-let max_f64 = f64::MAX;
-println!(&quot;max_f64 is: {}\n&quot;, max_f64);
-// max_f64 is: 179769313486231570000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-
 </code></pre>
 ]]></content>
     </entry>

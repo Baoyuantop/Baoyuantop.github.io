@@ -1,0 +1,319 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Update state on unmounted component | Baoyuan&#39;s Blog</title>
+<meta name="description" content="" />
+<link rel="shortcut icon" href="https://baoyuantop.github.io/favicon.ico?v=1627722428001">
+<link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css"> -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+<link rel="stylesheet" href="https://baoyuantop.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Update state on unmounted component | Baoyuan&#39;s Blog - Atom Feed" href="https://baoyuantop.github.io/atom.xml">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-155405926-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-155405926-1');
+</script>
+
+
+  </head>
+  <body>
+    <div class="site-nav has-cover">
+      <div class="head">
+  <div class="inner">
+    <a class="site-name" href="https://baoyuantop.github.io">
+        <span>Baoyuan&#39;s Blog</span>
+    </a>
+    <label class="burger" for="burger"></label>
+    <input id="burger" type="checkbox">
+    <button class="burger">
+      <div>
+        <span></span>
+        <span></span>
+      </div>
+    </button>
+    <nav class="info_nav">
+      
+        
+          <a href="https://baoyuantop.github.io">首页</a>
+        
+      
+        
+          <a href="/archives">归档</a>
+        
+      
+        
+          <a href="/tags">标签</a>
+        
+      
+        
+          <a href="/post/about">关于</a>
+        
+      
+    </nav>
+  </div>
+</div>
+    </div>
+    <article role="main" class="hentry has-cover">
+      
+        <div class="entry-cover js-cover" data-src="https://images.unsplash.com/photo-1541953747-d09e945b9083?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDl8fHxlbnwwfHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=900&amp;q=60" data-width="900" data-height="423" style="background-image:url(https://images.unsplash.com/photo-1541953747-d09e945b9083?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDl8fHxlbnwwfHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=900&amp;q=60); height: 80vw;">
+          <h1 class="post-title">Update state on unmounted component</h1>
+        </div>
+      
+      <h1 class="entry-title" itemprop="headline">Update state on unmounted component</h1>
+      <div class="entry-meta">
+        <time class="updated" datetime="2021-07-24 11:47:59">2021-07-24</time>
+        <span class="author vcard">
+          5 min read
+        </span>
+      </div>
+      <div class="post-content yue">
+        <p>写过 <code>React</code> 的一定会有遇到过这个错误：</p>
+<figure data-type="image" tabindex="1"><img src="https://z3.ax1x.com/2021/07/31/Wjf7Hs.png" alt="错误信息" loading="lazy"></figure>
+<p>准确来说这是一个警告，因为它看起来并不会影响程序的正常运行，如果不去处理的话也不会有什么严重的后果，所以大多数人就会选择视而不见... 😂</p>
+<p>但是要真问题来为啥会这样，不仔细研究一下不是很好想明白，下面就来探讨下这个错误提示的根本原因在哪。</p>
+<p>首先看一下错误的字面意思：</p>
+<p>不能更新 React 的 state 在一个还没有挂载的组件上。</p>
+<p>这是一个空操作，但它表明您的应用程序中存在内存泄漏。</p>
+<p>要修复，请取消 useEffect 清理函数中的所有订阅和异步任务。</p>
+<p>意思大概是说问题出在了 <code>useEffect</code> 上，首先我们先尝试着复现一下这个错误。</p>
+<p>我们构建一个简单的应用，通过一个 select 组件选择不同的动物名称，然后根据选择的名字读取相应的数据并显示在下方。</p>
+<p>Pets 组件：</p>
+<pre><code class="language-js">const Pets: React.FC = () =&gt; {
+  const [pets, setPets] = useState('');
+  const [petsData, setPetsData] = useState({});
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = ({ target }) =&gt; {
+    setLoading(true);
+    setPets(target.value);
+  };
+
+  useEffect(() =&gt; {
+    if (pets) {
+      getPets(pets).then(res =&gt; {
+        setLoading(false);
+        setPetsData(res);
+      });
+    }
+  }, [pets]);
+
+  return (
+    &lt;div&gt;
+      &lt;select name=&quot;pets&quot; id=&quot;pets&quot; onChange={handleChange}&gt;
+        &lt;option value=&quot;&quot;&gt;Select a pet&lt;/option&gt;
+        &lt;option value=&quot;cats&quot;&gt;Cats&lt;/option&gt;
+        &lt;option value=&quot;dogs&quot;&gt;Dogs&lt;/option&gt;
+      &lt;/select&gt;
+      {loading &amp;&amp; &lt;Loading /&gt;}
+      {petsData &amp;&amp; &lt;PetsCard petsData={petsData} /&gt;}
+    &lt;/div&gt;
+  );
+};
+</code></pre>
+<p>我们使用了 select 组件选择 <code>cats</code> 或是 <code>dogs</code>，当选择改变的时候我们设置当前的 <code>pets</code> 状态为选择的值，然后会触发 useEffect 更新对应的内容并显示。</p>
+<p>其中 <code>PetsCard</code> 组件接受动物的数据并渲染：</p>
+<pre><code class="language-js">const PetsCard = ({ petsData }) =&gt; {
+  console.log(petsData);
+  return (
+    &lt;div&gt;
+      &lt;p&gt;{petsData.name}&lt;/p&gt;
+      &lt;p&gt;{petsData.avatar}&lt;/p&gt;
+    &lt;/div&gt;
+  );
+};
+</code></pre>
+<p>使用 <code>Loading</code> 组件展示加载中的状态:</p>
+<pre><code class="language-js">const Loading: React.FC = () =&gt; {
+  return &lt;p&gt;Loading...&lt;/p&gt;;
+};
+</code></pre>
+<p>数据部分我们选择本地模拟：</p>
+<pre><code class="language-js">const petsData = {
+  dogs: {
+    name: 'dogs',
+    avatar: '🐶'
+  },
+  cats: {
+    name: 'cats',
+    avatar: '🐱'
+  }
+};
+
+export const getPets = (type: 'dogs' | 'cats') =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    setTimeout(() =&gt; {
+      resolve(petsData[type]);
+    }, 1000);
+  });
+};
+</code></pre>
+<p>使用 <code>setTimeout</code> 模拟较慢的网络请求。</p>
+<p>最后将他们挂载起来：</p>
+<pre><code class="language-js">const App: React.FC = () =&gt; {
+  return (
+    &lt;div&gt;
+      &lt;Pets /&gt;
+    &lt;/div&gt;
+  );
+};
+
+render(&lt;App /&gt;, document.getElementById('root'));
+</code></pre>
+<p>运行起来后一切正常，我们选择不同的名字展示相应的数据。</p>
+<p>重点来了，我们添加一个按钮控制这个组件的显示与隐藏，修改后：</p>
+<pre><code class="language-js">const App: React.FC = () =&gt; {
+  const [show, setShow] = useState(true);
+  return (
+    &lt;div&gt;
+      &lt;button onClick={() =&gt; setShow(!show)}&gt;switch&lt;/button&gt;
+      {show &amp;&amp; &lt;Pets /&gt;}
+    &lt;/div&gt;
+  );
+};
+
+render(&lt;App /&gt;, document.getElementById('root'));
+</code></pre>
+<p>下面执行操作：<strong>更换一个名字，在 Loading 状态的时候点击按钮，组件消失，console 弹出警告</strong></p>
+<p>至此我们已经复现出了这个问题。</p>
+<p>经过模拟我们发现了大概的问题所在，当我们更换名字的时候，组件开始请求对应的数据，然后我们点击了按钮，这个组件被卸载掉了，但是一秒后数据请求到了并 <code>setState</code> 更新数据，此时组件确实处于没有挂载的状态。</p>
+<p>按照这个思路，要修复这个问题，只需要在这个组件被卸载的时候，取消掉所有的可能在未来更改状态的操作，而在 <code>useEffect</code> 这个 hooks 中，允许我们 return 一个函数，在这个函数中我们可以放入一些清理的逻辑，React 会在组件被卸载的时候执行这个函数，而在当前应用中我们只需要保证 <strong>组件卸载后不会再有 setState</strong></p>
+<p>我们按照这个思路修改下 Pets 组件：</p>
+<p>修改一下 useEffect 方法：</p>
+<pre><code class="language-js">useEffect(() =&gt; {
+    let mount = true;
+    if (pets) {
+      getPets(pets).then(res =&gt; {
+        if (mount) {
+          setLoading(false);
+          setPetsData(res);
+        }
+      });
+    }
+    return () =&gt; {
+      console.log('hahahhaha');
+      mount = false;
+    };
+  }, [pets]);
+</code></pre>
+<p>定一个一个 <code>mount</code> 变量控制组件是否被挂载，并有条件的进行更新状态。</p>
+<p>这下那个警告就消失了😁。</p>
+<p>总结，在 <code>useEffect</code> 中订阅某些状态或者执行某些异步任务，一定要注意是否需要在组件被卸载的时候清除这些操作。</p>
+
+      </div>
+      <div class="entry-block">
+        <div class="entry-tags">
+          
+            <a href="https://baoyuantop.github.io/tag/M9ByBI47v/">
+              React
+            </a>
+          
+        </div>
+      </div>
+    </article>
+    
+      <section class="post-section prev-post">
+        <div class="inner">
+          <h3>前一篇</h3>
+          <a href="https://baoyuantop.github.io/post/rust-tiao-jian-yu-xun-huan/">
+            <strong>Rust 条件与循环</strong>
+          </a>
+        </div>
+      </section>
+    
+    
+      <section class="post-section prev-post">
+        <div class="inner">
+          <h3>后一篇</h3>
+          <a href="https://baoyuantop.github.io/post/react-usecallback/">
+            <strong>React useCallback</strong>
+          </a>
+        </div>
+      </section>
+    
+
+    
+      
+        <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: 'fbb50faa206162db5797',
+    clientSecret: '03cc41bb09f885d1b61dfe631e9f9497a29c38cc',
+    repo: 'baoyuantop.github.io',
+    owner: 'baoyuantop',
+    admin: ['baoyuantop'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+      
+
+      
+    
+
+    <footer class="footer">
+  <div class="main">
+    <a href="https://baoyuantop.github.io">
+      <img class="avatar" src="https://baoyuantop.github.io/images/avatar.png?v=1627722428001" alt="Baoyuan&#39;s Blog">
+    </a>
+    <div class="footer__social">
+      
+        
+          <a href="https://github.com/Baoyuantop" target="_blank"><i class="remixicon-github-line"></i></a>
+        
+      
+        
+          <a href="https://twitter.com/Baoyuan12" target="_blank"><i class="remixicon-twitter-line"></i></a>
+        
+      
+        
+          <a href="https://weibo.com/p/1005056062549773/home?from=page_100505&amp;mod=TAB&amp;is_all=1#place" target="_blank"><i class="remixicon-weibo-line"></i></a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <p class="footer__sosumi">
+      Powered by Baoyuan
+    </p>
+    <a class="footer-rss" href="https://baoyuantop.github.io/atom.xml">RSS</a>
+  </div>
+</footer>
+
+<script src="https://baoyuantop.github.io/media/prism.js"></script>
+<script>
+  Prism.highlightAll()
+</script>
+
+  </body>
+</html>
