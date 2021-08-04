@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://baoyuantop.github.io</id>
     <title>Baoyuan&apos;s Blog</title>
-    <updated>2021-07-31T09:07:12.328Z</updated>
+    <updated>2021-08-04T14:18:14.415Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://baoyuantop.github.io"/>
     <link rel="self" href="https://baoyuantop.github.io/atom.xml"/>
@@ -335,6 +335,16 @@ println!(&quot;{}&quot;, double(11)); // 22
 </code></pre>
 <pre><code class="language-rust">let triple = |n1| n1 * 3;
 println!(&quot;{}&quot;, triple(99)); // 297
+</code></pre>
+<h2 id="作用域">作用域</h2>
+<pre><code class="language-rust">fn main() {
+    let planet = &quot;Dunya&quot;;
+    if true {
+        let planet = &quot;Jupiter&quot;;
+        println!(&quot;planet is {}&quot;, planet); // planet is Jupiter
+    }
+    println!(&quot;planet is {}&quot;, planet); // planet is Dunya
+}
 </code></pre>
 ]]></content>
     </entry>
