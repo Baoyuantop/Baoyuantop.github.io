@@ -2,13 +2,121 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://baoyuantop.github.io</id>
     <title>Baoyuan&apos;s Blog</title>
-    <updated>2021-08-04T14:18:14.415Z</updated>
+    <updated>2021-11-21T09:36:36.291Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://baoyuantop.github.io"/>
     <link rel="self" href="https://baoyuantop.github.io/atom.xml"/>
     <logo>https://baoyuantop.github.io/images/avatar.png</logo>
     <icon>https://baoyuantop.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Baoyuan&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[从 0 上手 APISIX]]></title>
+        <id>https://baoyuantop.github.io/post/cong-0-shang-shou-apisix/</id>
+        <link href="https://baoyuantop.github.io/post/cong-0-shang-shou-apisix/">
+        </link>
+        <updated>2021-11-15T09:54:06.000Z</updated>
+        <content type="html"><![CDATA[<p>Apache APISIX 是一个云原生高性能 API 网关，同时也是 Apache 基金会下的顶级开源项目，自 2019 年开源以来社区高速发展，目前社区活跃贡献者已达到 300+，Github star 数 7.6K，可以说是目前最活跃的网关项目。</p>
+<p>本篇文章将从 APISIX 的结构开始，带你在本地运行一个 APISIX，并使用官方的 Dashboard 创建一条测试路由，最后借助插件为该路由实现基本鉴权功能。</p>
+<h1 id="项目结构">项目结构</h1>
+<p>APISIX 的结构如下图所示：</p>
+<figure data-type="image" tabindex="1"><img src="https://baoyuantop.github.io/post-images/1637402123510.png" alt="APISIX" loading="lazy"></figure>
+<p>从图中可以看出来，APISIX 的结构分为 <strong>数据面</strong>(Data Plane) 和 <strong>控制面</strong>(Control Plane)。数据面负责处理具体的 API 请求，控制面则主要通过读写配置信息以达到对 APISIX 的控制。</p>
+<p>数据面和控制面之间通过 <code>etcd</code> 搭建起了桥梁，etcd 是一个用于分布式系统的键值对存储库。控制面只负责往 etcd 中读写配置信息，一旦配置信息数据更改了，etcd 就会即时通知数据面，这样数据面就可以使用更新后的规则对路由进行处理了。而且这期间 APISIX 是不需要重新启动的。</p>
+<p>使用 APISIX 时还可以通过结合 <code>Apache SkyWalking</code>、<code>Prometheus</code> 和 <code>Grafana</code> 等实现可观测性，APISIX 会将请求统计数据上报，这样就可以方便的看到统计数据。</p>
+<h1 id="安装体验">安装体验</h1>
+<p>下面我们在自己的电脑上安装体验一下 APISIX。</p>
+<p>首先打开 APISIX 的<a href="https://apisix.apache.org/zh/docs/apisix/getting-started/">官方文档</a>，在这个快速入门指南中官方给出了步骤，我们只需按照步骤执行即可。</p>
+<h3 id="处理依赖">处理依赖</h3>
+<p>APISIX 项目代码托管在 Github 上，首先我们需要将代码 clone 到本地。然后我们需要在机器上准备一下依赖，根据<a href="https://github.com/apache/apisix/blob/master/docs/zh/latest/install-dependencies.md">安装依赖的文档</a>，我们只需要在项目目录下执行一下脚本就可以了。</p>
+<pre><code class="language-bash">bash utils/install-dependencies.sh
+</code></pre>
+<p>这个脚本会判断出执行环境，然后使用包管理工具自动安装依赖，在 <code>macOS</code> 下会调用 <code>brew</code> 安装</p>
+<pre><code class="language-bash">brew install openresty/brew/openresty luarocks lua@5.1 etcd curl git pcre openldap
+</code></pre>
+<p>然后启动 etcd 服务</p>
+<pre><code class="language-bash">brew services start etcd
+</code></pre>
+<p>安装完成之后可以检验一下 etcd 是否已经启动了</p>
+<pre><code class="language-bash">brew services
+</code></pre>
+<h3 id="初始化-apisix">初始化 APISIX</h3>
+<p>首先需要安装运行时依赖的一些库，在项目目录下执行</p>
+<pre><code class="language-bash">make deps
+</code></pre>
+<p>然后需要初始化配置文件和 etcd</p>
+<pre><code class="language-bash">make init
+</code></pre>
+<p>完成后就可以启动了，运行</p>
+<pre><code class="language-bash">make run
+</code></pre>
+<p>之后可以看到</p>
+<pre><code class="language-bash">/Users/apisix/bin/apisix start
+/usr/local/Cellar/openresty/1.19.9.1_1/luajit/bin/luajit ./apisix/cli/apisix.lua start
+[ info ] run -&gt; [ Done ]
+</code></pre>
+<p>这样 APISIX 就成功运行起来了。可以使用 <code>make help</code> 查看更多命令。</p>
+<h3 id="基本使用">基本使用</h3>
+<p>APISIX 默认运行在 9080 端口，我们可以访问一下</p>
+<pre><code class="language-bash">curl 127.0.0.1:9080
+</code></pre>
+<p>默认会看到返回</p>
+<pre><code class="language-json">{&quot;error_msg&quot;:&quot;404 Route Not Found&quot;}
+</code></pre>
+<p>这是我们没有在 APISIX 中配置任何的路由规则，所以请求会匹配不到路径。</p>
+<p>在 APISIX 中，使用 <code>Route</code> 表示一个路由匹配规则。<code>Route</code> 上可以绑定 <code>Plugin</code> 和 <code>Upstream</code>。</p>
+<p><code>Plugin</code> 表示一个插件，它可以在配置路由时选择开启，不同的 `Plugin 有不同的功能，APISIX 有一个<a href="https://apisix.apache.org/zh/plugins">插件市场</a>，里面有目前支持的所有的插件。</p>
+<p><code>Upstream</code> 表示上游服务，一般表示我们的后端服务。我们可以将其绑定到某个 <code>Route</code> 上，这样在访问这个 <code>Route</code> 时 APISIX 会将这个请求转发到该后端服务中。</p>
+<p>APISIX 支持一个 <code>Admin API</code> 用来读写配置，这个功能是默认开启的，地址在 <code>9080</code> 端口，这个端口可以在配置文件 <code>conf/conf.yaml</code> 中修改 <code>port_admin</code>。除此之外该功能使用路径 <code>/apisix/admin</code>，在调用 Admin API 时需要传递一个 <code>X-API-Key</code> 请求头来鉴权，否则会得到 401 返回，这个KEY 的值在配置文件 <code>conf/conf.yaml</code> 中。详细资源 API 定义参考<a href="https://apisix.apache.org/zh/docs/apisix/admin-api">文档</a>。</p>
+<p>APISIX 官方还支持一个 <a href="https://github.com/apache/apisix-dashboard">apisix-dashboard</a> 项目，这是一个可视化控制面板，可以更直观的对 APISIX 做配置。</p>
+<h3 id="安装-dashboard">安装 Dashboard</h3>
+<p>我们使用 Docker 将 dashboard 运行起来。</p>
+<p>首先获取到最新的镜像</p>
+<pre><code class="language-bash">docker pull apache/apisix-dashboard
+</code></pre>
+<p>运行镜像的时候有两个地方需要注意:</p>
+<p>因为我们需要在宿主机上访问 dashboard 的服务，所以我们需要修改配置文件将地址暴露出来，然后我们的 dashboard 需要访问宿主机的 etcd 服务，这个也需要修改配置文件。所以我们需要在启动的时候将修改后的配置文件挂载进去。</p>
+<p>默认的配置文件在 <a href="https://github.com/apache/apisix-dashboard/blob/master/api/conf/conf.yaml">https://github.com/apache/apisix-dashboard/blob/master/api/conf/conf.yaml</a></p>
+<p>将这个文件下载一份到本地，然后修改</p>
+<pre><code class="language-yaml">conf:
+  listen:
+    host: 0.0.0.0
+</code></pre>
+<pre><code class="language-yaml">etcd:
+    endpoints:
+      - host.docker.internal:2379
+</code></pre>
+<p>修改完成后用这个配置文件替换掉 <code>/usr/local/apisix-dashboard/conf/conf.yaml</code> 即可</p>
+<pre><code class="language-bash">docker run -d -p 9000:9000 -v /path/to/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml --name apisix-dashboard apisix-dashboard:$tag
+</code></pre>
+<p>启动完成之后访问 <a href="http://127.0.0.1:9000">http://127.0.0.1:9000</a> 应该可以访问到控制台。</p>
+<figure data-type="image" tabindex="2"><img src="https://baoyuantop.github.io/post-images/1637402173353.png" alt="Dashboard" loading="lazy"></figure>
+<h3 id="配置上游服务">配置上游服务</h3>
+<p>我们需要在本地模拟一个上游服务，包含一个 <code>/hello</code> API，使用 GET 访问会返回一个 &quot;Hello World&quot;。</p>
+<p>这个实现起来并不难，方式非常多，自己动手即可。</p>
+<p>在 Dashboard 上选择<code>上游 → 创建</code>，名称自己命名一下即可，关键的是目标节点：</p>
+<figure data-type="image" tabindex="3"><img src="https://baoyuantop.github.io/post-images/1637402198617.png" alt="" loading="lazy"></figure>
+<p>主机名需要填写上面创建的那个上游服务的地址，本地启动的服务多半可能 <code>127.0.0.1</code>，然后端口填写自己服务启动的端口即可。其他的用默认配置创建。</p>
+<h3 id="配置路由">配置路由</h3>
+<p>选择 <code>路由 → 创建</code>，命名一个名称，然后路径需要填写我们上面创建的服务的 API 路径，其他保持默认。在下一步中上游服务选择我们上一步创建的上游服务，其他默认，创建即可。</p>
+<p>到这里我们就完成了 API 的配置。</p>
+<p>我们访问验证一下:</p>
+<pre><code class="language-bash">curl 127.0.0.1:9080/hello 
+</code></pre>
+<p>配置正确的话可以看到返回 &quot;Hello World&quot;。</p>
+<h3 id="高级配置">高级配置</h3>
+<p>APISIX 的插件机制给路由的配置提供的很大的灵活性和功能的扩展，一些高级的功能比如：限流限速、鉴权等业务只需要开启一个插件即可。下面我们通过插件为路由添加上基本的身份验证功能。</p>
+<p><a href="https://apisix.apache.org/zh/docs/apisix/plugins/basic-auth/">basic-auth</a> 是 APISIX 的一个认证插件，可以为我们的路由添加基础的用户名和密码验证。该插件作用于 Consumer ，我们需要先在 Dashboard 中创建一个 consumer，在配置中启用 basic-auth 插件，同时在插件配置信息中填写用户名和密码完成配置。</p>
+<p>接着就可以在 Route 的配置中开启 basic-auth 插件，完成对该路由的认证。</p>
+<p>之后直接访问该路由会返回 401 缺少权限:</p>
+<pre><code class="language-json">{&quot;message&quot;:&quot;Missing authorization in request&quot;}
+</code></pre>
+<p>只有在发请求时提供 basic auth 信息，并附带正确的用户名和密码才能返回正确结果。</p>
+<p>如果使用的是 API 测试工具，可以在 Auth 选项中选择 basic auth，并填写正确的用户名和密码；如果使用 curl，则需要带上基本认证:</p>
+<pre><code class="language-bash">curl -i -u username:password http://127.0.0.1:9080/hello
+</code></pre>
+<p>到这里我们就完成了基本的上手。仔细翻看 APISIX 的插件市场就会发现各种各样的插件几乎涵盖了业务的方方面面，需要什么样的业务就配置对应的插件即可。除此之外 APISIX 还提供了自定义插件的 API ，这样我们就可以根据具体的业务定制自己的插件了。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Rust 条件与循环]]></title>
         <id>https://baoyuantop.github.io/post/rust-tiao-jian-yu-xun-huan/</id>
@@ -618,70 +726,6 @@ println!(&quot;value is {}&quot;, value); // value is 6
 let d3: [[[&amp;str; 100]; 20]; 5];
 d3 = [[[&quot;ok&quot;; 100]; 20]; 5];
 println!(&quot;value d3[3][11][35] is {}&quot;, d3[3][11][35]) // value d3[3][11][35] is ok
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[算数运算与比较运算]]></title>
-        <id>https://baoyuantop.github.io/post/suan-shu-yun-suan-yu-bi-jiao-yun-suan/</id>
-        <link href="https://baoyuantop.github.io/post/suan-shu-yun-suan-yu-bi-jiao-yun-suan/">
-        </link>
-        <updated>2021-07-12T02:59:50.000Z</updated>
-        <content type="html"><![CDATA[<p>在 Rust 中只能对相同类型的操作数做算数运算。</p>
-<p>基本运算:</p>
-<pre><code class="language-rust">let a = 11;
-let b = 33;
-let c = a + b;
-println!(&quot;c is {}&quot;, c); // c is 44
-let d = c - b;
-println!(&quot;d is {}&quot;, d); // d is 11
-let e = a * d;
-println!(&quot;e is {}&quot;, e); // e is 121
-</code></pre>
-<p>使用 <code>as</code> 进行类型转换，需要注意精度损失和兼容性问题。</p>
-<pre><code class="language-rust">let f = c as f32 / 4.5;
-println!(&quot;f is {}&quot;, f); // f is 9.777778
-</code></pre>
-<p>优先级控制</p>
-<pre><code class="language-rust">let g = 43.5432 % (a as f64 * e as f64);
-println!(&quot;g is {}&quot;, g); // g is 43.5432
-</code></pre>
-<p>同样的做比较运算只能对相同类型的进行比较</p>
-<pre><code class="language-rust">let a = 11;
-let b = 88;
-</code></pre>
-<pre><code class="language-rust">println!(&quot;a EQUAL TO b is {}&quot;, a == b); // a EQUAL TO b is false
-
-println!(&quot;a NOT EQUAL TO b is {}&quot;, a != b); // a NOT EQUAL TO b is true
-
-println!(&quot;a GREATER THAN b is {}&quot;, a &gt; b); // a GREATER THAN b is false
-
-println!(&quot;a GREATER THAN OR EQUAL TO b is {}&quot;, a &gt;= b); // a GREATER THAN OR EQUAL TO b is false
-
-println!(&quot;a LESS THAN b is {}&quot;, a &lt; b); // a LESS THAN b is true
-
-println!(&quot;a LESS THAN OR EQUAL TO b is {}&quot;, a &lt;= b); // a LESS THAN OR EQUAL TO b is true
-</code></pre>
-<pre><code class="language-rust">let c = true;
-let d = false;
-
-println!(&quot;c GREATER THAN d is {}&quot;, c &gt; d); // c GREATER THAN d is true
-println!(&quot;c GREATER THAN OR EQUAL TO d is {}&quot;, c &gt;= d); // c GREATER THAN OR EQUAL TO d is true
-</code></pre>
-<p><strong>示例：计算平均值</strong></p>
-<pre><code class="language-rust">fn main() {
-    let a = 33;
-    let b = 4.9;
-    let c: f32 = 123.5;
-    let average = (a as f32 + b as f32 + c) / 3.0;
-    println!(&quot;average is {}&quot;, average);
-    assert_eq!(average, 53.8);
-    println!(&quot;test passed.&quot;);
-}
-</code></pre>
-<p>输出：</p>
-<pre><code class="language-rust">average is 53.8
-test passed.
 </code></pre>
 ]]></content>
     </entry>
